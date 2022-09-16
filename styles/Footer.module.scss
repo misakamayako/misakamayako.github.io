@@ -1,0 +1,13 @@
+.footer {
+  @apply text-sm;
+  @apply text-stone-400;
+  @apply text-center;
+  @apply py-4;
+  @apply border-t-zinc-50;
+  @apply border-t-2;
+  @apply w-full;
+
+  a {
+    @apply underline;
+  }
+}

@@ -1,0 +1,19 @@
+.formItem{
+  @apply mb-6;
+  &::before,&::after{
+    @apply table;
+    @apply clear-both;
+    content: ''
+  }
+  .formItemLabel{
+    @apply align-middle float-left text-right pr-1;
+    font-size: 14px;
+    line-height: 40px;
+    box-sizing: border-box;
+  }
+  .formItemContent{
+    line-height: 40px;
+    position: relative;
+    font-size: 14px;
+  }
+}

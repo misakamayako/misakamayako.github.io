@@ -37,11 +37,17 @@ export default class Upload extends React.Component<Props, State> {
         return <BlogLayout>{page}</BlogLayout>
     }
 
+    static title = "博客上传"
+    // <Form labelWidth={120}>
+    // <Form.FormItem label={"123123123"}><input type="file" name={'file'}/></Form.FormItem>
+// </Form>
     render() {
         return (
-            <Form labelWidth={120}>
-                <Form.FormItem label={"123123123"}><span>1231231</span></Form.FormItem>
-            </Form>
+            <form action="/lastOrder/file/upload" method={"post"} encType="multipart/form-data">
+                <input type="file" name={'file'} id={"a"}/>
+                <input type="text" name={'file2'} id={'B'}/>
+                <button>提交</button>
+            </form>
         )
     }
 }

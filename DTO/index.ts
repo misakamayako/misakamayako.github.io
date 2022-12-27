@@ -22,7 +22,7 @@ export interface ArticleBriefDTO {
     date: string,
     brief: string,
     content: string,
-    id:number
+    id: number
 }
 
 export interface UserDTO {
@@ -40,7 +40,7 @@ export interface ArticleCategoryDTO {
     category?: String
 }
 
-export interface ArticleAll{
-    id:number,
+export interface ArticleAll {
+    id: number,
     title: string
 }

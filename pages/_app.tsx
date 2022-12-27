@@ -28,7 +28,7 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
     const [title, setTitle] = useState("")
     useEffect(() => {
         if (Component.title) {
-            setTitle(`"✨御坂网络-${Component.title}✨`)
+            setTitle(`✨御坂网络-${Component.title}✨`)
         } else {
             setTitle("✨御坂网络✨")
         }

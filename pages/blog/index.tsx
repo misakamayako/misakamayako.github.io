@@ -29,10 +29,6 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
 
     static getLayout(page: React.ReactElement<React.JSXElementConstructor<BlogIndex>>) {
         return <BlogLayout>{page}</BlogLayout>
-        // return React.createElement(BlogLayout, {}, [React.createElement(withRouter(props => {
-        //     // page.props = props
-        //     return withRouter(page)
-        // }))])
     }
 
     render() {
@@ -61,7 +57,7 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
                         total={Math.ceil(state.total / 10)}
                         page={state.page}
                         onChange={this.pullData.bind(this)}
-                        className="mb-5"
+                        className={"my-1 ml-4"}
                     />
                 </div>
             </div>

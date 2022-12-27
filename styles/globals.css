@@ -10,3 +10,6 @@ img, svg, video, canvas, audio, iframe, embed, object{
 .remark-highlight{
     display: inline-block;
 }
+:root {
+    color-scheme: dark;
+}

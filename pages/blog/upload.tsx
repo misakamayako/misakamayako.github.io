@@ -2,9 +2,10 @@ import React from "react";
 import BlogLayout from "../../components/layout/BlogLayout";
 import {Button, Checkbox, Input, Loading, Textarea} from "@nextui-org/react";
 import {addArticleTag, getArticleTag} from "../../api/category";
-import {ArticleCategoryDTO} from "../../DTO";
 import AlertService from "../../utils/AlertService";
 import FileUploader from "../../components/FileUploader";
+import {uploadArticle} from "../../api/article";
+import {ArticleCategoryDTO} from "../../DTO/Category";
 
 
 interface State {
@@ -13,15 +14,17 @@ interface State {
     title: string
     content: string
     uploading: boolean
+    selectedCategories: string[]
 }
 
-export default class Upload extends React.Component<{  }, State> {
+export default class Upload extends React.Component<{}, State> {
     state: State = {
         categories: [],
         files: [],
         title: '',
         content: '',
-        uploading:false
+        uploading: false,
+        selectedCategories: []
     }
 
     static getLayout(page: React.ReactElement<React.JSXElementConstructor<typeof this>>) {
@@ -31,13 +34,15 @@ export default class Upload extends React.Component<{  }, State> {
     static title = "博客上传"
     textArea = React.createRef<HTMLTextAreaElement>();
     selection = React.createRef<HTMLDivElement>()
+
     render() {
         return (
             <div className={"h-full w-full flex flex-row divide-x divide-cyan-400"}>
                 <div className={"grow px-4 flex h-full flex-col"}>
                     <div className={"flex flex-row w-full mb-4"}>
                         <div className={"w-16 shrink-0"} style={{lineHeight: "40px"}}>标题</div>
-                        <Input placeholder="标题" aria-label={"标题"} fullWidth underlined maxLength={80}/>
+                        <Input placeholder="标题" aria-label={"标题"} fullWidth underlined maxLength={80}
+                               value={this.state.title} onChange={e => this.setState({title: e.target.value})}/>
                     </div>
                     <div className={"flex flex-row w-full mb-4"}>
                         <div className={"w-16 shrink-0"} style={{lineHeight: "40px"}}>类型</div>
@@ -48,6 +53,7 @@ export default class Upload extends React.Component<{  }, State> {
                             defaultValue={[]}
                             className={"grow-1"}
                             ref={this.selection}
+                            onChange={it => this.setState({selectedCategories: it})}
                         >
                             <div className="flex-wrap">
                                 {
@@ -74,7 +80,8 @@ export default class Upload extends React.Component<{  }, State> {
                         </div>
                     </div>
                     <div className={"flex flex-row w-full mb-4 flex-row-reverse"}>
-                        <Button shadow color="primary" auto ghost disabled={this.state.uploading} onPress={this.uploadArticle.bind(this)}>
+                        <Button shadow color="primary" auto ghost disabled={this.state.uploading}
+                                onPress={this.uploadArticle.bind(this)}>
                             {this.state.uploading ? <Loading/> : "上传"}
                         </Button>
                     </div>
@@ -137,7 +144,12 @@ export default class Upload extends React.Component<{  }, State> {
             })
         }
     }
-    uploadArticle(){
 
+    uploadArticle() {
+        uploadArticle({
+            title: this.state.title,
+            categories: this.state.selectedCategories.map(it => Number(it)),
+            content: this.state.content
+        })
     }
 }

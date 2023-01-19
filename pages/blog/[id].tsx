@@ -13,22 +13,37 @@ import stringWidth from 'string-width'
 import BlogLayout from "../../components/layout/BlogLayout";
 import {getAllArticle, getArticle} from "../../api/article";
 import {GetStaticPropsContext, GetStaticPropsResult} from "next/types";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+import {ArticleDetailDTO} from "../../DTO/ArticleDTO";
+import {Badge} from "@nextui-org/react";
 
 
 interface Props {
-    mdxSource: MDXRemoteSerializeResult
+    mdxSource: MDXRemoteSerializeResult,
+    content:ArticleDetailDTO,
 }
 
-export default function Article({mdxSource}: Props) {
+export default function Article({mdxSource,content}: Props) {
     const [isSSR, setIsSSR] = useState(true);
 
     useEffect(() => {
         setIsSSR(false);
+        document.title = `✨御坂网络-${content.title}✨`
     }, []);
     return (
         <article className="prose dark:prose-invert px-4">
+            <h1>{content.title}</h1>
             {isSSR ? null : <MDXRemote {...mdxSource} />}
+            <hr/>
+            <div className={"px-2 py-4"}>
+                {
+                    content.categories.map(category=>(
+                        <Badge color="secondary" className={"ml-2"} variant="bordered" key={category.id}>
+                            {category.category}
+                        </Badge>
+                    ))
+                }
+            </div>
         </article>
     )
 }
@@ -44,10 +59,10 @@ export async function getStaticPaths() {
     }
 }
 
-export async function getStaticProps(context: GetStaticPropsContext<{ id: string }>): Promise<GetStaticPropsResult<{ mdxSource: MDXRemoteSerializeResult }>> {
-    const content = await getArticle(context.params!!.id)
+export async function getStaticProps(context: GetStaticPropsContext<{ id: string }>): Promise<GetStaticPropsResult<Props>> {
+    let content:ArticleDetailDTO = (await getArticle(context.params!!.id)).data.data
     const mdxSource = await serialize(
-        content.data.data.content,
+        content.content,
         {
             mdxOptions: {
                 remarkPlugins: [[remarkGfm, {stringLength: stringWidth}], remarkMath],
@@ -55,5 +70,5 @@ export async function getStaticProps(context: GetStaticPropsContext<{ id: string
                 format: 'md'
             },
         })
-    return {props: {mdxSource}}
+    return {props: {mdxSource,content}}
 }

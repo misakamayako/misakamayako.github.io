@@ -1,5 +1,6 @@
 import {AxiosPromise} from "axios";
-import {ArticleCategoryDTO, CategoryOfArticleSumDTO,Response} from "../DTO";
+import {CategoryOfArticleSumDTO,Response} from "../DTO";
+import { ArticleCategoryDTO } from "../DTO/Category";
 import axiosInstance from "../utils/axios";
 
 export function getArticleTag():AxiosPromise<Response<Array<ArticleCategoryDTO>>>{

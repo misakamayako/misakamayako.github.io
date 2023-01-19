@@ -87,7 +87,7 @@ class AlertService {
 
     #render() {
         const Element = this.element
-        this.#root!!.render(<Element message={this.#messageList}/>)
+        this.#root?.render(<Element message={this.#messageList}/>)
     }
 }
 

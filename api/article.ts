@@ -1,36 +1,36 @@
 import {AxiosPromise} from "axios";
-import {ArticleAll, ArticleBriefDTO, Pagination, Response} from "../DTO";
+import {ArticleUploadVo, Pagination, Response} from "../DTO";
 import axiosInstance from "../utils/axios";
+import {ArticleAllDTO, ArticleDetailDTO, ArticleDTO} from "../DTO/ArticleDTO";
 
-export function getArticleList(page: number,category?:string): AxiosPromise<Response<Pagination<ArticleBriefDTO>>> {
+export function getArticleList(page: number,pageSize:number, category?: string): AxiosPromise<Response<Pagination<ArticleDTO>>> {
     return axiosInstance({
         url: "/article/list",
-        data: {
+        params: {
             page,
+            pageSize,
             category
         }
     })
 }
 
-export function uploadArticle(formData: FormData): AxiosPromise<Response<string>> {
+export function uploadArticle(articleUploadVo: ArticleUploadVo): AxiosPromise<Response<ArticleDTO>> {
     return axiosInstance({
         url: "/article/upload",
         method: "post",
-        headers: {
-            "Content-Type": "multipart/form-data"
-        },
-        data: formData
+        data: articleUploadVo
     })
 }
 
-export function getAllArticle():AxiosPromise<Response<ArticleAll[]>>{
+export function getAllArticle(): AxiosPromise<Response<ArticleAllDTO[]>> {
     return axiosInstance({
-        url:'/article/all'
+        url: '/article/all',
+        baseURL: undefined
     })
 }
 
-export function getArticle(id:string):AxiosPromise<Response<ArticleBriefDTO>>{
+export function getArticle(id: string): AxiosPromise<Response<ArticleDetailDTO>> {
     return axiosInstance({
-        url:'/article/'+id
+        url: '/article/' + id
     })
 }

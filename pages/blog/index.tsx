@@ -1,26 +1,30 @@
-import {ArticleBriefDTO} from "../../DTO";
 import React from "react";
 import {getArticleList} from "../../api/article";
 import BlogLayout from "../../components/layout/BlogLayout";
-import {Pagination} from "@nextui-org/react";
+import {Badge, Loading, Pagination} from "@nextui-org/react";
 import Link from "next/link";
 import {NextPageContext} from "next";
+import {ArticleDTO} from "../../DTO/ArticleDTO";
 
 interface PageData {
     page: number,
+    pageSize:number,
     total: number,
-    briefs: ArticleBriefDTO[],
+    briefs: ArticleDTO[],
     searchText: string
-    category: string
+    category: string,
+    loading: boolean
 }
 
 export default class BlogIndex extends React.Component<{ category?: string }, PageData> {
     state: PageData = {
         page: 1,
+        pageSize:5,
         total: 0,
         briefs: [],
         searchText: '',
-        category: ''
+        category: '',
+        loading: false
     }
 
     static async getInitialProps(ctx: NextPageContext) {
@@ -38,23 +42,36 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
                 <div className="grow text-white flex flex-col">
                     <div className="flex-grow overflow-y-auto px-4">
                         {
-                            state.briefs.map(i => (
-                                <Link href={'/blog/' + i.id} key={i.id}>
-                                    <div className="block border rounded-lg mb-6 text-white cursor-pointer">
-                                        <div className="py-4 px-6">{i.title}</div>
-                                        <hr/>
-                                        <div className="px-6 py-4">
-                                            {i.brief}
+                            this.state.loading ?
+                                <Loading type={"gradient"} size={"xl"}/>
+                                : this.state.briefs.map(it => (
+                                    <Link href={'/blog/' + it.id} key={it.id}>
+                                        <div className="block border rounded-lg mb-6 text-white cursor-pointer">
+                                            <div className="py-4 px-6">{it.title}</div>
+                                            <hr/>
+                                            <div className="px-6 py-4">
+                                                {it.brief}
+                                            </div>
+                                            <hr/>
+                                            <div className="py-4 px-2">
+                                                {
+                                                    it.categories.map(category => (
+                                                        <Badge color="secondary" className={"ml-2"} variant="bordered"
+                                                               key={category.id}>
+                                                            {category.category}
+                                                        </Badge>
+                                                    ))
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            ))
+                                    </Link>
+                                ))
                         }
                     </div>
                     <Pagination
                         shadow
                         noMargin
-                        total={Math.ceil(state.total / 10)}
+                        total={Math.ceil(state.total / state.pageSize)}
                         page={state.page}
                         onChange={this.pullData.bind(this)}
                         className={"my-1 ml-4"}
@@ -65,7 +82,10 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
     }
 
     pullData(page: number = 1) {
-        getArticleList(page).then(({data}) => {
+        this.setState({
+            loading: true
+        })
+        getArticleList(page, this.state.pageSize,this.props.category).then(({data}) => {
             this.setState({
                 page,
                 total: data.data.total,
@@ -73,6 +93,10 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
                     ...t,
                     brief: t.brief
                 }))
+            })
+        }).finally(() => {
+            this.setState({
+                loading: false
             })
         })
     }

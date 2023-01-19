@@ -17,14 +17,6 @@ export interface CategoryOfArticleSumDTO {
     count: number
 }
 
-export interface ArticleBriefDTO {
-    title: string,
-    date: string,
-    brief: string,
-    content: string,
-    id: number
-}
-
 export interface UserDTO {
     id: number,
     name: string
@@ -35,12 +27,8 @@ export interface LoginDTO {
     password: string
 }
 
-export interface ArticleCategoryDTO {
-    id: number,
-    category?: String
-}
-
-export interface ArticleAll {
-    id: number,
-    title: string
+export interface ArticleUploadVo{
+    title:string
+    categories:number[]
+    content: string
 }

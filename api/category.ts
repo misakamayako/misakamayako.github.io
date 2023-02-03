@@ -3,9 +3,12 @@ import {CategoryOfArticleSumDTO,Response} from "../DTO";
 import { ArticleCategoryDTO } from "../DTO/Category";
 import axiosInstance from "../utils/axios";
 
-export function getArticleTag():AxiosPromise<Response<Array<ArticleCategoryDTO>>>{
+export function getArticleTag(type:number):AxiosPromise<Response<Array<ArticleCategoryDTO>>>{
     return axiosInstance({
-        url:'/category/article/'
+        url:'/category/categories/',
+        data:{
+            type
+        }
     })
 }
 

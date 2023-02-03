@@ -105,7 +105,7 @@ export default class Upload extends React.Component<{}, State> {
     }
 
     private getCategories() {
-        getArticleTag().then(({data}) => {
+        getArticleTag(1).then(({data}) => {
             this.setState({categories: data.data})
         })
     }

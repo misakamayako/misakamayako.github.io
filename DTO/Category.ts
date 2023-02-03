@@ -13,9 +13,11 @@ export class CategorySumDTO {
 export class ArticleCategoryDTO {
     category: string;
     id: number;
+    type:number;
 
-    constructor(category: string, id: number) {
+    constructor(category: string, id: number, type: number) {
         this.category = category
         this.id = id
+        this.type = type
     }
 }

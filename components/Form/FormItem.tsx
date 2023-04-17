@@ -12,8 +12,8 @@ export default function FormItem(Props: Props) {
     return (
         <div className={FormItemStyle.formItem}>
             <label className={FormItemStyle.formItemLabel} style={{width}}>{Props.label}</label>
-            <div style={{marginLeft: width}} className={FormItemStyle.formItemContent}>
-                <div>{Props.children}</div>
+            <div style={{marginLeft: width + 12}} className={FormItemStyle.formItemContent}>
+                {Props.children}
             </div>
         </div>
     )

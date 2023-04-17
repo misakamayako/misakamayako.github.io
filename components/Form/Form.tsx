@@ -1,7 +1,7 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import FormItem from "./FormItem";
 
-interface Props {
+interface Props extends React.FormHTMLAttributes<HTMLFormElement>{
     labelWidth?: number,
     children?: ReactNode
 }
@@ -13,12 +13,11 @@ export default function Form(props: Props) {
         updateState(props.labelWidth ?? 0)
     }, [props.labelWidth])
     return (
-        <form className="py-1">
+        <form className="py-1 px-2" {...props}>
             <Content.Provider value={state}>
                 {props.children}
             </Content.Provider>
         </form>
     )
-
 }
 Form.FormItem = FormItem

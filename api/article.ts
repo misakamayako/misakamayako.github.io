@@ -24,8 +24,7 @@ export function uploadArticle(articleUploadVo: ArticleUploadVo): AxiosPromise<Re
 
 export function getAllArticle(): AxiosPromise<Response<ArticleAllDTO[]>> {
     return axiosInstance({
-        url: '/article/all',
-        baseURL: undefined
+        url: '/article/all'
     })
 }
 

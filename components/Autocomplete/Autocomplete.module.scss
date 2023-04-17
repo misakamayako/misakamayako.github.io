@@ -1,0 +1,15 @@
+.autocomplete {
+  &Box {
+    @apply w-full relative rounded;
+  }
+
+  &Popover {
+    @apply absolute w-full p-1 bg-gray-800 rounded;
+  }
+
+  &OptionItem {
+    @apply p-1 hover:cursor-pointer hover:bg-cyan-200;
+    @apply active:bg-cyan-100 hover:text-neutral-800 ;
+    @apply active:text-neutral-800 rounded
+  }
+}

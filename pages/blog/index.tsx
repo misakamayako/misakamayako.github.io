@@ -55,7 +55,7 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
                                             <hr/>
                                             <div className="py-4 px-2">
                                                 {
-                                                    it.categories.map(category => (
+                                                    it.categories?.map(category => (
                                                         <Badge color="secondary" className={"ml-2"} variant="bordered"
                                                                key={category.id}>
                                                             {category.category}

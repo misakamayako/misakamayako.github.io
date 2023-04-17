@@ -29,7 +29,7 @@ export default function Article({mdxSource,content}: Props) {
     useEffect(() => {
         setIsSSR(false);
         document.title = `✨御坂网络-${content.title}✨`
-    }, []);
+    }, [content.title]);
     return (
         <article className="prose dark:prose-invert px-4">
             <h1>{content.title}</h1>
@@ -37,7 +37,7 @@ export default function Article({mdxSource,content}: Props) {
             <hr/>
             <div className={"px-2 py-4"}>
                 {
-                    content.categories.map(category=>(
+                    content.categories?.map(category=>(
                         <Badge color="secondary" className={"ml-2"} variant="bordered" key={category.id}>
                             {category.category}
                         </Badge>

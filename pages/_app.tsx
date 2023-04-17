@@ -5,8 +5,9 @@ import {createTheme, NextUIProvider} from '@nextui-org/react';
 
 import '../styles/globals.css'
 import '../public/css/github-dark-dimmed.css'
-import {useEffect, useState} from "react";
+import {StrictMode, useEffect, useState} from "react";
 import Head from "next/head";
+import {SSRProvider} from "@react-aria/ssr";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode,
@@ -38,7 +39,11 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
             <Head>
                 <title>{title}</title>
             </Head>
-            {getLayout(<Component {...pageProps}/>)}
+            <StrictMode>
+                <SSRProvider>
+                    {getLayout(<Component {...pageProps}/>)}
+                </SSRProvider>
+            </StrictMode>
         </NextUIProvider>
     );
 }

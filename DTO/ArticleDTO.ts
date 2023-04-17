@@ -1,4 +1,4 @@
-import {ArticleCategoryDTO} from "./Category";
+import {CategoryDTO} from "./Category";
 
 type Int = number
 type List<T> = Array<T>
@@ -10,7 +10,7 @@ interface IArticleDTO {
 
     createAt: string
     views: Int
-    categories: List<ArticleCategoryDTO>
+    categories: List<CategoryDTO>
 }
 
 export class ArticleDTO implements IArticleDTO {
@@ -19,7 +19,7 @@ export class ArticleDTO implements IArticleDTO {
     brief: string
     createAt: string
     views: Int
-    categories: List<ArticleCategoryDTO>
+    categories: List<CategoryDTO>
 
     constructor(
         id: Int,
@@ -27,7 +27,7 @@ export class ArticleDTO implements IArticleDTO {
         brief: string,
         createAt: string,
         views: Int,
-        categories: List<ArticleCategoryDTO>
+        categories: List<CategoryDTO>
     ) {
         this.id = id
         this.title = title
@@ -46,7 +46,7 @@ export class ArticleDetailDTO extends ArticleDTO {
                 brief: string,
                 createAt: string,
                 views: Int,
-                categories: List<ArticleCategoryDTO>,
+                categories: List<CategoryDTO>,
                 content: string) {
         super(id, title, brief, createAt, views, categories);
         this.content = content

@@ -10,10 +10,15 @@ export class CategorySumDTO {
     }
 }
 
-export class ArticleCategoryDTO {
+export enum CategoryType {
+    article = 1,
+    image
+}
+
+export class CategoryDTO {
     category: string;
     id: number;
-    type:number;
+    type: CategoryType;
 
     constructor(category: string, id: number, type: number) {
         this.category = category

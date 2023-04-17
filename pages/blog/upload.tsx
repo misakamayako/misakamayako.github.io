@@ -1,15 +1,15 @@
 import React from "react";
 import BlogLayout from "../../components/layout/BlogLayout";
 import {Button, Checkbox, Input, Loading, Textarea} from "@nextui-org/react";
-import {addArticleTag, getArticleTag} from "../../api/category";
+import {addCategory, getCategory} from "../../api/category";
 import AlertService from "../../utils/AlertService";
 import FileUploader from "../../components/FileUploader";
 import {uploadArticle} from "../../api/article";
-import {ArticleCategoryDTO} from "../../DTO/Category";
+import {CategoryDTO} from "../../DTO/Category";
 
 
 interface State {
-    categories: Array<ArticleCategoryDTO>,
+    categories: Array<CategoryDTO>,
     files: Array<File>,
     title: string
     content: string
@@ -79,7 +79,7 @@ export default class Upload extends React.Component<{}, State> {
                                 onChange={e => this.setState({content: e.target.value})}></Textarea>
                         </div>
                     </div>
-                    <div className={"flex flex-row w-full mb-4 flex-row-reverse"}>
+                    <div className={"flex w-full mb-4 flex-row-reverse"}>
                         <Button shadow color="primary" auto ghost disabled={this.state.uploading}
                                 onPress={this.uploadArticle.bind(this)}>
                             {this.state.uploading ? <Loading/> : "上传"}
@@ -105,7 +105,7 @@ export default class Upload extends React.Component<{}, State> {
     }
 
     private getCategories() {
-        getArticleTag(1).then(({data}) => {
+        getCategory(1).then(({data}) => {
             this.setState({categories: data.data})
         })
     }
@@ -114,7 +114,7 @@ export default class Upload extends React.Component<{}, State> {
         if (e.code === "Enter") {
             let currentTarget = e.currentTarget;
             if (currentTarget.value && currentTarget.value.length > 0) {
-                addArticleTag(currentTarget.value).then(({data}) => {
+                addCategory(currentTarget.value,1).then(({data}) => {
                     this.state.categories.push(data.data)
                     this.setState({
                         categories: this.state.categories

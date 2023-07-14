@@ -9,6 +9,10 @@ import {addCategory, getCategory} from "../../api/category";
 import {uploadFile} from "../../api/file";
 import URLWithStore from "../../utils/URLWithStore";
 import {addImage} from "../../api/images";
+import {getAlbumList} from "../../api/album";
+import {AlbumDTO} from "../../DTO/albumDTO";
+
+import albumUploadStyle from "../../styles/album/albumUpload.module.scss"
 
 interface State {
     imgUrl: string
@@ -19,6 +23,8 @@ interface State {
     loading: boolean
     nsfw: boolean
     private: boolean
+    albumSource: Array<AlbumDTO>
+    selectedAlbum?: AlbumDTO
 }
 
 export default class ImgUpload extends React.Component<any, State> {
@@ -30,7 +36,9 @@ export default class ImgUpload extends React.Component<any, State> {
         categorySource: [],
         loading: false,
         nsfw: false,
-        private: true
+        private: true,
+        albumSource: [],
+        selectedAlbum: undefined
     }
 
     private async submitForm() {
@@ -51,9 +59,9 @@ export default class ImgUpload extends React.Component<any, State> {
 
             })
             const url = uploadJobResult.data.data
-           await addImage({
+            await addImage({
                 fileUrl: url,
-               name: this.state.fileName,
+                name: this.state.fileName,
                 categories: this.state.selectedCategories.map(it => it.value),
                 // album?: number;
                 nsfw: false,
@@ -76,10 +84,15 @@ export default class ImgUpload extends React.Component<any, State> {
 
     private tryAddNew(category: string) {
         return addCategory(category, CategoryType.image).then(({data}) => {
-            this.state.selectedCategories.push({value: data.data.id, text: data.data.category})
-            this.setState({
-                selectedCategories: this.state.selectedCategories
-            })
+            this.addCategory({value: data.data.id, text: data.data.category})
+        })
+    }
+
+    private addCategory(category: { text: string; value: number }) {
+        const selectedCategories = structuredClone(this.state.selectedCategories)
+        selectedCategories.push(category)
+        this.setState({
+            selectedCategories
         })
     }
 
@@ -93,10 +106,20 @@ export default class ImgUpload extends React.Component<any, State> {
         }
     }
 
+    private findAlbum(key: string) {
+        if (key.length > 0) {
+            return getAlbumList({keyword: key}).then(({data}) => {
+                this.setState({
+                    albumSource: data.data.data
+                })
+            })
+        }
+    }
+
     render() {
         return (
-            <div className={"w-full h-screen grid grid-cols-12"}>
-                <div className={"col-span-8 h-full flex flex-col items-center justify-center"}
+            <div className={albumUploadStyle.albumUploadRoot}>
+                <div className={albumUploadStyle.imageArea}
                      onDragOver={e => e.preventDefault()}
                      onDrop={this.onDrop.bind(this)}>
                     {
@@ -105,7 +128,7 @@ export default class ImgUpload extends React.Component<any, State> {
                             <p className={"text-center"}>请将图片拖动到此处</p>
                     }
                 </div>
-                <div className={"col-span-4 h-full"}>
+                <div className={"col-span-4 h-full px-8"}>
                     <Form labelWidth={80}>
                         <Form.FormItem label={"图片名称"}>
                             <Input value={this.state.fileName}
@@ -117,8 +140,9 @@ export default class ImgUpload extends React.Component<any, State> {
                             <Autocomplete
                                 dataSource={this.state.categorySource}
                                 onChange={this.findCategory.bind(this)}
-                                onSelected={() => void 0}
+                                onSelected={this.addCategory.bind(this)}
                                 onCreateNew={this.tryAddNew.bind(this)}
+                                clearAfterSelect={true}
                             />
                         </Form.FormItem>
                         <Form.FormItem label={"已选分类"}>
@@ -128,27 +152,46 @@ export default class ImgUpload extends React.Component<any, State> {
                                         color="primary"
                                         variant="bordered"
                                         key={it.value}
-                                        className={"cursor-pointer"}
+                                        className={albumUploadStyle.badge}
                                         onClick={this.removeCategory.bind(this, it.value)}
                                     >
                                         {it.text}
+                                        <span></span>
                                     </Badge>
                                 ))
                             }
                         </Form.FormItem>
                         <Form.FormItem label={"所属相册"}>
-                            todo
+                            {
+                                this.state.selectedAlbum ?
+                                    <Badge
+                                        isSquared
+                                        color="primary"
+                                        variant="bordered"
+                                        className={"cursor-pointer"}
+                                        onClick={() => {
+                                            this.setState({selectedAlbum: undefined})
+                                        }}>
+                                        {this.state.selectedAlbum.title}
+                                    </Badge> :
+                                    <Autocomplete
+                                        dataSource={this.state.albumSource.map(it => ({value: it.id, text: it.title}))}
+                                        onChange={this.findAlbum.bind(this)}
+                                        onSelected={(item) => {
+                                            this.setState({selectedAlbum: this.state.albumSource.find(it => it.id === item.value)})
+                                        }}/>
+                            }
                         </Form.FormItem>
                         <Form.FormItem label={"其他配置"}>
                             <Checkbox isSelected={this.state.nsfw} onChange={nsfw => this.setState({nsfw})}
-                                      label={"nsfw"}/>
+                                      label={"NSFW"}/>
                             <span>{" "}</span>
-                            <Checkbox isSelected={this.state.private} onChange={a => this.setState({private: a})}
+                            <Checkbox isSelected={this.state.private} onChange={p => this.setState({private: p})}
                                       label={"private"}/>
                         </Form.FormItem>
                         <Form.FormItem>
                             <Button color={"primary"} shadow disabled={this.state.loading}
-                                    onClick={this.submitForm.bind(this)}>
+                                    onPress={this.submitForm.bind(this)}>
                                 {this.state.loading ? <Loading/> : null} 提交
                             </Button>
                         </Form.FormItem>

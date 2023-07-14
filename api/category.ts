@@ -2,10 +2,11 @@ import {AxiosPromise} from "axios";
 import {CategoryOfArticleSumDTO,Response} from "../DTO";
 import {CategoryDTO, CategoryType} from "../DTO/Category";
 import axiosInstance from "../utils/axios";
+const sourceType = "/category"
 
 export function getCategory(type:CategoryType,keyword?:string):AxiosPromise<Response<Array<CategoryDTO>>>{
     return axiosInstance({
-        url:'/category',
+        url:sourceType,
         params:{
             type,
             keyword
@@ -15,7 +16,7 @@ export function getCategory(type:CategoryType,keyword?:string):AxiosPromise<Resp
 
 export function addCategory(category: String,type:CategoryType): AxiosPromise<Response<CategoryDTO>> {
     return axiosInstance({
-        url: "/category/article",
+        url: sourceType,
         method:"post",
         data: {
             category,
@@ -25,6 +26,6 @@ export function addCategory(category: String,type:CategoryType): AxiosPromise<Re
 }
 export function getArticleTagSum():AxiosPromise<Response<Array<CategoryOfArticleSumDTO>>>{
     return axiosInstance({
-        url: '/category/article/sum'
+        url: sourceType+'/article/sum'
     })
 }

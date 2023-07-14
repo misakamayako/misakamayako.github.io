@@ -1,17 +1,21 @@
 import type {ReactElement, ReactNode} from 'react'
+import {StrictMode, useEffect, useState} from "react";
 import type {NextPage} from 'next'
 import type {AppProps} from 'next/app'
 import {createTheme, NextUIProvider} from '@nextui-org/react';
+import {useRouter} from "next/router"
 
 import '../styles/globals.css'
 import '../public/css/github-dark-dimmed.css'
-import {StrictMode, useEffect, useState} from "react";
 import Head from "next/head";
 import {SSRProvider} from "@react-aria/ssr";
+import {Provider, useSelector} from "react-redux";
+import store, {RootState} from "../store";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode,
-    title?: string
+    title?: string,
+    auth?: boolean
 }
 
 type AppPropsWithLayout = AppProps & {
@@ -27,13 +31,18 @@ const darkTheme = createTheme({
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
     const getLayout = Component.getLayout ?? ((page) => page)
     const [title, setTitle] = useState("")
+    const loginState = useSelector<RootState, boolean>((state) => state.userReducer.login)
+    const router = useRouter()
     useEffect(() => {
         if (Component.title) {
             setTitle(`✨御坂网络-${Component.title}✨`)
         } else {
             setTitle("✨御坂网络✨")
         }
-    }, [Component])
+        if (Component.auth && !loginState) {
+            router.push("/401")
+        }
+    }, [Component, loginState])
     return (
         <NextUIProvider theme={darkTheme}>
             <Head>
@@ -48,5 +57,13 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
     );
 }
 
-export default MyApp;
+function Root(appPropsWithLayout: AppPropsWithLayout) {
+    return (
+        <Provider store={store}>
+            <MyApp {...appPropsWithLayout}/>
+        </Provider>
+    )
+}
+
+export default Root;
 

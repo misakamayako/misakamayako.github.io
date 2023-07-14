@@ -7,15 +7,15 @@ interface Props extends React.FormHTMLAttributes<HTMLFormElement>{
 }
 
 export const Content = React.createContext(120)
-export default function Form(props: Props) {
-    const [state, updateState] = useState(props.labelWidth ?? 120)
+export default function Form({labelWidth, children,...rest}: Props) {
+    const [state, updateState] = useState(labelWidth ?? 120)
     useEffect(() => {
-        updateState(props.labelWidth ?? 0)
-    }, [props.labelWidth])
+        updateState(labelWidth ?? 0)
+    }, [labelWidth])
     return (
-        <form className="py-1 px-2" {...props}>
+        <form className="py-1 px-2" {...rest}>
             <Content.Provider value={state}>
-                {props.children}
+                {children}
             </Content.Provider>
         </form>
     )

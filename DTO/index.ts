@@ -32,3 +32,7 @@ export interface ArticleUploadVo{
     categories:number[]
     content: string
 }
+export interface PageQuery{
+    page?:number,
+    pageSize?:number
+}

@@ -3,7 +3,7 @@ import type {FormElement} from "@nextui-org/react";
 import {Input, Loading} from "@nextui-org/react";
 
 import autocompleteStyle from "./Autocomplete.module.scss";
-import Empty from "../Empty/Empty";
+import Empty from "../Empty";
 import debounce from "../../utils/debounce";
 
 interface State {
@@ -23,6 +23,7 @@ interface Props<T> {
     onSelected: (item: SelectItem<T>) => void
     onEnter?: (value: string) => void
     onCreateNew?: (value: string) => void | Promise<void>
+    clearAfterSelect?: boolean
 }
 
 
@@ -31,6 +32,10 @@ export default class Autocomplete<T> extends React.Component<Props<T>, State> {
         searchText: "",
         loading: false,
         showPopover: false
+    }
+
+    static defaultProps = {
+        clearAfterSelect: false
     }
 
     target = createRef<HTMLDivElement>()
@@ -47,9 +52,12 @@ export default class Autocomplete<T> extends React.Component<Props<T>, State> {
             })
             callback.finally(() => {
                 this.setState({
-                    loading: false
+                    loading: false,
+                    searchText: this.props.clearAfterSelect ? '' : this.state.searchText
                 })
             })
+        } else if (this.props.clearAfterSelect) {
+            this.setState({searchText: ''})
         }
     }
 
@@ -81,14 +89,14 @@ export default class Autocomplete<T> extends React.Component<Props<T>, State> {
             this.setState({
                 loading: true
             })
-            callback.then(()=>{
+            callback.then(() => {
                 if (!this.state.showPopover) {
                     document.addEventListener("click", this.autoClose.bind(this))
                 }
             }).finally(() => {
                 this.setState({
                     loading: false,
-                    showPopover:true
+                    showPopover: true
                 })
             })
         } else {
@@ -96,7 +104,7 @@ export default class Autocomplete<T> extends React.Component<Props<T>, State> {
                 document.addEventListener("click", this.autoClose.bind(this))
             }
             this.setState({
-                showPopover:true
+                showPopover: true
             })
         }
     }, 800)
@@ -108,7 +116,7 @@ export default class Autocomplete<T> extends React.Component<Props<T>, State> {
                 <Input
                     value={this.state.searchText}
                     onChange={this.handleChange.bind(this)}
-                    css={{width:"100%"}}
+                    css={{width: "100%"}}
                     className={"w-full"}
                     aria-label={"keywords"}
                     contentRight={this.state.loading ? <Loading size="xs"/> : null}

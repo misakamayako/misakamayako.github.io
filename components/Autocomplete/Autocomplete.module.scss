@@ -5,6 +5,7 @@
 
   &Popover {
     @apply absolute w-full p-1 bg-gray-800 rounded;
+    z-index: 10000;
   }
 
   &OptionItem {

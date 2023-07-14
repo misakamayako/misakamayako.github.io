@@ -5,9 +5,11 @@ import albumScss from "../../styles/album/albumIndex.module.scss"
 import {getAlbumList} from "../../api/album";
 import {AlbumDTO} from "../../DTO/albumDTO";
 import {Pagination} from "../../DTO";
+import AlbumAndImageListLayout from "../../components/layout/AlbumAndImageListLayout";
+import Link from "next/link";
 
 interface State extends Pagination<AlbumDTO> {
-    category: number[]
+    category: number[],
 }
 
 export default class AlbumIndex extends React.Component<null, State> {
@@ -19,6 +21,13 @@ export default class AlbumIndex extends React.Component<null, State> {
         data: []
     }
 
+    static getLayout(main: React.ReactElement) {
+        return <AlbumAndImageListLayout>{main}</AlbumAndImageListLayout>
+    }
+
+    static contextType = AlbumAndImageListLayout.categoryProvider;
+    context!: React.ContextType<typeof AlbumIndex.contextType>
+
     render() {
         return (
             <div className={albumScss.albumRoot}>
@@ -27,9 +36,10 @@ export default class AlbumIndex extends React.Component<null, State> {
                         <div className={albumScss.card} key={it.id}>
                             <div className={albumScss.square1}></div>
                             <div className={albumScss.square2}></div>
-                            <div className={albumScss.square3}>
+                            <Link className={albumScss.square3} href={"/album/" + it.id}>
                                 <Image src={it.cover!} alt={it.title}/>
-                            </div>
+                            </Link>
+                            <div className={albumScss.name}>{it.title}</div>
                         </div>
                     ))
                 }
@@ -38,7 +48,7 @@ export default class AlbumIndex extends React.Component<null, State> {
     }
 
     search(page: number = 1, pageSize: number = 20) {
-        getAlbumList(page, pageSize, this.state.category).then(({data}) => {
+        getAlbumList({page, pageSize, tags: this.state.category}).then(({data}) => {
             this.setState({
                 total: data.data.total,
                 data: data.data.data,
@@ -50,5 +60,15 @@ export default class AlbumIndex extends React.Component<null, State> {
 
     componentDidMount() {
         this.search()
+    }
+
+    componentDidUpdate(prevProps: Readonly<null>, prevState: Readonly<State>, snapshot?: any) {
+        if (this.state.category.length !== this.context.length) {
+            this.setState({
+                category: structuredClone(this.context)
+            }, () => {
+                this.search()
+            })
+        }
     }
 }

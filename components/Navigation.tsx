@@ -1,15 +1,6 @@
 import React from "react";
 
 import NavigationStyle from "../styles/Navigation.module.scss"
-
-interface State {
-    login: boolean,
-    name: string,
-    password: string,
-    loading: boolean,
-    showLogin: boolean,
-}
-
 import avatar from "../public/img/avatar.jpg"
 import loginLogo from "../public/img/login-logo.png"
 import Link from "next/link";
@@ -17,22 +8,48 @@ import {Button, Input, Loading, Modal} from "@nextui-org/react";
 import Image from "next/image";
 import {getUserInfo, login} from "../api/userInfo";
 import AlertService from "../utils/AlertService";
+import {setLoginState} from "../store/userState";
+import {connect} from "react-redux";
+import {RootState} from "../store";
 
-export default class Navigation extends React.Component<{}, State> {
+interface State {
+    name: string,
+    password: string,
+    loading: boolean,
+    showLogin: boolean,
+}
+
+interface ConnectProps {
+    login: boolean
+}
+
+interface ConnectAction {
+    setLogin: typeof setLoginState
+}
+function mapStateToProps (state:any):ConnectProps {
+    return {
+        login: (state as RootState).userReducer.login
+    }
+}
+const mapDispatchToProps = {
+    setLogin: setLoginState
+}
+
+class Navigation extends React.Component<ConnectProps & ConnectAction, State> {
     state: State = {
-        login: false,
         name: "",
         password: "",
         loading: false,
         showLogin: false,
     }
+    static test = 1234
 
     render() {
         return (
             <div>
                 <div className={NavigationStyle.avatar}>
                     <Image src={avatar} width={64} height={64} alt="" onClick={e => {
-                        if (e.altKey && e.ctrlKey && e.shiftKey && !this.state.login) {
+                        if (e.altKey && e.ctrlKey && e.shiftKey && !this.props.login) {
                             this.setState({
                                 showLogin: true
                             })
@@ -73,7 +90,7 @@ export default class Navigation extends React.Component<{}, State> {
                 </Modal>
                 <nav className={NavigationStyle.menu}>
                     <Link href="/blog" className={NavigationStyle.navLink}>blog</Link>
-                    {this.state.login ?
+                    {this.props.login ?
                         <Link href="/blog/upload" className={'inline-block'}>blog upload</Link> : null}
                     <Link href="/dream-map" className={'inline-block'}>dream map</Link>
                     <Link href="/album" className={NavigationStyle.navLink}>album</Link>
@@ -92,7 +109,6 @@ export default class Navigation extends React.Component<{}, State> {
             password: this.state.password
         }).then(() => {
             this.setState({
-                login: true,
                 showLogin: false
             })
             AlertService.info('登录成功')
@@ -105,9 +121,8 @@ export default class Navigation extends React.Component<{}, State> {
 
     componentDidMount() {
         getUserInfo().then(() => {
-            this.setState({
-                login: true
-            })
+            this.props.setLogin()
         })
     }
 }
+export default connect<ConnectProps,ConnectAction>(mapStateToProps, mapDispatchToProps)(Navigation)

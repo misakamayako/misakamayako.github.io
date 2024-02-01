@@ -3,6 +3,7 @@ version: "1"
 services:
   next-app:
     container_name: next-app
+    image: misakanetworks-frontend:${HOST_TYPE?-latest}}
     build:
       context: .
       dockerfile: /docker/prod.Dockerfile

@@ -1,4 +1,4 @@
-import {combineReducers, configureStore, Reducer} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import userReducer from "./userState";
 
 const reducer = combineReducers({

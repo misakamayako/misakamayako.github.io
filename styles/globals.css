@@ -13,3 +13,6 @@ img, svg, video, canvas, audio, iframe, embed, object{
 :root {
     color-scheme: dark;
 }
+article{
+    max-width:unset!important;
+}

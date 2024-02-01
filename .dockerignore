@@ -1,0 +1,5 @@
+/.gitignore
+/node_modules/
+/.next/
+/.idea/
+/README.md

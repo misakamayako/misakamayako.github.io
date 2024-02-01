@@ -108,10 +108,9 @@ export default class BlogIndex extends React.Component<{ category?: string }, Pa
     componentDidUpdate(prevProps: Readonly<{ category?: string }>) {
         if (this.props.category !== prevProps.category) {
             this.setState({
-                category: this.props?.category ?? ""
-            }, () => {
-                this.pullData()
+                category: this.props.category ?? ""
             })
+            this.pullData()
         }
     }
 }

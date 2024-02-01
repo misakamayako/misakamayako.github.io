@@ -42,7 +42,7 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
         if (Component.auth && !loginState) {
             router.push("/401")
         }
-    }, [Component, loginState])
+    }, [Component, loginState,router])
     return (
         <NextUIProvider theme={darkTheme}>
             <Head>

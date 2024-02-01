@@ -26,7 +26,7 @@ export default class AlbumIndex extends React.Component<null, State> {
     }
 
     static contextType = AlbumAndImageListLayout.categoryProvider;
-    context!: React.ContextType<typeof AlbumIndex.contextType>
+    declare context: React.ContextType<typeof AlbumIndex.contextType>
 
     render() {
         return (

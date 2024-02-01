@@ -8,8 +8,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'misaka-networks-open-source.oss-cn-shanghai.aliyuncs.com',
       },
-    ],
+    ]
   },
+  output: 'standalone',
 }
 
 module.exports = nextConfig

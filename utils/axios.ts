@@ -4,23 +4,33 @@ import AlertService from "./AlertService";
 import * as https from "https";
 
 const axiosInstance = axios.create({
-    baseURL: (typeof window === "undefined" ? "https://127.0.0.1/" : "/") + "lastOrder",
+    baseURL: getHost(),
     httpsAgent: new https.Agent({
         rejectUnauthorized: false
     })
 })
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-// axiosInstance.interceptors.request.use(value => {
-//     logger.info(value.method?.toUpperCase(), value.url, value.params || value.data)
-//     return value
-// })
+
+function getHost():string {
+    console.log(`host:${process.env.USE_HOST}`)
+    if (typeof window !== "undefined") {
+        return "/lastOrder"
+    } else if (process.env.USE_HOST) {
+        return "http://host.docker.internal:8080/"
+    } else {
+        return "https://localhost/lastOrder"
+    }
+}
+
 axiosInstance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
+    if (error.response && error.response.statusCode === 404 && typeof window === "undefined") {
+        return Promise.resolve(error.response)
+    }
     if (error.config.headers?.noEmit) {
         return Promise.reject(error);
     }
-    if(error.response){
+    if (error.response) {
         const response: Response<unknown> = error.response.data;
         AlertService.error(response.message ?? '网络请求失败')
     } else {

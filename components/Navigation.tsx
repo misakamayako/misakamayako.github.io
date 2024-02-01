@@ -42,7 +42,6 @@ class Navigation extends React.Component<ConnectProps & ConnectAction, State> {
         loading: false,
         showLogin: false,
     }
-    static test = 1234
 
     render() {
         return (
@@ -92,6 +91,8 @@ class Navigation extends React.Component<ConnectProps & ConnectAction, State> {
                     <Link href="/blog" className={NavigationStyle.navLink}>blog</Link>
                     {this.props.login ?
                         <Link href="/blog/upload" className={'inline-block'}>blog upload</Link> : null}
+                    {this.props.login ?
+                        <Link href="/images/upload" className={'inline-block'}>img upload</Link> : null}
                     <Link href="/dream-map" className={'inline-block'}>dream map</Link>
                     <Link href="/album" className={NavigationStyle.navLink}>album</Link>
                     <Link href="/about-me" className={NavigationStyle.navLink}>about me</Link>
@@ -112,6 +113,7 @@ class Navigation extends React.Component<ConnectProps & ConnectAction, State> {
                 showLogin: false
             })
             AlertService.info('登录成功')
+            this.props.setLogin()
         }).finally(() => {
             this.setState({
                 loading: false

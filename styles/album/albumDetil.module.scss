@@ -1,0 +1,21 @@
+.albumDetailRoot {
+  @apply flex flex-col;
+  @apply w-screen h-screen overflow-hidden;
+  .albumDetailMain{
+    @apply flex flex-row flex-grow;
+    @apply w-screen overflow-hidden
+  }
+  .albumDetailDescription{
+    @apply w-72 h-full;
+  }
+  .albumDetailImgSet{
+    @apply grid grid-cols-6 md:grid-cols-4 gap-2;
+    @apply overflow-auto grow auto-rows-min;
+    .albumDetailImageEntry{
+      @apply cursor-pointer bg-blue-300 h-60;
+    }
+  }
+  .albumDetailPreview{
+    @apply w-72 h-full;
+  }
+}

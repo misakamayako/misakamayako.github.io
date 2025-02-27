@@ -1,0 +1,16 @@
+---
+import HomeLayout from "../layouts/home.astro";
+import HomeStyle from '../styles/Home.module.scss'
+
+const title="✨御坂网络✨"
+---
+<HomeLayout pageTitle={title}>
+    <div class= {HomeStyle.home}>
+        <div class={HomeStyle.menu}>
+            <a href="/blog">blog</a>
+            <a href="/dream-map">dream map</a>
+            <a href="/album">album</a>
+            <a href="/about-me">about me</a>
+        </div>
+    </div>
+</HomeLayout>

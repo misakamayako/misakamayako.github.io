@@ -1,6 +1,6 @@
 import React from "react";
 import BlogLayout from "../../components/layout/BlogLayout";
-import {Button, Checkbox, Input, Loading, Textarea} from "@nextui-org/react";
+import {Button, Checkbox, Input, Loading, Textarea} from "@heroui/react";
 import {addCategory, getCategory} from "../../api/category";
 import AlertService from "../../utils/AlertService";
 import FileUploader from "../../components/FileUploader";

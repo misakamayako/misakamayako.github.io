@@ -1,5 +1,6 @@
+@reference "./global.css";
 .home {
-  background :url("../public/img/background.jpg") no-repeat;
+  background: url("/img/background.jpg") no-repeat;
   @apply bg-cover;
   @apply h-screen;
   @apply w-screen;

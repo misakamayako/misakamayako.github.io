@@ -15,7 +15,7 @@ import {getAllArticle, getArticle} from "../../api/article";
 import {GetStaticPropsContext, GetStaticPropsResult} from "next/types";
 import React, {useEffect, useState} from "react";
 import {ArticleDetailDTO} from "../../DTO/ArticleDTO";
-import {Badge} from "@nextui-org/react";
+import {Badge} from "@heroui/react";
 
 
 interface Props {
@@ -38,7 +38,7 @@ export default function Article({mdxSource,content}: Props) {
             <div className={"px-2 py-4"}>
                 {
                     content.categories?.map(category=>(
-                        <Badge color="secondary" className={"ml-2"} variant="bordered" key={category.id}>
+                        <Badge color="secondary" className={"ml-2"} variant="shadow" key={category.id}>
                             {category.category}
                         </Badge>
                     ))

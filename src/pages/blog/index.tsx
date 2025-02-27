@@ -1,7 +1,7 @@
 import React from "react";
 import {getArticleList} from "../../api/article";
 import BlogLayout from "../../components/layout/BlogLayout";
-import {Badge, Loading, Pagination} from "@nextui-org/react";
+import {Badge, Loading, Pagination} from "@heroui/react";
 import Link from "next/link";
 import {NextPageContext} from "next";
 import {ArticleDTO} from "../../DTO/ArticleDTO";

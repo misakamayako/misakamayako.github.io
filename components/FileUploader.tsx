@@ -1,6 +1,6 @@
 import React from "react";
 import {uploadFile} from "../api/file";
-import {Progress} from "@nextui-org/react";
+import {Progress} from "@heroui/react";
 
 interface Props {
     file: File

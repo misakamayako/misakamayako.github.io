@@ -1,6 +1,6 @@
 import React, {createRef} from "react";
-import type {FormElement} from "@nextui-org/react";
-import {Input, Loading} from "@nextui-org/react";
+import type {FormElement} from "@heroui/react";
+import {Input, Loading} from "@heroui/react";
 
 import autocompleteStyle from "./Autocomplete.module.scss";
 import Empty from "../Empty";

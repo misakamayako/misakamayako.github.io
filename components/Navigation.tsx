@@ -4,7 +4,7 @@ import NavigationStyle from "../styles/Navigation.module.scss"
 import avatar from "../public/img/avatar.jpg"
 import loginLogo from "../public/img/login-logo.png"
 import Link from "next/link";
-import {Button, Input, Loading, Modal} from "@nextui-org/react";
+import {Button, Input, Loading, Modal} from "@heroui/react";
 import Image from "next/image";
 import {getUserInfo, login} from "../api/userInfo";
 import AlertService from "../utils/AlertService";

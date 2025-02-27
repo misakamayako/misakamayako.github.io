@@ -1,5 +1,5 @@
 import React from "react";
-import {Badge, Button, Checkbox, Input, Loading} from "@nextui-org/react";
+import {Badge, Button, Checkbox, Input, Loading} from "@heroui/react";
 
 import {CategoryType} from "../../DTO/Category";
 import Form from "../../components/Form/Form";

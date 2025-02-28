@@ -14,7 +14,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
@@ -25,8 +25,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "node_modules/@jetbrains/ring-ui/dist/**/*.js",
-    "**.mts"
+    "**.mts",
+    "astro.config.mts"
   ],
   "exclude": [
     "node_modules"

@@ -1,0 +1,38 @@
+@reference "./global.css";
+
+.menu {
+  @apply h-16;
+  @apply pr-16;
+  @apply border-b-zinc-50;
+  @apply border-b-2;
+  @apply text-right;
+  a{
+    @apply inline-block;
+    @apply px-2;
+    @apply py-2;
+    @apply text-xl;
+    @apply text-zinc-50;
+    @apply mt-2.5;
+    @apply hover:text-sky-500 hover:-translate-y-0.5;
+    @apply transition-transform transition-colors;
+    /*transition: color 0.4s ease;*/
+  }
+}
+
+.navLink {
+  @apply inline-block;
+  @apply px-2;
+  @apply py-2;
+  @apply text-xl;
+  @apply text-zinc-50;
+  @apply mt-2.5;
+  @apply hover:text-sky-500;
+  transition: color 0.4s ease;
+}
+
+.avatar {
+  @apply overflow-hidden;
+  @apply inline-block;
+  @apply rounded;
+  @apply float-right;
+}

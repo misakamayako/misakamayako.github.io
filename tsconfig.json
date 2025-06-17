@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "jsxImportSource": "react"
+    "allowImportingTsExtensions": true
   },
   "include": [
     "next-env.d.ts",

@@ -1,0 +1,35 @@
+@reference "./global.css";
+.root{
+    @apply bg-slate-800 h-screen flex flex-col overflow-hidden;
+    .main{
+        @apply w-full h-1 grow flex flex-row;
+    }
+    .aside{
+        @apply w-72 h-full border-r border-r-amber-100 text-white;
+        @apply flex flex-col overflow-hidden;
+    }
+    .nav{
+        @apply text-lg font-semibold mb-4 mt-2 pl-6 flex items-center;
+    }
+    .list{
+        @apply h-1 grow overflow-auto px-4 py-2;
+    }
+    .tag{
+        @apply flex items-center justify-between py-2 px-3 mb-1.5;
+        @apply gap-1 cursor-pointer transition-transform rounded-md;
+        &:hover {
+            @apply bg-slate-900/70 shadow-sm shadow-cyan-300/30;
+            @apply -translate-y-0.5;
+        }
+        &.active {
+            @apply bg-slate-900/70 border-l-sky-300 border-l-3;
+        }
+        .link{
+            @apply w-1 grow overflow-hidden overflow-ellipsis;
+        }
+        .count{
+            @apply text-xs bg-sky-400/20 text-sky-400 text-center py-0.5 rounded-full;
+            @apply min-w-8 shrink-0;
+        }
+    }
+}

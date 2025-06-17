@@ -1,1 +1,14 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 245, 255, 0.5);
+    border-radius: 3px;
+}

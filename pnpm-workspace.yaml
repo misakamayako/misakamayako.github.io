@@ -1,0 +1,18 @@
+ignoredBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - matewind
+onlyBuiltDependencies:
+  - sharp
+overrides:
+  esbuild@<=0.24.2: '>=0.25.0'
+  prismjs@<1.30.0: '>=1.30.0'
+  vite@>=6.2.0 <6.2.3: '>=6.2.3'
+  vite@>=6.2.0 <6.2.4: '>=6.2.4'
+  vite@>=6.2.0 <6.2.6: '>=6.2.6'
+  '@babel/helpers@<7.26.10': '>=7.26.10'
+  vite@>=6.2.0 <=6.2.6: '>=6.2.7'
+  vite@>=6.2.0 <6.2.5: '>=6.2.5'
+  file-type@>=17.0.0 <17.1.3: '>=17.1.3'
+  sharp@<0.30.5: '>=0.30.5'
+  sharp@<0.32.6: '>=0.32.6'
+  phin@<3.7.1: '>=3.7.1'

@@ -1,0 +1,46 @@
+---
+import BaseLayout from "./home.astro";
+import Navigation from "../components/Navigation.astro";
+import {getCollection} from "astro:content";
+
+const allPosts = await getCollection('blog');
+const hashMap = new Map<string,number>()
+allPosts.forEach(it=>{
+    (it.data.tags as string[])?.forEach(tag=>{
+        hashMap.set(tag,(hashMap.get(tag)??0)+1)
+    })
+})
+const tags = Array.from(hashMap.entries())
+tags.sort((a, b) => b[1] - a[1])
+import localStyle from "../styles/tagsAndBlogs.module.css"
+const {active} = Astro.props
+
+---
+<BaseLayout pageTitle={"✨御坂网络✨"}>
+    <div class={localStyle.root}>
+        <Navigation/>
+        <main class={localStyle.main}>
+            <aside class={localStyle.aside}>
+                <nav class={localStyle.nav}>
+                    <span>标签分类</span>
+                </nav>
+                <ol class={localStyle.list}>
+                    {
+                        tags.map(([name,count])=>(
+                                <li class:list={[localStyle.tag,active===name?localStyle.active:null]}>
+                                    <a href={`/blog/tag/${name}`} class={localStyle.link}  data-astro-prefetch>
+                                        <span>{name}</span>
+                                    </a>
+                                    <span class={localStyle.count}>{count}</span>
+                                </li>
+                        ))
+                    }
+                </ol>
+            </aside>
+            <div class="bg-slate-900 w-full overflow-auto px-2 py-3 grid grid-cols-2 auto-rows-min gap-6"  data-transition>
+                <slot />
+            </div>
+        </main>
+    </div>
+</BaseLayout>
+

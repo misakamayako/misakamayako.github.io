@@ -1,0 +1,128 @@
+---
+import Home from "../layouts/home.astro"
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import localStyle from "../styles/aboutMe.module.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faGithub} from "@fortawesome/free-brands-svg-icons";
+---
+<Home pageTitle="✨御坂网络-关于我✨">
+    <Navigation/>
+    <main class={localStyle.main}>
+        <div class="container mx-auto px-6">
+            <!-- 个人简介区域 -->
+            <section id="about" class="mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
+                    <div class="md:col-span-2 flex justify-center">
+                        <div class={localStyle.hexagon}>
+                            <img src="/avatar.jpg"
+                                 alt="个人照片"
+                                 class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    <div class="md:col-span-3">
+                        <h1 class="text-4xl md:text-5xl font-fira mb-4 neon-text">Mayako</h1>
+                        <h2 class="text-2xl md:text-3xl font-fira text-secondary mb-6">全栈开发工程师</h2>
+                        <p class="text-lg mb-8 leading-relaxed break-all whitespace-pre-line" lang="latin">
+                            Mayako Componere‑nata de Domus Misaka,
+                            Primus Eorum Nomine,
+                            Reacta‑tactus,
+                            Algorithmi‑peritus,
+                            Dominus Domini DOM et Circuli UI Composabilium,
+                            Custos ViewModelorum et Fangorum,
+                            Fractus Insectus CSS,
+                            Creator Functionum @Composable et React Componentium.
+                        </p>
+                        <div class="flex space-x-6">
+                            <a href="https://github.com/misakamayako/" class="social-icon text-2xl text-light hover:text-secondary" target="_blank">
+                                <FontAwesomeIcon icon={faGithub} className="w-4" /> 
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="projects" class="mb-20">
+                <h2 class="text-3xl font-fira mb-12 text-center neon-text">精选项目</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="project-card glass-card rounded-xl p-6">
+                        <div class="h-45 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://ai-public.mastergo.com/ai/img_res/1fed8e960dce17659bbd77e16211b986.jpg"
+                                 alt="项目预览"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-fira mb-2">matewind</h3>
+                        <p class="text-gray-400 mb-4">基于tailwind css制作的material风格的ui组件库</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <span class="text-xs tech-tag px-2 py-1 rounded">tailwind css</span>
+                                <span class="text-xs tech-tag px-2 py-1 rounded">React</span>
+                            </div>
+                            <a href="https://github.com/misakamayako/matewind"
+                               target="_blank"
+                               rel="noreferrer"
+                               class="text-secondary hover:underline flex items-center">
+                                <i class="fab fa-github mr-1"></i> 查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-card glass-card rounded-xl p-6">
+                        <div class="h-45 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://ai-public.mastergo.com/ai/img_res/0ee2c752a9f5db321c72183a9dd68d3c.jpg"
+                                 alt="项目预览"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-fira mb-2">misakanetworks-fronted-react</h3>
+                        <p class="text-gray-400 mb-4">基于Astro的个人博客</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <span class="text-xs tech-tag px-2 py-1 rounded">Astro</span>
+                                <span class="text-xs tech-tag px-2 py-1 rounded">React</span>
+                            </div>
+                            <a href="https://github.com/misakamayako/misakanetworks-fronted-react" class="text-secondary hover:underline flex items-center">
+                                <FontAwesomeIcon icon={faGithub} className="w-4" /> 查看代码
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-card glass-card rounded-xl p-6">
+                        <div class="h-45 mb-4 overflow-hidden rounded-lg">
+                            <img src="https://ai-public.mastergo.com/ai/img_res/900dbcb1440e894221a5b1869a09d8d3.jpg"
+                                 alt="项目预览"
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-fira mb-2">PowerTrack</h3>
+                        <p class="text-gray-400 mb-4">本地化记录健身数据的App</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-2">
+                                <span class="text-xs tech-tag px-2 py-1 rounded">Kotlin</span>
+                                <span class="text-xs tech-tag px-2 py-1 rounded">Jetpack Compose</span>
+                            </div>
+                            <a href="https://github.com/misakamayako/PowerTrack" class="text-secondary hover:underline flex items-center">
+                                <FontAwesomeIcon icon={faGithub} className="w-4" /> 查看代码
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 联系方式 -->
+            <section id="contact" class="glass-card rounded-xl p-12">
+                <h2 class="text-3xl font-fira mb-8 text-center neon-text">联系我</h2>
+                <div class="flex flex-col items-center">
+                    <div class="text-xl mb-8">
+                        <a href="mailto:misakamayaco@qq.com" class="text-secondary hover:underline">misakamayaco@qq.com</a>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <span class="tech-tag px-3 py-1 rounded-full">JavaScript</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">TypeScript</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">React</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">Node.js</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">Kotlin</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">Jetpack Compose</span>
+                        <span class="tech-tag px-3 py-1 rounded-full">Spring Boot</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <Footer/>
+</Home>

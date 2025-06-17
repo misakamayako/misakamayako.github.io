@@ -7,7 +7,7 @@
   <component name="PWA">
     <option name="wasEnabledAtLeastOnce" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="zulu-11 (2)" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" project-jdk-name="Kotlin SDK" project-jdk-type="KotlinSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

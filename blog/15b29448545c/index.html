@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="generator" content="Astro v5.9.1"><title>✨御坂网络-Web Worker 类型概览✨</title><link rel="stylesheet" href="/_astro/index.jpoqI2TY.css">
+<style>/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88047 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% -.0000298023 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s));transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D5CD64Zi.css"><script type="module" src="/_astro/page.V2R8AmkL.js"></script></head> <body class="w-full h-full flex flex-col">  <div class="bg-slate-800 h-screen flex flex-col"> <div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/blog" class="q0UmqG_navLink">blog</a> <a href="/dream-map" class="inline-block">dream map</a> <a href="/album" class="q0UmqG_navLink">album</a> <a href="/about-me" class="q0UmqG_navLink">about me</a> </nav> </div> <div class="flex p-4 grow flex-row h-full overflow-hidden"> <aside class="w-1/4 ml-4 md:block min-w-[200px]"> <div class="sticky top-4 space-y-6"> <div class="bg-slate-700 p-4 rounded-lg"> <img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"> <p class="text-white text-center mt-2">作者：misakamayako</p>  <p class="text-white text-center mt-2">发布时间：2025/05/15</p> </div> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">简介</h3> <p class="text-white font-light mb-2">本文系统梳理了 Web 平台三种主要 Worker 类型——DedicatedWorker、SharedWorker 和 ServiceWorker，详细解析它们的通信机制、作用域、生命周期、浏览器支持及典型应用场景，帮助开发者选择合适的 Worker 类型提升性能与用户体验。</p> </div> <!-- 2. 文章目录 --> <!--<div class="bg-slate-700 p-4 rounded-lg">--> <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>--> <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;--> <!--</div>--> <!-- 3. 热门标签 --> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">随便看看</h3> <div class="flex flex-wrap gap-2"> <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> Sass 与 Less：哪种 CSS 预处理器更适合你？ </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> Java VarHandle 与 Reflection 的对比及性能测试 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> 如何优雅地处理用户取消文件上传的操作 </a> </div> </div> </div> </aside> <main class="grow h-full overflow-auto w-3/4 px-8"> <article class="text-white mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-white prose-strong:text-white prose-code:text-white
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100">  <header> <h1>Web Worker 类型概览</h1> </header> <p>Web 平台提供三种主要的 Worker 类型：<strong>DedicatedWorker</strong>、<strong>SharedWorker</strong> 和 <strong>ServiceWorker</strong>。</p>
+<ul>
+<li><strong>Dedicated Worker</strong> 由单个页面创建，仅供该页面使用，可以执行与主线程并发运行的任务。</li>
+<li><strong>Shared Worker</strong> 则可以被同源的多个页面或 iframe 共享访问；它在所有连接它的上下文间使用同一个Worker实例，通过 <code>MessagePort</code> 和 <code>onconnect</code> 事件进行通信。</li>
+<li><strong>Service Worker</strong> 是一种后台独立线程，专门用于网络请求拦截、离线缓存、后台同步、推送等功能；它注册到指定作用域下，可拦截该作用域内页面的网络请求，为 PWA 提供离线支持。</li>
+<li>三者均不能直接操作 DOM，运行在独立的全局上下文（专用、共享或服务的 GlobalScope），只能通过消息传递或事件与页面交互。</li>
+</ul>
+<h2 id="通信机制与作用域">通信机制与作用域</h2>
+<ul>
+<li>
+<p><strong>Dedicated Worker：</strong> 通过 <code>new Worker(url)</code> 创建后，主线程与 Worker 通过 <code>postMessage</code>/<code>onmessage</code> 双向通信。该 Worker 独立于任何其他页面，<strong>仅限创建它的脚本上下文通信</strong>。作用域为创建它的页面自身；其他页面无法直接访问或通信。</p>
+</li>
+<li>
+<p><strong>Shared Worker：</strong> 通过 <code>new SharedWorker(url)</code> 创建后，Worker 端使用 <code>onconnect</code> 事件捕获连接。每个连接会得到一个 <code>MessagePort</code>，页面通过 <code>port.start()</code> 开启通信，然后用 <code>port.postMessage()</code>/<code>port.onmessage</code> 与 Worker 交互。同源的不同页面/窗口/iframe 只要使用相同的脚本 URL，就能 <strong>共享同一个 Worker 实例</strong>。</p>
+</li>
+<li>
+<p><strong>Service Worker：</strong> 通过 <code>navigator.serviceWorker.register()</code> 注册，在指定的作用域（默认是其所在目录及子路径）范围内生效。受控页面可以通过 <code>navigator.serviceWorker.controller</code> 或者在注册时获取<code>serviceWorker</code>实例并使用<code>sw.postMessage()</code>/<code>sw.addEventListener</code>与 sw 交换消息。Service Worker 还是一个特殊的 Worker，有特殊的全局事件包括 <code>install</code>、<code>activate</code>、<code>fetch</code>、<code>push</code> 等，可以拦截受控范围内页面的网络请求并返回自定义响应，从而实现离线缓存、消息推送等功能。</p>
+</li>
+</ul>
+<p>下表对比了三种 Worker 在通信和作用域方面的差异：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>特性</th><th>DedicatedWorker</th><th>SharedWorker</th><th>ServiceWorker</th></tr></thead><tbody><tr><td><strong>通信机制</strong></td><td>单页面与 DedicatedWorker 间通过 <code>postMessage()</code> 和 <code>onmessage</code> 进行双向通信</td><td>多页面间通过 <code>MessagePort</code> 和 <code>onconnect</code> 共享同一个实例：每个页面连接到同一个 SharedWorker 实例，通过 <code>port.postMessage()</code> 发送消息</td><td>受控页面与 Service Worker 通过 <code>postMessage</code>/<code>onmessage</code> 交换消息。同时，Service Worker 可侦听 <code>fetch</code>、<code>push</code> 等事件，拦截并处理网络请求</td></tr><tr><td><strong>作用域</strong></td><td><strong>单一创建者</strong>：仅限创建它的页面/脚本使用，其他页面无法访问</td><td><strong>同源共享</strong>：同一源（协议、主机、端口）下的多个页面/iframe/Workers 可共享同一实例</td><td><strong>注册作用域</strong>：注册时可指定 scope，Service Worker 可控制该作用域内所有页面（同一源下的指定路径范围）。</td></tr></tbody></table>
+<h2 id="生命周期与内存共享">生命周期与内存共享</h2>
+<ul>
+<li>
+<p><strong>Dedicated Worker 生命周期：</strong> Dedicated Worker 一旦被创建，就与创建它的页面生命周期绑定。通常，当页面关闭或调用 <code>worker.terminate()</code> 时，该 Worker 就会终止。每个 Dedicated Worker 拥有独立的全局内存空间，<strong>不同实例之间不共享数据</strong>（除非使用 <code>SharedArrayBuffer</code> 等特定机制）。全局变量和缓存只在该线程内可见，页面卸载后即全部清理。</p>
+</li>
+<li>
+<p><strong>Shared Worker 生命周期：</strong> Shared Worker 的生命周期更长。首次创建时启动一个线程实例，只要有任何页面保持对它的引用，它就保持存活。当所有连接该 SharedWorker 的页面都关闭或断开引用后（其“owner”集合为空），Shared Worker 会被垃圾回收结束。由于所有页面共用同一个实例，全局变量在各连接间共享：比如某个页面向 Worker 加载的数据，其它页面也能通过消息获取到。因此 Shared Worker 适合保存可跨页面复用的状态或资源。但也要注意内存管理，如果加载大数据结构，他会对所有连接的页面可见。</p>
+</li>
+<li>
+<p><strong>Service Worker 生命周期：</strong> Service Worker 的生命周期与注册/激活流程相关：先触发 <code>install</code> 事件，在安装完成后触发 <code>activate</code> 事件。激活后，Service Worker 就可以控制对应作用域内的页面。当没有事件处理任务时，浏览器可能在后台停用或销毁 Service Worker 实例；下次有控制范围内页面请求或事件时，Service Worker 会重新启动。Service Worker 拥有自己的全局作用域（<code>ServiceWorkerGlobalScope</code>），多个受控页面共享同一个全局上下文，同样可使用全局变量或 IndexedDB/Cache 存储数据，但这些数据对所有页面可见。由于 Service Worker 可能随时被回收，状态应尽量保存在外部存储（如 Cache、IndexedDB）而非仅依赖内存。</p>
+</li>
+</ul>
+<h2 id="浏览器支持情况">浏览器支持情况</h2>
+<p>不同浏览器对三种 Worker 的支持度存在差异：</p>
+<ul>
+<li>
+<p><strong>Dedicated Worker：</strong> 几乎所有现代浏览器都支持。Chrome、Firefox、Safari、Edge 及移动浏览器均能使用 Dedicated Worker（IE 10+ 支持）。</p>
+</li>
+<li>
+<p><strong>Shared Worker：</strong> 桌面浏览器支持不一：Chrome、Firefox、Opera、新版 Edge 等均支持 Shared Worker（Chrome 从早期版本就支持；Firefox 29+ 支持）。但 Safari 历经停滞：Safari 5-6 支持 Shared Worker，而 Safari 6.1-15.6 不支持（从 Safari 16 开始又恢复支持）；iOS Safari 类似，5-6 支持，7-15 不支持，16+ 恢复支持。Android 平台则普遍不支持 Shared Worker（Chrome Android 尚不支持）。IE 系列不支持 SharedWorker。总体来看，目前全球大约半数用户浏览器环境支持 SharedWorker（Can I Use 统计约 45%）。</p>
+</li>
+<li>
+<p><strong>Service Worker：</strong> 支持度非常高。现代 Chrome/Firefox/Edge 在较新版本即支持（Chrome 45+、Firefox 44+、Edge 17+）。Safari 从 11.1 (iOS 11.3) 开始支持 Service Worker。移动端绝大多数浏览器（Android Chrome、Samsung Internet 等）支持 Service Worker，但 IE、Opera Mini 等不支持。总体覆盖率约 95%以上。</p>
+</li>
+<li>
+<p><strong>总结：</strong> <strong>DedicatedWorker</strong> 和 <strong>ServiceWorker</strong> 基本属于成熟标准，浏览器兼容性较好；<strong>SharedWorker</strong> 支持较差，应用前需注意目标用户的浏览器环境。</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>浏览器/平台</th><th>DedicatedWorker 支持</th><th>SharedWorker 支持</th><th>ServiceWorker 支持</th></tr></thead><tbody><tr><td>Chrome 桌面</td><td>✅ 支持 (4+)</td><td>✅ 支持 (4+)</td><td>✅ 支持 (45+)</td></tr><tr><td>Firefox 桌面</td><td>✅ 支持 (3.5+)</td><td>✅ 支持 (29+)</td><td>✅ 支持 (44+)</td></tr><tr><td>Safari 桌面</td><td>✅ 支持 (4+)</td><td>✅ 支持 (5-6, 16+；6.1-15 ❌)</td><td>✅ 支持 (11.1+)</td></tr><tr><td>iOS Safari</td><td>✅ 支持 (5+)</td><td>✅ 支持 (5-6, 16+；7-15 ❌)</td><td>✅ 支持 (11.3+)</td></tr><tr><td>Android Chrome</td><td>✅ 支持</td><td>❌ 不支持</td><td>✅ 支持 (45+)</td></tr><tr><td>Edge</td><td>✅ 支持 (12+)</td><td>✅ 支持 (79+)</td><td>✅ 支持 (17+)</td></tr><tr><td>IE</td><td>✅ 支持 (10+)</td><td>❌ 不支持</td><td>❌ 不支持</td></tr></tbody></table>
+<h2 id="典型使用场景与案例">典型使用场景与案例</h2>
+<ul>
+<li>
+<p><strong>单页高负载计算（DedicatedWorker）：</strong> 适用于将 CPU 密集型任务从主线程卸载的场景，如图像处理、加密运算、复杂数据计算、受控制的文件下载或 WebAssembly 计算等。Dedicated Worker 只被创建它的脚本使用，每个线程独占资源，适合一个页面需要并发处理多个任务时使用多个 Dedicated Worker。</p>
+</li>
+<li>
+<p><strong>跨标签页通信与数据共享（SharedWorker）：</strong> 当需要同源的多个页面/标签之间共享数据或通信时，可使用 SharedWorker。典型案例如在线协同编辑、多窗口实时聊天、统一通知等。举例：如果用户在后台打开了多个标签页，想用一个 WebSocket 连接来接收服务器推送的数据，就可以让所有标签页连接同一个 SharedWorker，由其维持一个后台轮询或 WebSocket 任务，然后将消息广播到各标签页。MDN 示例中就演示了两个页面通过同一个 SharedWorker 并发执行计算。另一个真实案例是后台事件轮询：在一个管理后台中，登录用户可能开了多个页面标签，每个页面都不必独立轮询服务器，而只需由一个 SharedWorker 统一进行轮询并发送通知。SharedWorker 会在有页面打开时保持活跃，所有页面只会收到一次事件通知，不会重复请求。</p>
+</li>
+<li>
+<p><strong>离线缓存和后台服务（ServiceWorker）：</strong> Service Worker 专门用于提升应用可靠性和性能，如资源预缓存、离线访问、后台同步（Background Sync）、推送通知等。典型场景是 Progressive Web App：ServiceWorker 在安装阶段缓存网页资源，当网络不可用时仍能返回缓存内容；还可以拦截所有网络请求，实现智能缓存策略和离线页面。同时，ServiceWorker 能在无任何页面打开时响应推送消息，或在后台进行定期同步。</p>
+</li>
+</ul>
+<h2 id="性能与安全性差异">性能与安全性差异</h2>
+<ul>
+<li>
+<p><strong>性能：</strong> DedicatedWorker 每创建一个线程实例都要占用额外内存和 CPU，适合并行处理任务，但如果多个页面都创建多个线程，可能资源消耗较高。SharedWorker 则只创建单个线程实例供所有页面复用，节省了多实例的内存开销，但多个页面发送给 SharedWorker 的消息会排队处理（仅有一个线程执行），并发度不如多个 DedicatedWorker。ServiceWorker 因为主要处理网络 I/O 和事件驱动任务，不适合长期执行重计算任务；其启动也需经过安装/激活流程，性能主要体现在缓存命中和快速响应网络请求上。</p>
+</li>
+<li>
+<p><strong>安全性：</strong> Service Worker 要求在 HTTPS（或 localhost）环境下注册运行，以确保安全；而 Dedicated/Shared Worker 在任意同源环境中均可使用，无额外安全限制。此外，Service Worker 拥有拦截和修改网络请求的权限（可访问响应缓存、修改请求头等），权限比普通 Worker 高，因此标准要求其必须在安全上下文运行。SharedWorker 要求所有使用的页面同源，而 DedicatedWorker 也只能由同源脚本创建；因此，无论哪种 Worker，脚本和 Worker 文件都必须遵循同源策略。所有 Worker 都在隔离的线程环境中运行，无法直接操作 DOM，只能通过消息交换共享数据，从而避免了直接跨线程访问页面元素带来的安全风险。ServiceWorker 和 SharedWorker 都可以使用 IndexedDB、Cache 等存储，而这些存储也遵循同源规则，不同 Worker 之间需通过这些 API 或消息显式共享数据。</p>
+</li>
+</ul>
+<p><strong>总结：</strong> SharedWorker 的优势在于<strong>跨页面共享单个后台线程</strong>，适合需要同步状态或复用连接的应用场景；而 DedicatedWorker 更适用于单页面的并行计算；ServiceWorker 则专注于网络层面（离线、缓存、推送）优化。选择何种 Worker 类型，应根据具体需求的并发模型、作用域以及兼容性来决定。</p>  </article> <div class="tags"> <div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/Web Worker">Web Worker</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/DedicatedWorker">DedicatedWorker</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/SharedWorker">SharedWorker</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/ServiceWorker">ServiceWorker</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/多线程">多线程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/前端性能">前端性能</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/离线缓存">离线缓存</a> </div> </div> </main> </div> <div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div> </div>  </body></html>

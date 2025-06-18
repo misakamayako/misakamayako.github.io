@@ -1,0 +1,10 @@
+@reference "./global.css";
+.hexagon {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    @apply w-75 h-75 bg-gray-800 overflow-hidden relative;
+}
+
+.main {
+    @apply flex-grow py-20 w-full bg-slate-800;
+    @apply text-white overflow-auto h-1 grow;
+}

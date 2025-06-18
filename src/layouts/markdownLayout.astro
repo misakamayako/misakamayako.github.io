@@ -1,0 +1,104 @@
+---
+import BaseLayout from "./home.astro";
+import Footer from "../components/Footer.astro"
+import Navigation from "../components/Navigation.astro"
+import "matewind/matewind.css"
+import {Tag} from "matewind"
+const {frontmatter} = Astro.props;
+import {getCollection} from 'astro:content';
+
+const allPosts = await getCollection('blog');
+
+function reservoirSample<T>(items: T[], k: number): T[] {
+    const result: T[] = [];
+
+    for (let i = 0; i < items.length; i++) {
+        if (i < k) {
+            result.push(items[i]);
+        } else {
+            const j = Math.floor(Math.random() * (i + 1));
+            if (j < k) {
+                result[j] = items[i];
+            }
+        }
+    }
+
+    return result;
+}
+
+const randomPosts = reservoirSample(allPosts, 3);
+---
+<BaseLayout pageTitle={"✨御坂网络-" + frontmatter.title + "✨"}>
+    <div class="bg-slate-800 h-screen flex flex-col">
+        <Navigation/>
+        <div class="flex p-4 grow flex-row h-full overflow-hidden">
+            <aside class="w-1/4 ml-4 md:block min-w-[200px]">
+                <div class="sticky top-4 space-y-6">
+                    <div class="bg-slate-700 p-4 rounded-lg">
+                        <img src={frontmatter.avatar ?? '/avatar.jpg'} class="w-16 h-16 rounded-full mx-auto"/>
+                        <p class="text-white text-center mt-2">作者：{frontmatter.auth}</p>
+                        {frontmatter.translated ?
+                                <>
+                                    <p class="text-white text-center mt-2">翻译：{frontmatter.translator}</p>
+                                    <p class="text-white text-center mt-2">原文地址：
+                                        <a target="_blank"
+                                           class="text-violet-200"
+                                           href={frontmatter.original_link}>{new URL(frontmatter.original_link).host}</a>
+                                    </p>
+                                    <p class="text-white text-center mt-2 text-sm">
+                                        本文为翻译文章，原文作者及来源如上所示。</p>
+                                    <p class="text-white text-center mt-2 text-sm">
+                                        翻译仅作学习与参考用途，若有侵权请联系删除。</p>
+                                </>
+                            : null
+                        }
+                        <p class="text-white text-center mt-2">发布时间：{frontmatter.pubDate}</p>
+                    </div>
+                    <div class="bg-slate-700 p-4 rounded-lg">
+                        <h3 class="text-emerald-400 mb-2">简介</h3>
+                        <p class="text-white font-light mb-2">{frontmatter.description}</p>
+                    </div>
+
+                    <!-- 2. 文章目录 -->
+                    <!--<div class="bg-slate-700 p-4 rounded-lg">-->
+                    <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>-->
+                    <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;-->
+                    <!--</div>-->
+
+                    <!-- 3. 热门标签 -->
+                    <div class="bg-slate-700 p-4 rounded-lg">
+                        <h3 class="text-emerald-400 mb-2">随便看看</h3>
+                        <div class="flex flex-wrap gap-2">
+                            {
+                                randomPosts.map(it => (
+                                        <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition"
+                                           href={`/blog/${it.slug}/`}>
+                                            {it.data.title}
+                                        </a>
+                                ))
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <main class="grow h-full overflow-auto w-3/4 px-8">
+                <article class="text-white mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-white prose-strong:text-white prose-code:text-white
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100">
+                    <slot/>
+                </article>
+                <div class="tags">
+                    {
+                        frontmatter.tags?.map((tag: string) => (
+                                <Tag>
+                                    <a href={`/blog/tag/${tag}`}>{tag}</a>
+                                </Tag>
+                        ))
+                    }
+                </div>
+            </main>
+        </div>
+        <Footer/>
+    </div>
+</BaseLayout>

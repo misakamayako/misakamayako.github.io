@@ -22,6 +22,10 @@ jobs:
           pnpm i --frozen-lockfile
           pnpm run build
 
+      - name: create nojekyll
+        run: echo > dist/.nojekyll
+
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:

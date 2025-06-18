@@ -1,14 +1,15 @@
 ---
 import NavigationStyle from "../styles/Navigation.module.css";
+const baseURL = import.meta.env.BASE_URL
 ---
 <div class="bg-slate-700 w-full">
     <div class={NavigationStyle.avatar}>
-        <img src="/favicon.jpg" width={64} height={64} alt="" />
+        <img src={`${baseURL}favicon.jpg`} width={64} height={64} alt=""/>
     </div>
     <nav class={NavigationStyle.menu}>
-        <a href="/blog" class={NavigationStyle.navLink}>blog</a>
-        <a href="/dream-map" class={'inline-block'}>dream map</a>
-        <a href="/album" class={NavigationStyle.navLink}>album</a>
-        <a href="/about-me" class={NavigationStyle.navLink}>about me</a>
+        <a href={`${baseURL}blog/`} class={NavigationStyle.navLink}>blog</a>
+        <a href={`${baseURL}dream-map/`} class={'inline-block'}>dream map</a>
+        <a href={`${baseURL}album/`} class={NavigationStyle.navLink}>album</a>
+        <a href={`${baseURL}about-me/`} class={NavigationStyle.navLink}>about me</a>
     </nav>
 </div>

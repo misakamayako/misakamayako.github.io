@@ -27,6 +27,7 @@ function reservoirSample<T>(items: T[], k: number): T[] {
 }
 
 const randomPosts = reservoirSample(allPosts, 3);
+const baseURL = import.meta.env.BASE_URL
 ---
 <BaseLayout pageTitle={"✨御坂网络-" + frontmatter.title + "✨"}>
     <div class="bg-slate-800 h-screen flex flex-col">
@@ -35,7 +36,7 @@ const randomPosts = reservoirSample(allPosts, 3);
             <aside class="w-1/4 ml-4 md:block min-w-[200px]">
                 <div class="sticky top-4 space-y-6">
                     <div class="bg-slate-700 p-4 rounded-lg">
-                        <img src={frontmatter.avatar ?? '/avatar.jpg'} class="w-16 h-16 rounded-full mx-auto"/>
+                        <img src={frontmatter.avatar ?? `${baseURL}avatar.jpg`} class="w-16 h-16 rounded-full mx-auto"/>
                         <p class="text-white text-center mt-2">作者：{frontmatter.auth}</p>
                         {frontmatter.translated ?
                                 <>
@@ -92,7 +93,7 @@ const randomPosts = reservoirSample(allPosts, 3);
                     {
                         frontmatter.tags?.map((tag: string) => (
                                 <Tag>
-                                    <a href={`/blog/tag/${tag}`}>{tag}</a>
+                                    <a href={`${baseURL}blog/tag/${tag}/`}>{tag}</a>
                                 </Tag>
                         ))
                     }

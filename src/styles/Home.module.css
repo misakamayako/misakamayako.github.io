@@ -1,6 +1,6 @@
 @reference "./global.css";
 .home {
-  background: url("/img/background.jpg") no-repeat;
+  background: url("/mayako.space/img/background.jpg") no-repeat;
   @apply bg-cover;
   @apply h-screen;
   @apply w-screen;

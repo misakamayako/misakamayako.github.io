@@ -14,7 +14,7 @@ const tags = Array.from(hashMap.entries())
 tags.sort((a, b) => b[1] - a[1])
 import localStyle from "../styles/tagsAndBlogs.module.css"
 const {active} = Astro.props
-
+const baseURL = import.meta.env.BASE_URL
 ---
 <BaseLayout pageTitle={"✨御坂网络✨"}>
     <div class={localStyle.root}>
@@ -28,7 +28,7 @@ const {active} = Astro.props
                     {
                         tags.map(([name,count])=>(
                                 <li class:list={[localStyle.tag,active===name?localStyle.active:null]}>
-                                    <a href={`/blog/tag/${name}`} class={localStyle.link}  data-astro-prefetch>
+                                    <a href={`${baseURL}blog/tag/${name}/`} class={localStyle.link}  data-astro-prefetch>
                                         <span>{name}</span>
                                     </a>
                                     <span class={localStyle.count}>{count}</span>

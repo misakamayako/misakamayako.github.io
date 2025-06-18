@@ -13,9 +13,10 @@ export default defineConfig({
             rehypeHeadingIds,
         ],
     },
-    site: "https://misakamayako.github.io/<repo-name>/",
+    site: "https://misakamayako.github.io/",
+    base:"/mayako.space",
     integrations: [
-        // sitemap(),
+        sitemap(),
         react()
     ],
 

@@ -14,7 +14,7 @@ export default defineConfig({
         ],
     },
     site: "https://misakamayako.github.io/",
-    base:"/mayako.space",
+    base:"/",
     trailingSlash:"always",
     integrations: [
         sitemap(),

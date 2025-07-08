@@ -33,8 +33,14 @@ import BaseLayout from "../../layouts/home.astro"
         }
 
         .container {
-            max-width: 1200px;
+            max-width: unset;
             margin: 0 auto;
+            height: 100%;
+            overflow: auto;
+            > *{
+                margin: 0 auto;
+                width: 1200px;
+            }
         }
 
         header {
@@ -360,7 +366,7 @@ import BaseLayout from "../../layouts/home.astro"
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" id="result">
                 <h2 class="card-title">📊 性能结果</h2>
 
                 <div class="results">
@@ -440,6 +446,7 @@ import BaseLayout from "../../layouts/home.astro"
                 gpuTotalTime = 0
                 cpuTotalTime = 0;
                 completedRuns = 0;
+                document.getElementById("result").scrollIntoView({behavior:"smooth"})
                 if (!navigator.gpu) {
                     outputEl.textContent = "当前浏览器不支持 WebGPU";
                     return;

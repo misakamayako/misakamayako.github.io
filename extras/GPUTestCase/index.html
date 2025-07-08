@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.11.0"><title>WebGPU vs CPU 性能对比</title><link rel="stylesheet" href="/_astro/index.CouIsyMu.css">
+<link rel="stylesheet" href="/_astro/GPUTestCase.Dj8xBPVj.css"><script type="module" src="/_astro/page.V2R8AmkL.js"></script></head> <body class="w-full h-full flex flex-col">   <div class="container" data-astro-cid-2e5ek5u4> <header data-astro-cid-2e5ek5u4> <h1 data-astro-cid-2e5ek5u4>WebGPU vs CPU 性能对比</h1> <p class="subtitle" data-astro-cid-2e5ek5u4>本演示使用 WebGPU 和 JavaScript 计算最近邻点，对比 GPU 和 CPU
+                在并行计算上的性能差异。调整点数并运行测试以查看结果。</p> </header> <main data-astro-cid-2e5ek5u4> <div class="card" data-astro-cid-2e5ek5u4> <h2 class="card-title" data-astro-cid-2e5ek5u4>⚙️ 测试控制</h2> <div class="controls" data-astro-cid-2e5ek5u4> <div class="control-group" data-astro-cid-2e5ek5u4> <label for="pointCount" data-astro-cid-2e5ek5u4>点的数量:</label> <input id="pointCount" value="500000" data-astro-cid-2e5ek5u4> </div> <div class="control-group" data-astro-cid-2e5ek5u4> <label for="runs" data-astro-cid-2e5ek5u4>测试次数:</label> <select id="runs" data-astro-cid-2e5ek5u4> <option value="1" style="color: black" data-astro-cid-2e5ek5u4>1 次</option> <option value="3" selected style="color: black" data-astro-cid-2e5ek5u4>3 次</option> <option value="5" style="color: black" data-astro-cid-2e5ek5u4>5 次</option> <option value="10" style="color: black" data-astro-cid-2e5ek5u4>10 次</option> </select> </div> <div class="control-group" data-astro-cid-2e5ek5u4> <label data-astro-cid-2e5ek5u4>&nbsp;</label> <button id="runTest" data-astro-cid-2e5ek5u4> <span data-astro-cid-2e5ek5u4>🚀 运行性能测试</span> </button> </div> </div> <div class="progress-container" data-astro-cid-2e5ek5u4> <div class="progress-bar" id="progressBar" data-astro-cid-2e5ek5u4></div> </div> </div> <div class="card" id="result" data-astro-cid-2e5ek5u4> <h2 class="card-title" data-astro-cid-2e5ek5u4>📊 性能结果</h2> <div class="results" data-astro-cid-2e5ek5u4> <div class="result-box gpu-total-box" data-astro-cid-2e5ek5u4> <div class="result-title" data-astro-cid-2e5ek5u4>GPU 总计</div> <div class="time-value gpu-transfer-time" id="gpuTotalTime" data-astro-cid-2e5ek5u4>0.00 ms</div> </div> <div class="result-box gpu-box" data-astro-cid-2e5ek5u4> <div class="result-title" data-astro-cid-2e5ek5u4>GPU 计算时间</div> <div class="time-value gpu-time" id="gpuTime" data-astro-cid-2e5ek5u4>0.00 ms</div> </div> <div class="result-box cpu-box" data-astro-cid-2e5ek5u4> <div class="result-title" data-astro-cid-2e5ek5u4>CPU 计算时间</div> <div class="time-value cpu-time" id="cpuTime" data-astro-cid-2e5ek5u4>0.00 ms</div> </div> </div> <div class="comparison" data-astro-cid-2e5ek5u4> <div class="result-title" data-astro-cid-2e5ek5u4>性能差异</div> <div class="comparison-value" id="difference" data-astro-cid-2e5ek5u4>0.00 ms</div> <div class="comparison-text" id="differenceText" data-astro-cid-2e5ek5u4>GPU 比 CPU 计算快 0.00%</div> </div> <div class="visualization" id="visualization" data-astro-cid-2e5ek5u4> <div class="bar gpu-total-bar" data-astro-cid-2e5ek5u4> <div class="bar-value" data-astro-cid-2e5ek5u4>0</div> <div class="bar-label" data-astro-cid-2e5ek5u4>GPU 总计</div> </div> <div class="bar gpu-bar" data-astro-cid-2e5ek5u4> <div class="bar-value" data-astro-cid-2e5ek5u4>0</div> <div class="bar-label" data-astro-cid-2e5ek5u4>GPU 计算</div> </div> <div class="bar cpu-bar" data-astro-cid-2e5ek5u4> <div class="bar-value" data-astro-cid-2e5ek5u4>0</div> <div class="bar-label" data-astro-cid-2e5ek5u4>CPU</div> </div> </div> </div> <div class="card" data-astro-cid-2e5ek5u4> <h2 class="card-title" data-astro-cid-2e5ek5u4>📝 输出结果</h2> <div class="output" id="output" data-astro-cid-2e5ek5u4>准备运行测试...</div> </div> </main> </div> <script>
+        /// <reference types="@webgpu/types" />
+        document.addEventListener('DOMContentLoaded', () => {
+            const runButton = document.getElementById('runTest');
+            const pointCountInput = document.getElementById('pointCount');
+            const runsSelect = document.getElementById('runs');
+            const outputEl = document.getElementById('output');
+            const gpuComputeTimeEl = document.getElementById('gpuTime');
+            const gpuTotalTimeEl = document.getElementById('gpuTotalTime');
+            const cpuTimeEl = document.getElementById('cpuTime');
+            const differenceEl = document.getElementById('difference');
+            const differenceTextEl = document.getElementById('differenceText');
+            const progressBar = document.getElementById('progressBar');
+            const gpuBar = document.querySelector('.gpu-bar');
+            const gpuTotalBar = document.querySelector('.gpu-total-bar');
+            const cpuBar = document.querySelector('.cpu-bar');
+
+            let gpuTotalComputeTime = 0;
+            let gpuTotalTime = 0;
+            let cpuTotalTime = 0;
+            let completedRuns = 0;
+
+            runButton.addEventListener('click', async () => {
+                const pointCount = parseInt(pointCountInput.value);
+                if (isNaN(pointCount)){
+                    outputEl.textContent = "请输入正确的数量";
+                    return;
+                }
+                const runs = parseInt(runsSelect.value);
+                gpuTotalComputeTime = 0;
+                gpuTotalTime = 0
+                cpuTotalTime = 0;
+                completedRuns = 0;
+                document.getElementById("result").scrollIntoView({behavior:"smooth"})
+                if (!navigator.gpu) {
+                    outputEl.textContent = "当前浏览器不支持 WebGPU";
+                    return;
+                }
+                const adapter = await navigator.gpu.requestAdapter();
+                if (!adapter) {
+                    outputEl.textContent = "无法获取 WebGPU 适配器";
+                    return;
+                }
+                let device
+                try {
+                    device = await adapter.requestDevice({
+                        requiredFeatures: ['timestamp-query', 'chromium-experimental-timestamp-query-inside-passes']
+                    });
+                } catch (e) {
+                    outputEl.textContent = '错误：请在 chrome://flags/#enable-unsafe-webgpu 启用 Unsafe WebGPU Support'
+                    return
+                }
+                const limit = device.limits.maxComputeWorkgroupsPerDimension
+                if (pointCount > limit * 64) {
+                    outputEl.textContent = `错误：当前测试代码在当前设备最大接受数据量为${limit * 64}`;
+                    return;
+                }
+                runButton.disabled = true;
+                outputEl.textContent = "初始化测试...";
+                progressBar.style.width = '0%';
+                for (let i = 0; i < runs; i++) {
+                    outputEl.textContent += `运行测试 ${i + 1}/${runs}...\r\n`;
+                    await runTest(device, pointCount, i);
+                    completedRuns = i + 1;
+                    progressBar.style.width = `${(completedRuns / runs) * 100}%`;
+                }
+                const avgGpuComputeTime = gpuTotalComputeTime / runs;
+                const avgGpuTotalTime = gpuTotalTime / runs;
+                const avgCpuTime = cpuTotalTime / runs;
+                const diff = avgCpuTime - avgGpuComputeTime;
+                const percentDiff = (diff / avgCpuTime) * 100;
+                gpuComputeTimeEl.textContent = `${avgGpuComputeTime.toFixed(2)} ms`;
+                gpuTotalTimeEl.textContent = `${avgGpuTotalTime.toFixed(2)} ms`;
+                cpuTimeEl.textContent = `${avgCpuTime.toFixed(2)} ms`;
+                differenceEl.textContent = `${diff.toFixed(2)} ms`;
+                differenceTextEl.textContent = `GPU 比 CPU 快 ${percentDiff.toFixed(1)}%`;
+                outputEl.textContent += `\n\n测试完成！平均结果：\nGPU: ${avgGpuComputeTime.toFixed(2)} ms\nCPU: ${avgCpuTime.toFixed(2)} ms`;
+                const maxTime = Math.max(avgGpuComputeTime, avgGpuTotalTime, avgCpuTime);
+                gpuBar.style.height = `${(avgGpuComputeTime / maxTime) * 100}%`;
+                gpuBar.querySelector('.bar-value').textContent = `${avgGpuComputeTime.toFixed(2)}`;
+                gpuTotalBar.style.height = `${(avgGpuTotalTime / maxTime) * 100}%`;
+                gpuTotalBar.querySelector('.bar-value').textContent = `${avgGpuTotalTime.toFixed(2)}`;
+                cpuBar.style.height = `${(avgCpuTime / maxTime) * 100}%`;
+                cpuBar.querySelector('.bar-value').textContent = `${avgCpuTime.toFixed(2)}`;
+                runButton.disabled = false;
+            });
+
+            async function runTest(device, N, runIndex) {
+                const querySet = device.createQuerySet({
+                    type: 'timestamp',
+                    count: 2,
+                });
+                const queryResolveBuffer = device.createBuffer({
+                    size: 16,
+                    usage: GPUBufferUsage.QUERY_RESOLVE | GPUBufferUsage.COPY_SRC
+                });
+                const queryReadBuffer = device.createBuffer({
+                    size: 16,
+                    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ
+                });
+                const points = new Float32Array(N * 2);
+                for (let i = 0; i < N * 2; i++) {
+                    points[i] = Math.random() * 2 - 1;
+                }
+                const target = new Float32Array([Math.random() * 2 - 1, Math.random() * 2 - 1]);
+                const pointsBuf = device.createBuffer({
+                    size: points.byteLength,
+                    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST
+                });
+                device.queue.writeBuffer(pointsBuf, 0, points);
+                const targetBuf = device.createBuffer({
+                    size: target.byteLength,
+                    usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST
+                });
+                device.queue.writeBuffer(targetBuf, 0, target);
+                const partialBuf = device.createBuffer({
+                    size: N * 8,
+                    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC
+                });
+                const readBuf = device.createBuffer({
+                    size: N * 8,
+                    usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ
+                });
+                const shaderCode = `
+        struct Point {
+            pos: vec2<f32>,
+        };
+
+        struct Result {
+            dist: f32,
+            idx: u32,
+        };
+
+        @group(0) @binding(0) var<storage, read> points : array<Point>;
+        @group(0) @binding(1) var<uniform> u_target : vec2<f32>;
+        @group(0) @binding(2) var<storage, read_write> partial : array<Result>;
+
+        @compute @workgroup_size(64)
+        fn main(@builtin(global_invocation_id) gid : vec3<u32>) {
+            let i = gid.x;
+            if (i >= arrayLength(&points)) {
+                return;
+            }
+            let d = distance(points[i].pos, u_target);
+            partial[i] = Result(d, i);
+        }
+    `;
+                const module = device.createShaderModule({code: shaderCode});
+                const pipeline = device.createComputePipeline({
+                    layout: 'auto',
+                    compute: {
+                        module,
+                        entryPoint: 'main'
+                    }
+                });
+                const bindGroup = device.createBindGroup({
+                    layout: pipeline.getBindGroupLayout(0),
+                    entries: [
+                        {binding: 0, resource: {buffer: pointsBuf}},
+                        {binding: 1, resource: {buffer: targetBuf}},
+                        {binding: 2, resource: {buffer: partialBuf}},
+                    ]
+                });
+                const commandEncoder = device.createCommandEncoder();
+                const pass = commandEncoder.beginComputePass();
+                pass.writeTimestamp(querySet, 0);
+                pass.setPipeline(pipeline);
+                pass.setBindGroup(0, bindGroup);
+                pass.dispatchWorkgroups(Math.ceil(N / 64));
+                pass.writeTimestamp(querySet, 1);
+                pass.end();
+                commandEncoder.resolveQuerySet(querySet, 0, 2, queryResolveBuffer, 0);
+                commandEncoder.copyBufferToBuffer(queryResolveBuffer, 0, queryReadBuffer, 0, 16);
+                commandEncoder.copyBufferToBuffer(partialBuf, 0, readBuf, 0, N * 8);
+                const gpuStart = performance.now();
+                device.queue.submit([commandEncoder.finish()]);
+                await device.queue.onSubmittedWorkDone();
+                const gpuEnd = performance.now()
+                // 6. 读取 timestamp
+                await queryReadBuffer.mapAsync(GPUMapMode.READ);
+                const timestampArray = new BigUint64Array(queryReadBuffer.getMappedRange());
+                const gpuTimeNs = timestampArray[1] - timestampArray[0];
+                const gpuTimeMs = Number(gpuTimeNs) / 1_000_000;
+                queryReadBuffer.unmap();
+
+                // 7. 读取结果 buffer
+                await readBuf.mapAsync(GPUMapMode.READ);
+
+                const view = new DataView(readBuf.getMappedRange());
+                let gpuMinDist = Infinity, gpuMinIdx = -1;
+                for (let i = 0; i < N; i++) {
+                    const offset = i * 8;
+                    const d = view.getFloat32(offset, true);
+                    const idx = view.getUint32(offset + 4, true);
+                    if (d < gpuMinDist) {
+                        gpuMinDist = d;
+                        gpuMinIdx = idx;
+                    }
+                }
+                readBuf.unmap();
+
+                gpuTotalComputeTime += gpuTimeMs;
+                gpuTotalTime += gpuEnd - gpuStart;
+
+                // 8. CPU 计算
+                const startCPU = performance.now();
+                let cpuMinDist = Infinity, cpuMinIdx = -1;
+                for (let i = 0; i < N; i++) {
+                    const dx = points[2 * i] - target[0];
+                    const dy = points[2 * i + 1] - target[1];
+                    const dist = Math.hypot(dx, dy);
+                    if (dist < cpuMinDist) {
+                        cpuMinDist = dist;
+                        cpuMinIdx = i;
+                    }
+                }
+                const endCPU = performance.now();
+                const cpuTime = endCPU - startCPU;
+                cpuTotalTime += cpuTime;
+
+                const ok = (gpuMinIdx === cpuMinIdx && Math.abs(gpuMinDist - cpuMinDist) < 1e-6);
+                const runOutput = `测试 #${runIndex + 1} 结果:
+目标点: (${target[0].toFixed(3)}, ${target[1].toFixed(3)})
+GPU 最近邻 idx=${gpuMinIdx}, dist=${gpuMinDist.toFixed(6)}
+  - GPU 计算时间: ${gpuTimeMs.toFixed(2)} ms
+  - GPU 总计: ${(gpuEnd - gpuStart).toFixed(2)} ms
+CPU 最近邻 idx=${cpuMinIdx}, dist=${cpuMinDist.toFixed(6)} (用时: ${cpuTime.toFixed(2)} ms)
+验证 ${ok ? '通过 ✅' : '未通过 ❌'}\r\n\r\n`;
+
+                outputEl.textContent += runOutput;
+            }
+        });
+    </script>  </body></html>

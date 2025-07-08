@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.11.0"><title>✨御坂网络-WebGPU vs CPU：并行计算性能实测对比✨</title><link rel="stylesheet" href="/_astro/index.CouIsyMu.css">
+<style>/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88047 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% -.0000298023 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s));transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.C7rg5Mfo.css"><script type="module" src="/_astro/page.V2R8AmkL.js"></script></head> <body class="w-full h-full flex flex-col">  <div class="bg-slate-800 h-screen flex flex-col"> <div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div> <div class="flex p-4 grow flex-row h-full overflow-hidden"> <aside class="w-1/4 ml-4 md:block min-w-[200px]"> <div class="sticky top-4 space-y-6"> <div class="bg-slate-700 p-4 rounded-lg"> <img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"> <p class="text-white text-center mt-2">作者：misakamayako</p>  <p class="text-white text-center mt-2">发布时间：2025/06/56</p> </div> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">简介</h3> <p class="text-white font-light mb-2">实测 WebGPU 与 CPU 在二维最近邻计算中的性能差异，揭示 GPU 并行计算在 Web 前端的优势。</p> </div> <!-- 2. 文章目录 --> <!--<div class="bg-slate-700 p-4 rounded-lg">--> <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>--> <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;--> <!--</div>--> <!-- 3. 热门标签 --> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">随便看看</h3> <div class="flex flex-wrap gap-2"> <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> 基于Kotlin协程的高效异步文件上传服务设计与实现 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> Sass 与 Less：哪种 CSS 预处理器更适合你？ </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/undefined/"> BroadcastChannel API 概述 </a> </div> </div> </div> </aside> <main class="grow h-full overflow-auto w-3/4 px-8"> <article class="text-white mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-white prose-strong:text-white prose-code:text-white
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100">  <header> <h1>WebGPU vs CPU：并行计算性能实测对比</h1> </header> <p>在现代前端开发中，<strong>性能瓶颈</strong>一直是影响用户体验和交互流畅度的核心问题。尤其是涉及大量数据计算时，传统 CPU 的线性处理方式往往力不从心。幸运的是，WebGPU 的出现为 Web 端并行计算带来了新的可能。</p>
+<p>本文将通过一个<strong>实际的性能测试案例</strong>，直观地比较 WebGPU 和传统 JavaScript（CPU）在处理大规模点距计算任务中的表现差异。</p>
+<hr>
+<h2 id="-测试目标">📌 测试目标</h2>
+<p>我们模拟了一个二维空间中的<strong>最近邻查找</strong>问题。给定一个目标点 <code>(x, y)</code>，从几十万的点集中找出与它距离最近的点。</p>
+<h3 id="对比内容包括">对比内容包括：</h3>
+<ul>
+<li>GPU 计算时间（不含数据传输）</li>
+<li>GPU 总时间（含写入缓冲、执行、读取结果）</li>
+<li>CPU 计算时间</li>
+<li>GPU 相比 CPU 的性能提升百分比</li>
+</ul>
+<hr>
+<h2 id="-测试界面">🧪 测试界面</h2>
+<p><img  loading="lazy" decoding="async" fetchpriority="auto" width="1192" height="958" src="/_astro/GPUTestCasePage.Bm4Dkgjb_fwwI3.webp" ></p>
+<hr>
+<h2 id="-背后原理简述">🧠 背后原理简述</h2>
+<h3 id="1️⃣-gpu-计算流程">1️⃣ GPU 计算流程</h3>
+<ul>
+<li>使用 WebGPU 的 compute shader 批量计算每个点到目标点的欧几里得距离。</li>
+<li>每个 <code>workgroup_size = 64</code>，调度 <code>ceil(N / 64)</code> 个工作组。</li>
+<li>计算结果写入 GPU 存储缓冲区。</li>
+<li>最终通过 <code>mapReadAsync</code> 拿到最近邻结果。</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="wgsl"><code><span class="line"><span style="color:#F97583">@</span><span style="color:#B392F0">compute</span><span style="color:#F97583"> @</span><span style="color:#B392F0">workgroup_size</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">64</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">fn</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">@</span><span style="color:#B392F0">builtin</span><span style="color:#E1E4E8">(global_invocation_id) gid : </span><span style="color:#F97583">vec3</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#F97583">u32</span><span style="color:#E1E4E8">>) {</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> gid</span><span style="color:#F97583">.</span><span style="color:#E1E4E8">x;</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> (i </span><span style="color:#F97583">>=</span><span style="color:#B392F0"> arrayLength</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">points)) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#F97583">    let</span><span style="color:#E1E4E8"> d </span><span style="color:#F97583">=</span><span style="color:#B392F0"> distance</span><span style="color:#E1E4E8">(points[i]</span><span style="color:#F97583">.</span><span style="color:#E1E4E8">pos, u_target);</span></span>
+<span class="line"><span style="color:#E1E4E8">    partial[i] </span><span style="color:#F97583">=</span><span style="color:#B392F0"> Result</span><span style="color:#E1E4E8">(d, i);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="2️⃣-cpu-对比流程">2️⃣ CPU 对比流程</h3>
+<p>传统方式通过 <code>for</code> 循环遍历数组计算距离，逻辑简单但不可并行。</p>
+<hr>
+<h2 id="-性能分析机制">🧩 性能分析机制</h2>
+<p>我们使用了 WebGPU 的 <code>timestamp-query</code> 进行 GPU 精确耗时统计，同时也使用 <code>performance.now()</code> 做 CPU 计时。</p>
+<p>为了精度和可重复性，用户可以选择运行多轮测试，自动计算平均值，并通过柱状图直观展示。</p>
+<blockquote>
+<p>注意：为了使用 timestamp-query，需要在 Chrome 开启 flag：
+<code>chrome://flags/#enable-unsafe-webgpu</code></p>
+</blockquote>
+<hr>
+<h2 id="-示例测试结果500000-个点--3-次">📊 示例测试结果（500,000 个点 × 3 次）</h2>
+<p><img  loading="lazy" decoding="async" fetchpriority="auto" width="1205" height="725" src="/_astro/WebGPU_VS_CPU.D_48aA6F_ZmMaTj.webp" ></p>
+<h3 id="-结论">🎯 结论：</h3>
+<ul>
+<li><strong>WebGPU 的并行计算能力在处理大数据时有压倒性的优势</strong>。</li>
+<li>在 50 万个点的最近邻计算中，GPU 比 CPU 的计算速度快 <strong>97%</strong>。</li>
+<li>GPU 数据传输会消耗远超计算所需的时间。</li>
+<li>当点数较少时，GPU 初始化/传输时间可能不划算；但随着数据量增长，优势迅速扩大。</li>
+</ul>
+<hr>
+<h2 id="️-注意事项">⚠️ 注意事项</h2>
+<ul>
+<li>
+<p>WebGPU 的 compute shader 调度有以下关键限制：</p>
+<ol>
+<li>
+<p>每个维度（x、y、z）的最大工作组数不得超过 <code>maxComputeWorkgroupsPerDimension</code>（通常是 65535）。</p>
+</li>
+<li>
+<p>每个工作组内部最多可包含 <code>maxComputeInvocationsPerWorkgroup</code> 个线程（例如 256 或 1024），而每个维度的 @workgroup_size(x, y, z) 又分别受 maxComputeWorkgroupSizeX/Y/Z 限制。</p>
+</li>
+</ol>
+</li>
+<li>
+<p>如果你试图调度超过这些上限的工作组数量，例如：</p>
+</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="typescript"><code><span class="line"><span style="color:#B392F0">dispatchWorkgroups</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">156250</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">); </span><span style="color:#6A737D">// ❌ 超过 65535</span></span></code></pre>
+<ul>
+<li>将会报错：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Dispatch workgroup count X exceeds max compute workgroups per dimension</span></span></code></pre>
+<ul>
+<li>当前实现仅使用单阶段 shader，没有做全流程 GPU 归约（也即最近邻查找的最终比较仍在 CPU 完成），但已足够用于展示 GPU 的<strong>并行计算能力</strong>。</li>
+</ul>
+<hr>
+<h2 id="-运行方式">🧩 运行方式</h2>
+<p>本项目仅依赖原生 Web API，<strong>无需任何第三方库</strong>。支持 Chrome 113+（需手动启用 WebGPU）。</p>
+<p>在线测试地址：<a href="/extras/GPUTestCase/">GPUTestCase</a></p>
+<hr>
+<h2 id="-总结">🚀 总结</h2>
+<p>WebGPU 作为 Web 平台下 GPU 并行计算的新标准，展现出了强大的性能潜力。通过这次对比，我们可以看到：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>建议使用方式</th></tr></thead><tbody><tr><td>小数据量、低延迟</td><td>仍适合 CPU</td></tr><tr><td>大数据量、重复批处理</td><td>强烈推荐使用 WebGPU</td></tr></tbody></table>  </article> <div class="tags"> <div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/WebGPU/">WebGPU</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/性能优化/">性能优化</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/前端性能/">前端性能</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/GPU加速/">GPU加速</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/JavaScript/">JavaScript</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/可视化分析/">可视化分析</a> </div> </div> </main> </div> <div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div> </div>  </body></html>

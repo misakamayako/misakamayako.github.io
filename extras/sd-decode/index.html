@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.11.0"><title>在线解析sd图片信息</title><link rel="stylesheet" href="/_astro/index.Dkvjf0Zb.css">
+<style>/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s));transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/sd-decode.ehbFa-mV.css">
+<style>/*! tailwindcss v4.0.9 | MIT License | https://tailwindcss.com */
+.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88047 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% -.0000298023 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+</style><script type="module" src="/_astro/page.V2R8AmkL.js"></script></head> <body class="w-full h-full flex flex-col">  <div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div> <div class="text-slate-700"> <div class="max-w-5xl mx-auto px-4 py-12"> <!-- 页头 --> <header class="text-center mb-14"> <div class="flex justify-center mb-6"> <div class="w-24 h-24 rounded-full bg-gradient-to-br
+                 from-slate-700 to-slate-600 flex items-center justify-center animate-bounce
+                 duration-700
+                 "> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="camera" class="svg-inline--fa fa-camera text-white h-9" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M149.1 64.8L138.7 96 64 96C28.7 96 0 124.7 0 160L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L362.9 64.8C356.4 45.2 338.1 32 317.4 32L194.6 32c-20.7 0-39 13.2-45.5 32.8zM256 192a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path></svg> </div> </div> <h1 class="text-4xl md:text-5xl font-bold mb-4"> <span class="RYf1iW_sourceText">Stable Diffusion</span>元数据解析器
+</h1> <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+上传图片提取EXIF元数据，所有处理均在您的浏览器中完成
+<br> <span class="font-bold text-slate-700">图片不会发送到任何服务器</span> </p> </header> <!-- 隐私保障说明 --> <div class="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-10 flex items-start shadow-sm"> <div class="mr-4 mt-1 text-slate-700"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lock" class="svg-inline--fa fa-lock w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"></path></svg> </div> <div> <h3 class="font-bold text-xl text-slate-900 mb-2">100% 隐私保障</h3> <p class="text-slate-700">
+您的图片永远不会离开您的设备！所有元数据提取操作都在浏览器中本地完成，
+<span class="font-semibold">无服务器交互，无数据传输</span>，完全保护您的隐私。
+</p> </div> </div> <!-- 上传区域 --> <div class="mb-16"> <div id="upload-container" class="RYf1iW_uploadArea" onclick="getImageByClick()" ondrop="handleDrop(event)" ondragover="allowDrop(event)"> <div class="mb-5"> <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-4 border-2 border-dashed border-slate-300"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cloud-arrow-up" class="svg-inline--fa fa-cloud-arrow-up w-9" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128l-368 0zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39L296 392c0 13.3 10.7 24 24 24s24-10.7 24-24l0-134.1 39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path></svg> </div> <h3 class="text-xl font-semibold mb-3 text-slate-900">拖放图片到此处</h3> <p class="text-slate-500 mb-5">或点击选择图片文件</p> <button id="upload-btn" class="RYf1iW_btnPrimary"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="folder-open" class="svg-inline--fa fa-folder-open mr-2 w-4 inline-block" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M88.7 223.8L0 375.8 0 96C0 60.7 28.7 32 64 32l117.5 0c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7L416 96c35.3 0 64 28.7 64 64l0 32-336 0c-22.8 0-43.8 12.1-55.3 31.8zm27.6 16.1C122.1 230 132.6 224 144 224l400 0c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480L32 480c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2 .1-32.1l112-192z"></path></svg>
+选择图片
+</button> </div> <p class="text-sm text-slate-500">支持格式:
+                        PNG(SD生成的图片均为PNG形式，并且只有PNG可以保留生成信息)</p> </div> </div> <div id="result-section" class="hidden"> <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4"> <h2 class="text-2xl font-bold text-slate-900"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chart-bar" class="svg-inline--fa fa-chart-bar mr-2 inline-block w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M32 32c17.7 0 32 14.3 32 32l0 336c0 8.8 7.2 16 16 16l400 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L80 480c-44.2 0-80-35.8-80-80L0 64C0 46.3 14.3 32 32 32zm96 96c0-17.7 14.3-32 32-32l192 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-192 0c-17.7 0-32-14.3-32-32zm32 64l128 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32zm0 96l256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"></path></svg>
+元数据解析结果
+</h2> <div class="flex gap-2"> <button id="download-btn" class="btn-outline"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" class="svg-inline--fa fa-download mr-2 inline-block w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
+导出数据
+</button> <button id="reset-btn" class="btn-outline"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-rotate-right" class="svg-inline--fa fa-arrow-rotate-right mr-2 inline-block w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M386.3 160L336 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-128c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 51.2L414.4 97.6c-87.5-87.5-229.3-87.5-316.8 0s-87.5 229.3 0 316.8s229.3 87.5 316.8 0c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0c-62.5 62.5-163.8 62.5-226.3 0s-62.5-163.8 0-226.3s163.8-62.5 226.3 0L386.3 160z"></path></svg>
+解析新图片
+</button> </div> </div> <div class="grid grid-cols-1 md:grid-cols-2 gap-6"> <!-- 图片预览 --> <div class="metadata-card"> <h3 class="font-semibold text-lg text-slate-900 mb-4 flex items-center"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="image" class="svg-inline--fa fa-image mr-2 inline-block w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM323.8 202.5c-4.5-6.6-11.9-10.5-19.8-10.5s-15.4 3.9-19.8 10.5l-87 127.6L170.7 297c-4.6-5.7-11.5-9-18.7-9s-14.2 3.3-18.7 9l-64 80c-5.8 7.2-6.9 17.1-2.9 25.4s12.4 13.6 21.6 13.6l96 0 32 0 208 0c8.9 0 17.1-4.9 21.2-12.8s3.6-17.4-1.4-24.7l-120-176zM112 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"></path></svg>
+图片预览
+</h3> <div class="aspect-square bg-slate-50 rounded-lg overflow-hidden border border-slate-200 flex items-center justify-center"> <img id="image-preview" class="w-full h-full object-contain" src="" alt="预览"> </div> </div> <!-- 文件信息 --> <div class="metadata-card"> <h3 class="font-semibold text-lg text-slate-900 mb-4 flex items-center"> <i class="fas fa-file-alt text-slate-700 mr-2"></i>文件信息
+</h3> <div class="space-y-4"> <div class="flex items-center py-2 border-b border-slate-100"> <span class="w-32 text-slate-500 flex items-center"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="signature" class="svg-inline--fa fa-signature mr-2 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M192 128c0-17.7 14.3-32 32-32s32 14.3 32 32l0 7.8c0 27.7-2.4 55.3-7.1 82.5l-84.4 25.3c-40.6 12.2-68.4 49.6-68.4 92l0 71.9c0 40 32.5 72.5 72.5 72.5c26 0 50-13.9 62.9-36.5l13.9-24.3c26.8-47 46.5-97.7 58.4-150.5l94.4-28.3-12.5 37.5c-3.3 9.8-1.6 20.5 4.4 28.8s15.7 13.3 26 13.3l128 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-83.6 0 18-53.9c3.8-11.3 .9-23.8-7.4-32.4s-20.7-11.8-32.2-8.4L316.4 198.1c2.4-20.7 3.6-41.4 3.6-62.3l0-7.8c0-53-43-96-96-96s-96 43-96 96l0 32c0 17.7 14.3 32 32 32s32-14.3 32-32l0-32zm-9.2 177l49-14.7c-10.4 33.8-24.5 66.4-42.1 97.2l-13.9 24.3c-1.5 2.6-4.3 4.3-7.4 4.3c-4.7 0-8.5-3.8-8.5-8.5l0-71.9c0-14.1 9.3-26.6 22.8-30.7zM24 368c-13.3 0-24 10.7-24 24s10.7 24 24 24l40.3 0c-.2-2.8-.3-5.6-.3-8.5L64 368l-40 0zm592 48c13.3 0 24-10.7 24-24s-10.7-24-24-24l-310.1 0c-6.7 16.3-14.2 32.3-22.3 48L616 416z"></path></svg>
+文件名:
+</span> <span id="file-name" class="font-medium text-slate-900 truncate">example.jpg</span> </div> <div class="flex items-center py-2 border-b border-slate-100"> <span class="w-32 text-slate-500 flex items-center"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-code" class="svg-inline--fa fa-file-code mr-2 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM153 289l-31 31 31 31c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L71 337c-9.4-9.4-9.4-24.6 0-33.9l48-48c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9zM265 255l48 48c9.4 9.4 9.4 24.6 0 33.9l-48 48c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l31-31-31-31c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"></path></svg>
+文件类型:
+</span> <span id="file-type" class="font-medium text-slate-900">JPEG</span> </div> <div class="flex items-center py-2 border-b border-slate-100"> <span class="w-32 text-slate-500 flex items-center"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="weight-scale" class="svg-inline--fa fa-weight-scale mr-2 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M128 176a128 128 0 1 1 256 0 128 128 0 1 1 -256 0zM391.8 64C359.5 24.9 310.7 0 256 0S152.5 24.9 120.2 64L64 64C28.7 64 0 92.7 0 128L0 448c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64l-56.2 0zM296 224c0-10.6-4.1-20.2-10.9-27.4l33.6-78.3c3.5-8.1-.3-17.5-8.4-21s-17.5 .3-21 8.4L255.7 184c-22 .1-39.7 18-39.7 40c0 22.1 17.9 40 40 40s40-17.9 40-40z"></path></svg>
+文件大小:
+</span> <span id="file-size" class="font-medium text-slate-900">2.4 MB</span> </div> <div class="flex items-center py-2"> <span class="w-32 text-slate-500 flex items-center"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ruler-combined" class="svg-inline--fa fa-ruler-combined mr-2 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"></path></svg>
+尺寸:
+</span> <span id="image-dimensions" class="font-medium text-slate-900">4032 × 3024</span> </div> </div> </div> <!-- 生成参数 --> <div class="metadata-card md:col-span-2"> <h3 class="font-semibold text-lg text-slate-900 mb-4 flex items-center"> <i class="fas fa-cogs text-slate-700 mr-2"></i>生成参数
+</h3> <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> <!-- 提示词 --> <div class="md:col-span-2 flex items-start p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500 flex-shrink-0">提示词:</span> <span id="gen-prompt" class="font-medium text-slate-900 break-words"></span> </div> <!-- 负面提示词 --> <div class="md:col-span-2 flex items-start p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500 flex-shrink-0">负面提示词:</span> <span id="gen-negative-prompt" class="font-medium text-slate-900 break-words"></span> </div> <!-- 尺寸 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">尺寸:</span> <span id="gen-size" class="font-medium text-slate-900"></span> </div> <!-- 种子 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">种子:</span> <span id="gen-seed" class="font-medium text-slate-900"></span> </div> <!-- 模型 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">模型:</span> <span id="gen-model" class="font-medium text-slate-900"></span> </div> <!-- 步数 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">步数:</span> <span id="gen-steps" class="font-medium text-slate-900"></span> </div> <!-- 采样器 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">采样器:</span> <span id="gen-sampler" class="font-medium text-slate-900"></span> </div> <!-- 调度器 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">调度器:</span> <span id="gen-schedule" class="font-medium text-slate-900"></span> </div> <!-- CFG Scale --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">CFG Scale:</span> <span id="gen-cfg-scale" class="font-medium text-slate-900"></span> </div> <!-- 降噪强度 --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">降噪强度:</span> <span id="gen-denoising-strength" class="font-medium text-slate-900"></span> </div> <!-- Clip Skip --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">Clip Skip:</span> <span id="gen-clip-skip" class="font-medium text-slate-900"></span> </div> <!-- VAE --> <div class="flex items-center p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">VAE:</span> <span id="gen-vae" class="font-medium text-slate-900"></span> </div> <!-- LoRA --> <div class="md:col-span-2 flex items-start p-3 bg-slate-50 rounded-lg"> <span class="w-32 text-slate-500">LoRA:</span> <span id="gen-lora" class="font-medium text-slate-900"></span> </div> <!-- 高分辨率优化 --> <div class="md:col-span-2"> <h4 class="font-semibold text-md text-slate-800 mb-2">高分辨率优化:</h4> <div class="grid grid-cols-1 md:grid-cols-3 gap-3"> <div class="flex items-center p-3 bg-slate-100 rounded-lg"> <span class="w-24 text-slate-500 text-sm">放大尺寸:</span> <span id="gen-hires-resize" class="font-medium text-slate-900 text-sm"></span> </div> <div class="flex items-center p-3 bg-slate-100 rounded-lg"> <span class="w-24 text-slate-500 text-sm">步数:</span> <span id="gen-hires-steps" class="font-medium text-slate-900 text-sm"></span> </div> <div class="flex items-center p-3 bg-slate-100 rounded-lg"> <span class="w-24 text-slate-500 text-sm">算法:</span> <span id="gen-hires-upscaler" class="font-medium text-slate-900 text-sm"></span> </div> </div> </div> </div> </div> </div> </div> <!-- 技术说明 --> <div class="mt-16 pt-10 border-t border-slate-200"> <h3 class="font-bold text-xl text-slate-900 mb-5 text-center">本地处理技术说明</h3> <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100"> <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="lock" class="svg-inline--fa fa-lock text-white w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"></path></svg> </div> <h4 class="font-bold text-lg text-slate-900 mb-2">隐私保护</h4> <p class="text-slate-600">图片完全在浏览器中处理，永不离开您的设备</p> </div> <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100"> <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bolt" class="svg-inline--fa fa-bolt text-white w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288l111.5 0L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7l-111.5 0L349.4 44.6z"></path></svg> </div> <h4 class="font-bold text-lg text-slate-900 mb-2">快速处理</h4> <p class="text-slate-600">利用现代浏览器能力实现快速元数据解析</p> </div> <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100"> <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4"> <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="code" class="svg-inline--fa fa-code text-white w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"></path></svg> </div> <h4 class="font-bold text-lg text-slate-900 mb-2">开源技术</h4> <p class="text-slate-600">基于File API和PNG标准在本地处理图片</p> </div> </div> </div> </div> </div> <div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div> <script>
+        async function getImageByClick(){
+            const [fileHandle] = await window.showOpenFilePicker({
+                types: [{
+                    description: 'SD生成的PNG图片',
+                    accept: {
+                        'image/png': ['.png']
+                        }
+                    }],
+                excludeAcceptAllOption: true,
+                multiple: false
+                });
+            const file = await fileHandle.getFile();
+            decodeImage(file)
+            }
+            async function decodeImage(file){
+                clearImageData()
+                const objectURL = URL.createObjectURL(file);
+                const resultSelection = document.getElementById("result-section")
+                resultSelection.classList.remove("hidden")
+                const imageDiv = document.getElementById("image-preview")
+                imageDiv.src=objectURL
+                document.getElementById("file-name").textContent = file.name
+                document.getElementById("file-type").textContent = file.type
+                document.getElementById("file-size").textContent = formatFileSize(file.size)
+                const dimensions = await getImageDimensions(file)
+                document.getElementById("image-dimensions").textContent =
+                    `${dimensions.width} x ${dimensions.height}, ${dimensions.ratio}`
+                try {
+                    const result = await parsePngTextChunks(file)
+                    const generation_data = result.find(it=>it.key==="generation_data")
+                    if (!generation_data){
+                        alert("这张图片不是由stable diffusion生成的，或者用户发送时没有选择发送原图导致信息丢失")
+                        return
+                        }
+                    const metaJson=JSON.parse(generation_data.value)
+                    if (metaJson.seed==="-1"){
+                        const parsedWorkflow = JSON.parse(result[1].value);
+                        for (const [_, node] of Object.entries(parsedWorkflow)) {
+                            if (node.class_type === 'KSampler') {
+                                metaJson.seed = node.inputs.seed;
+                                break;
+                                }
+                            }
+                        }
+                    const genData = parseGenerationData(metaJson)
+                    document.getElementById("gen-prompt").textContent = genData.prompt || "无";
+                    document.getElementById("gen-negative-prompt").textContent = genData.negativePrompt || "无";
+                    document.getElementById("gen-size").textContent = genData.size || "无";
+                    document.getElementById("gen-seed").textContent = genData.seed || "无";
+                    document.getElementById("gen-model").textContent = genData.model || "无";
+                    document.getElementById("gen-steps").textContent = genData.steps || "无";
+                    document.getElementById("gen-sampler").textContent = genData.sampler || "无";
+                    document.getElementById("gen-schedule").textContent = genData.schedule || "无";
+                    document.getElementById("gen-cfg-scale").textContent = genData.cfgScale || "无";
+                    document.getElementById("gen-denoising-strength").textContent = genData.denoisingStrength || "无";
+                    document.getElementById("gen-clip-skip").textContent = genData.clipSkip || "无";
+                    document.getElementById("gen-vae").textContent = genData.vae || "无";
+
+                    // 处理LoRA数据
+                    if (genData.lora && genData.lora.length > 0) {
+                        document.getElementById("gen-lora").textContent = genData.lora.map(lora =>
+                            `${lora.name || '未知'} (${lora.weight})`
+                            ).join(', ');
+                        } else {
+                        document.getElementById("gen-lora").textContent = "无";
+                        }
+
+                    // 处理高分辨率优化
+                    if (genData.hires) {
+                        document.getElementById("gen-hires-resize").textContent = genData.hires.resize || "无";
+                        document.getElementById("gen-hires-steps").textContent = genData.hires.steps || "无";
+                        document.getElementById("gen-hires-upscaler").textContent = genData.hires.upscaler || "无";
+                        } else {
+                        document.getElementById("gen-hires-resize").textContent = "无";
+                        document.getElementById("gen-hires-steps").textContent = "无";
+                        document.getElementById("gen-hires-upscaler").textContent = "无";
+                        }
+                    } catch (e){
+                    console.log(e)
+                    }
+                }
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+                }
+
+            async function getImageDimensions(file) {
+                return new Promise((resolve, reject) => {
+                    const image = new Image();
+                    const url = URL.createObjectURL(file);
+
+                    image.onload = () => {
+                        const width = image.naturalWidth;
+                        const height = image.naturalHeight;
+                        const divisor = gcd(width, height);
+                        const ratio = `${width / divisor}:${height / divisor}`;
+                        URL.revokeObjectURL(url);
+                        resolve({ width, height, ratio });
+                        };
+
+                    image.onerror = (err) => {
+                        URL.revokeObjectURL(url);
+                        reject(new Error("图片加载失败"));
+                        };
+
+                    image.src = url;
+                    });
+                }
+            function gcd(a, b) {
+                return b === 0 ? a : gcd(b, a % b);
+                }
+            function parsePngTextChunks(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onload = function (ev) {
+                        const arrayBuffer = ev.target.result
+                        const dataView = new DataView(arrayBuffer)
+
+                        // 验证 PNG 文件签名
+                        const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10]
+                        for (let i = 0; i < 8; i++) {
+                            if (dataView.getUint8(i) !== pngSignature[i]) {
+                                reject(new Error('不是有效的 PNG 文件'))
+                                return
+                                }
+                            }
+
+                        let offset = 8
+                        const texts = []
+
+                        // 遍历 chunk
+                        while (offset < dataView.byteLength) {
+                            const length = dataView.getUint32(offset, false)
+                            const type = readString(dataView, offset + 4, 4)
+                            const dataStart = offset + 8
+
+                            if (type === 'tEXt') {
+                                // tEXt 格式为：key\0value
+                                let keyEnd = dataStart
+                                while (dataView.getUint8(keyEnd) !== 0 && keyEnd < dataStart + length) {
+                                    keyEnd++
+                                    }
+                                const key = readString(dataView, dataStart, keyEnd - dataStart)
+                                const value = readString(dataView, keyEnd + 1, dataStart + length - keyEnd - 1)
+                                texts.push({ key, value:trimNullChar(value) })
+                                }
+
+                            offset += length + 12 // chunk: length(4) + type(4) + data + crc(4)
+                            }
+
+                        resolve(texts)
+                        }
+
+                    reader.onerror = (err) => reject(err)
+                    reader.readAsArrayBuffer(file)
+                    })
+
+                function readString(view, offset, length) {
+                    let str = ''
+                    for (let i = 0; i < length; i++) {
+                        str += String.fromCharCode(view.getUint8(offset + i))
+                        }
+                    return str
+                    }
+                function trimNullChar(str) {
+                    return str.replace(/\x00+$/, '')
+                    }
+                }
+
+            function parseGenerationData(metaJson) {
+                // 辅助提取LoRA列表
+                function extractLoraList(models) {
+                    if (!Array.isArray(models)) return []
+                    return models
+                        .filter(m => m.type === 'LORA')
+                        .map(m => ({
+                        name: m.modelFileName,
+                        label: m.label,
+                        weight: m.weight
+                        }))
+                    }
+
+                return {
+                    prompt: metaJson.prompt || '',
+                    negativePrompt: metaJson.negativePrompt || '',
+                    size: (metaJson.width && metaJson.height) ? `${metaJson.width}x${metaJson.height}` : '',
+                    seed: metaJson.seed || '',
+                    model: (metaJson.baseModel && metaJson.baseModel.modelFileName) || '',
+                    steps: metaJson.steps || 0,
+                    sampler: metaJson.samplerName || '',
+                    ksampler: metaJson.ksamplerName || '',
+                    schedule: metaJson.schedule || '',
+                    cfgScale: metaJson.cfgScale || 0,
+                    guidance: metaJson.guidance || 0,
+                    vae: metaJson.sdVae || '',
+                    denoisingStrength: metaJson.denoisingStrength || 0,
+                    clipSkip: metaJson.clipSkip || 0,
+                    lora: extractLoraList(metaJson.models),
+                    hires: {
+                        resize: (metaJson.hrResizeX && metaJson.hrResizeY) ? `${metaJson.hrResizeX}x${metaJson.hrResizeY}` : '',
+                        steps: metaJson.hrSecondPassSteps || 0,
+                        upscaler: metaJson.hrUpscaler || ''
+                        }
+                    }
+                }
+            function allowDrop(e) {
+                e.preventDefault();
+                }
+
+            function handleDrop(e) {
+                e.preventDefault();
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                decodeImage(files[0])
+                }
+            function clearImageData() {
+                // 清空所有SD生成信息
+                const sdFields = [
+                    "gen-prompt",
+                    "gen-negative-prompt",
+                    "gen-size",
+                    "gen-seed",
+                    "gen-model",
+                    "gen-steps",
+                    "gen-sampler",
+                    "gen-schedule",
+                    "gen-cfg-scale",
+                    "gen-denoising-strength",
+                    "gen-clip-skip",
+                    "gen-vae",
+                    "gen-lora",
+                    "gen-hires-resize",
+                    "gen-hires-steps",
+                    "gen-hires-upscaler"
+                    ];
+
+                sdFields.forEach(id => {
+                    document.getElementById(id).textContent = "";
+                    });
+
+                // 隐藏结果区域
+                document.getElementById("result-section").classList.add("hidden");
+                }
+    </script>  </body></html>

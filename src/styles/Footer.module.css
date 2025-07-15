@@ -7,8 +7,7 @@
   @apply py-4;
   @apply border-t-zinc-50;
   @apply border-t-2;
-  @apply w-full bg-slate-900;
-
+  @apply w-full bg-slate-900 relative;
   a {
     @apply underline;
   }

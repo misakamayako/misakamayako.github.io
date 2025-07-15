@@ -1,0 +1,15 @@
+@reference "./global.css";
+
+@layer components {
+    .uploadArea {
+        @apply border-2 border-dashed border-slate-300 rounded-xl ;
+        @apply bg-white/70 p-8 text-center cursor-pointer transition-all duration-300;
+    }
+    .sourceText{
+        @apply bg-gradient-to-r from-slate-700 to-slate-600 bg-clip-text text-transparent;
+    }
+    .btnPrimary{
+        @apply px-6 py-3 bg-gradient-to-r from-slate-700 to-slate-600 cursor-pointer;
+        @apply text-white font-medium rounded-lg hover:opacity-90 transition-opacity hover:shadow-lg;
+    }
+}

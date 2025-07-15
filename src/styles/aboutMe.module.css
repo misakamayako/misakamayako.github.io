@@ -8,3 +8,10 @@
     @apply flex-grow py-20 w-full bg-slate-800;
     @apply text-white overflow-auto h-1 grow;
 }
+.techIcon{
+    @apply inline-block  w-3.5  mr-0.5;
+}
+.techText{
+    @apply text-white  hover:text-(--themeColor) cursor-pointer;
+    @apply transition-colors duration-100;
+}

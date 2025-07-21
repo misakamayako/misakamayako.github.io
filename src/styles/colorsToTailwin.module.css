@@ -1,0 +1,167 @@
+@reference "./global.css";
+.pageRoot{
+    @apply bg-linear-to-br from-slate-800 via-rose-800 to-slate-200;
+    @apply text-stone-50 p-5;
+}
+header{
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    @apply bg-black/30 text-center px-8 mb-8 rounded-2xl;
+}
+
+h1 {
+    font-size: 3rem;
+    @apply mb-2.5 ;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.inputSection {
+    @apply bg-black/15 p-8 rounded-2xl mb-8;
+    @apply backdrop-blur-xs;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.inputGroup {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.colorInput {
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    @apply text-slate-800/70 p-4 border-none rounded-xl w-85 bg-white/90;
+    @apply transition-all duration-300;
+}
+
+.colorInput:focus {
+    @apply outline-none shadow-yellow-300/50 -translate-y-0.5;
+}
+
+.btn {
+    @apply px-8 py-4 text-white border-none rounded-xl cursor-pointer transition-all;
+    @apply duration-300 shadow-xl shadow-black/20;
+    font-size: 1.1rem;
+    @apply bg-linear-to-br from-orange-400 to-rose-500 font-bold;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.example {
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.example:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.colorCard {
+    flex: 1;
+    min-width: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.colorCard h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #ffd700;
+}
+
+.colorDisplay {
+    height: 150px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.colorInfo {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    text-align: center;
+    @apply cursor-pointer;
+}
+
+.canvasContainer {
+    @apply bg-linear-to-br from-red-950/50 via-blue-500/50 to-stone-50/50 rounded-2xl p-5 mb-8 text-center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.canvasContainer h2 {
+    @apply text-center text-yellow-400 text-3xl mb-5;
+
+}
+.canvasContainer h3{
+    @apply text-center text-violet-300 text-2xl mb-4;
+}
+
+#canvas {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    @apply mx-auto max-w-full bg-black/30 rounded-xl;
+}
+
+@media (max-width: 768px) {
+    .results {
+        flex-direction: column;
+    }
+
+    .colorInput {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+}

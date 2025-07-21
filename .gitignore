@@ -38,4 +38,4 @@ next-env.d.ts
 .astro
 .idea
 dist
-/src/test.*
+/src/pages/test.*

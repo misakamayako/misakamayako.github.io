@@ -1,0 +1,7 @@
+@reference "./global.css";
+:where(p > code, li > code, span > code) {
+    @apply bg-stone-200 text-slate-600 rounded px-1 py-0.5 text-sm font-mono;
+    &:before,&:after{
+        content: none;
+    }
+}

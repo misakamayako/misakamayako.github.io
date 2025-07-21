@@ -2,6 +2,7 @@
 import BaseLayout from "./home.astro";
 import Footer from "../components/Footer.astro"
 import Navigation from "../components/Navigation.astro"
+import "../styles/overrideInlineCode.css"
 import "matewind/matewind.css"
 import {Tag} from "matewind"
 const {frontmatter} = Astro.props;
@@ -102,4 +103,25 @@ const baseURL = import.meta.env.BASE_URL
         </div>
         <Footer/>
     </div>
+    <script type="module" is:global>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script>
 </BaseLayout>

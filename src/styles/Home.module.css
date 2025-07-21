@@ -1,7 +1,6 @@
 @reference "./global.css";
 .home {
-  background: url("/img/background.jpg") no-repeat;
-  @apply bg-cover;
+  @apply bg-black;
   @apply h-screen;
   @apply w-screen;
   @apply flex;
@@ -11,13 +10,17 @@
   @apply items-center;
   @apply justify-center;
 }
-
+.water{
+  @apply absolute bottom-0 h-[47%] w-full bg-no-repeat;
+  background: url('/img/background.jpg') no-repeat center bottom;
+  @apply bg-cover;
+}
 .menu {
   @apply bg-clip-text;
   @apply text-6xl;
   @apply text-center;
   @apply uppercase;
-  @apply leading-relaxed;
+  @apply leading-relaxed z-50;
   background-image: linear-gradient(225deg,#fff 35%,#4e6773);
   -webkit-text-fill-color: transparent;
   font-family: "Phage Rough";

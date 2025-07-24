@@ -67,14 +67,14 @@ const baseURL = import.meta.env.BASE_URL
                     <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;-->
                     <!--</div>-->
 
-                    <!-- 3. 热门标签 -->
+                    <!-- 3. 随机文章 -->
                     <div class="bg-slate-700 p-4 rounded-lg">
                         <h3 class="text-emerald-400 mb-2">随便看看</h3>
                         <div class="flex flex-wrap gap-2">
                             {
                                 randomPosts.map(it => (
                                         <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition"
-                                           href={`/blog/${it.slug}/`}>
+                                           href={`/blog/${it.data.slug}/`}>
                                             {it.data.title}
                                         </a>
                                 ))

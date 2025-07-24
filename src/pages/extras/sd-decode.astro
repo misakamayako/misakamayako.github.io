@@ -75,23 +75,6 @@ import Footer from "../../components/Footer.astro";
             </div>
 
             <div id="result-section" class="hidden">
-                <div class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-                    <h2 class="text-2xl font-bold text-slate-900">
-                        <FontAwesomeIcon icon={faChartBar} className="mr-2 inline-block w-4"/>
-                        元数据解析结果
-                    </h2>
-                    <div class="flex gap-2">
-                        <button id="download-btn" class="btn-outline">
-                            <FontAwesomeIcon icon={faDownload} className="mr-2 inline-block w-4"/>
-                            导出数据
-                        </button>
-                        <button id="reset-btn" class="btn-outline">
-                            <FontAwesomeIcon icon={faRedo} className="mr-2 inline-block w-4"/>
-                            解析新图片
-                        </button>
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- 图片预览 -->
                     <div class="metadata-card">
@@ -106,8 +89,14 @@ import Footer from "../../components/Footer.astro";
 
                     <!-- 文件信息 -->
                     <div class="metadata-card">
-                        <h3 class="font-semibold text-lg text-slate-900 mb-4 flex items-center">
-                            <i class="fas fa-file-alt text-slate-700 mr-2"></i>文件信息
+                        <h3 class="font-semibold text-lg text-slate-900 mb-4 flex justify-between">
+                            <span>
+                                <i class="fas fa-file-alt text-slate-700 mr-2"></i>文件信息
+                            </span>
+                            <button id="reset-btn" class="btn-outline cursor-pointer" onclick="getImageByClick()">
+                                <FontAwesomeIcon icon={faRedo} className="mr-2 inline-block w-4"/>
+                                解析新图片
+                            </button>
                         </h3>
                         <div class="space-y-4">
                             <div class="flex items-center py-2 border-b border-slate-100">
@@ -279,250 +268,263 @@ import Footer from "../../components/Footer.astro";
     </div>
     <Footer/>
     <script is:inline>
-        async function getImageByClick(){
+        async function getImageByClick() {
             const [fileHandle] = await window.showOpenFilePicker({
                 types: [{
                     description: 'SD生成的PNG图片',
                     accept: {
                         'image/png': ['.png']
-                        }
-                    }],
+                    }
+                }],
                 excludeAcceptAllOption: true,
                 multiple: false
-                });
+            });
             const file = await fileHandle.getFile();
             decodeImage(file)
+        }
+
+        async function decodeImage(file) {
+            document.querySelector("#upload-container").parentNode.classList.add("hidden")
+            clearImageData()
+            const objectURL = URL.createObjectURL(file);
+            const resultSelection = document.getElementById("result-section")
+            resultSelection.classList.remove("hidden")
+            const imageDiv = document.getElementById("image-preview")
+            imageDiv.src = objectURL
+            document.getElementById("file-name").textContent = file.name
+            document.getElementById("file-type").textContent = file.type
+            document.getElementById("file-size").textContent = formatFileSize(file.size)
+            const dimensions = await getImageDimensions(file)
+            document.getElementById("image-dimensions").textContent =
+                `${dimensions.width} x ${dimensions.height}, ${dimensions.ratio}`
+            try {
+                const result = await parsePngTextChunks(file)
+                const generation_data = result.find(it => it.key === "generation_data")
+                if (!generation_data) {
+                    alert("这张图片不是由stable diffusion生成的，或者用户发送时没有选择发送原图导致信息丢失")
+                    return
+                }
+                const metaJson = JSON.parse(generation_data.value)
+                if (metaJson.seed === "-1") {
+                    const parsedWorkflow = JSON.parse(result[1].value);
+                    for (const [_, node] of Object.entries(parsedWorkflow)) {
+                        if (node.class_type === 'KSampler') {
+                            metaJson.seed = node.inputs.seed;
+                            break;
+                        }
+                    }
+                }
+                const genData = parseGenerationData(metaJson)
+                document.getElementById("gen-prompt").textContent = genData.prompt || "无";
+                document.getElementById("gen-negative-prompt").textContent = genData.negativePrompt || "无";
+                document.getElementById("gen-size").textContent = genData.size || "无";
+                document.getElementById("gen-seed").textContent = genData.seed || "无";
+                document.getElementById("gen-model").textContent = genData.model || "无";
+                document.getElementById("gen-steps").textContent = genData.steps || "无";
+                document.getElementById("gen-sampler").textContent = genData.sampler || "无";
+                document.getElementById("gen-schedule").textContent = genData.schedule || "无";
+                document.getElementById("gen-cfg-scale").textContent = genData.cfgScale || "无";
+                document.getElementById("gen-denoising-strength").textContent = genData.denoisingStrength || "无";
+                document.getElementById("gen-clip-skip").textContent = genData.clipSkip || "无";
+                document.getElementById("gen-vae").textContent = genData.vae || "无";
+
+                // 处理LoRA数据
+                if (genData.lora && genData.lora.length > 0) {
+                    document.getElementById("gen-lora").textContent = genData.lora.map(lora =>
+                        `${lora.name || '未知'} (${lora.weight})`
+                    ).join(', ');
+                } else {
+                    document.getElementById("gen-lora").textContent = "无";
+                }
+
+                // 处理高分辨率优化
+                if (genData.hires) {
+                    document.getElementById("gen-hires-resize").textContent = genData.hires.resize || "无";
+                    document.getElementById("gen-hires-steps").textContent = genData.hires.steps || "无";
+                    document.getElementById("gen-hires-upscaler").textContent = genData.hires.upscaler || "无";
+                } else {
+                    document.getElementById("gen-hires-resize").textContent = "无";
+                    document.getElementById("gen-hires-steps").textContent = "无";
+                    document.getElementById("gen-hires-upscaler").textContent = "无";
+                }
+            } catch (e) {
+                console.log(e)
             }
-            async function decodeImage(file){
-                clearImageData()
-                const objectURL = URL.createObjectURL(file);
-                const resultSelection = document.getElementById("result-section")
-                resultSelection.classList.remove("hidden")
-                const imageDiv = document.getElementById("image-preview")
-                imageDiv.src=objectURL
-                document.getElementById("file-name").textContent = file.name
-                document.getElementById("file-type").textContent = file.type
-                document.getElementById("file-size").textContent = formatFileSize(file.size)
-                const dimensions = await getImageDimensions(file)
-                document.getElementById("image-dimensions").textContent =
-                    `${dimensions.width} x ${dimensions.height}, ${dimensions.ratio}`
-                try {
-                    const result = await parsePngTextChunks(file)
-                    const generation_data = result.find(it=>it.key==="generation_data")
-                    if (!generation_data){
-                        alert("这张图片不是由stable diffusion生成的，或者用户发送时没有选择发送原图导致信息丢失")
-                        return
-                        }
-                    const metaJson=JSON.parse(generation_data.value)
-                    if (metaJson.seed==="-1"){
-                        const parsedWorkflow = JSON.parse(result[1].value);
-                        for (const [_, node] of Object.entries(parsedWorkflow)) {
-                            if (node.class_type === 'KSampler') {
-                                metaJson.seed = node.inputs.seed;
-                                break;
-                                }
-                            }
-                        }
-                    const genData = parseGenerationData(metaJson)
-                    document.getElementById("gen-prompt").textContent = genData.prompt || "无";
-                    document.getElementById("gen-negative-prompt").textContent = genData.negativePrompt || "无";
-                    document.getElementById("gen-size").textContent = genData.size || "无";
-                    document.getElementById("gen-seed").textContent = genData.seed || "无";
-                    document.getElementById("gen-model").textContent = genData.model || "无";
-                    document.getElementById("gen-steps").textContent = genData.steps || "无";
-                    document.getElementById("gen-sampler").textContent = genData.sampler || "无";
-                    document.getElementById("gen-schedule").textContent = genData.schedule || "无";
-                    document.getElementById("gen-cfg-scale").textContent = genData.cfgScale || "无";
-                    document.getElementById("gen-denoising-strength").textContent = genData.denoisingStrength || "无";
-                    document.getElementById("gen-clip-skip").textContent = genData.clipSkip || "无";
-                    document.getElementById("gen-vae").textContent = genData.vae || "无";
+        }
 
-                    // 处理LoRA数据
-                    if (genData.lora && genData.lora.length > 0) {
-                        document.getElementById("gen-lora").textContent = genData.lora.map(lora =>
-                            `${lora.name || '未知'} (${lora.weight})`
-                            ).join(', ');
-                        } else {
-                        document.getElementById("gen-lora").textContent = "无";
-                        }
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
 
-                    // 处理高分辨率优化
-                    if (genData.hires) {
-                        document.getElementById("gen-hires-resize").textContent = genData.hires.resize || "无";
-                        document.getElementById("gen-hires-steps").textContent = genData.hires.steps || "无";
-                        document.getElementById("gen-hires-upscaler").textContent = genData.hires.upscaler || "无";
-                        } else {
-                        document.getElementById("gen-hires-resize").textContent = "无";
-                        document.getElementById("gen-hires-steps").textContent = "无";
-                        document.getElementById("gen-hires-upscaler").textContent = "无";
-                        }
-                    } catch (e){
-                    console.log(e)
-                    }
-                }
-            function formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes';
-                const k = 1024;
-                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-                }
+        async function getImageDimensions(file) {
+            return new Promise((resolve, reject) => {
+                const image = new Image();
+                const url = URL.createObjectURL(file);
 
-            async function getImageDimensions(file) {
-                return new Promise((resolve, reject) => {
-                    const image = new Image();
-                    const url = URL.createObjectURL(file);
-
-                    image.onload = () => {
-                        const width = image.naturalWidth;
-                        const height = image.naturalHeight;
-                        const divisor = gcd(width, height);
-                        const ratio = `${width / divisor}:${height / divisor}`;
-                        URL.revokeObjectURL(url);
-                        resolve({ width, height, ratio });
-                        };
-
-                    image.onerror = (err) => {
-                        URL.revokeObjectURL(url);
-                        reject(new Error("图片加载失败"));
-                        };
-
-                    image.src = url;
+                image.onload = () => {
+                    const width = image.naturalWidth;
+                    const height = image.naturalHeight;
+                    const divisor = gcd(width, height);
+                    const ratio = `${width / divisor}:${height / divisor}`;
+                    URL.revokeObjectURL(url);
+                    resolve({
+                        width,
+                        height,
+                        ratio
                     });
-                }
-            function gcd(a, b) {
-                return b === 0 ? a : gcd(b, a % b);
-                }
-            function parsePngTextChunks(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader()
-                    reader.onload = function (ev) {
-                        const arrayBuffer = ev.target.result
-                        const dataView = new DataView(arrayBuffer)
+                };
 
-                        // 验证 PNG 文件签名
-                        const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10]
-                        for (let i = 0; i < 8; i++) {
-                            if (dataView.getUint8(i) !== pngSignature[i]) {
-                                reject(new Error('不是有效的 PNG 文件'))
-                                return
-                                }
+                image.onerror = (err) => {
+                    URL.revokeObjectURL(url);
+                    reject(new Error("图片加载失败"));
+                };
+
+                image.src = url;
+            });
+        }
+
+        function gcd(a, b) {
+            return b === 0 ? a : gcd(b, a % b);
+        }
+
+        function parsePngTextChunks(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader()
+                reader.onload = function (ev) {
+                    const arrayBuffer = ev.target.result
+                    const dataView = new DataView(arrayBuffer)
+
+                    // 验证 PNG 文件签名
+                    const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10]
+                    for (let i = 0; i < 8; i++) {
+                        if (dataView.getUint8(i) !== pngSignature[i]) {
+                            reject(new Error('不是有效的 PNG 文件'))
+                            return
+                        }
+                    }
+
+                    let offset = 8
+                    const texts = []
+
+                    // 遍历 chunk
+                    while (offset < dataView.byteLength) {
+                        const length = dataView.getUint32(offset, false)
+                        const type = readString(dataView, offset + 4, 4)
+                        const dataStart = offset + 8
+
+                        if (type === 'tEXt') {
+                            // tEXt 格式为：key\0value
+                            let keyEnd = dataStart
+                            while (dataView.getUint8(keyEnd) !== 0 && keyEnd < dataStart + length) {
+                                keyEnd++
                             }
-
-                        let offset = 8
-                        const texts = []
-
-                        // 遍历 chunk
-                        while (offset < dataView.byteLength) {
-                            const length = dataView.getUint32(offset, false)
-                            const type = readString(dataView, offset + 4, 4)
-                            const dataStart = offset + 8
-
-                            if (type === 'tEXt') {
-                                // tEXt 格式为：key\0value
-                                let keyEnd = dataStart
-                                while (dataView.getUint8(keyEnd) !== 0 && keyEnd < dataStart + length) {
-                                    keyEnd++
-                                    }
-                                const key = readString(dataView, dataStart, keyEnd - dataStart)
-                                const value = readString(dataView, keyEnd + 1, dataStart + length - keyEnd - 1)
-                                texts.push({ key, value:trimNullChar(value) })
-                                }
-
-                            offset += length + 12 // chunk: length(4) + type(4) + data + crc(4)
-                            }
-
-                        resolve(texts)
+                            const key = readString(dataView, dataStart, keyEnd - dataStart)
+                            const value = readString(dataView, keyEnd + 1, dataStart + length - keyEnd - 1)
+                            texts.push({
+                                key,
+                                value: trimNullChar(value)
+                            })
                         }
 
-                    reader.onerror = (err) => reject(err)
-                    reader.readAsArrayBuffer(file)
-                    })
+                        offset += length + 12 // chunk: length(4) + type(4) + data + crc(4)
+                    }
 
-                function readString(view, offset, length) {
-                    let str = ''
-                    for (let i = 0; i < length; i++) {
-                        str += String.fromCharCode(view.getUint8(offset + i))
-                        }
-                    return str
-                    }
-                function trimNullChar(str) {
-                    return str.replace(/\x00+$/, '')
-                    }
+                    resolve(texts)
                 }
 
-            function parseGenerationData(metaJson) {
-                // 辅助提取LoRA列表
-                function extractLoraList(models) {
-                    if (!Array.isArray(models)) return []
-                    return models
-                        .filter(m => m.type === 'LORA')
-                        .map(m => ({
+                reader.onerror = (err) => reject(err)
+                reader.readAsArrayBuffer(file)
+            })
+
+            function readString(view, offset, length) {
+                let str = ''
+                for (let i = 0; i < length; i++) {
+                    str += String.fromCharCode(view.getUint8(offset + i))
+                }
+                return str
+            }
+
+            function trimNullChar(str) {
+                return str.replace(/\x00+$/, '')
+            }
+        }
+
+        function parseGenerationData(metaJson) {
+            // 辅助提取LoRA列表
+            function extractLoraList(models) {
+                if (!Array.isArray(models)) return []
+                return models
+                    .filter(m => m.type === 'LORA')
+                    .map(m => ({
                         name: m.modelFileName,
                         label: m.label,
                         weight: m.weight
-                        }))
-                    }
+                    }))
+            }
 
-                return {
-                    prompt: metaJson.prompt || '',
-                    negativePrompt: metaJson.negativePrompt || '',
-                    size: (metaJson.width && metaJson.height) ? `${metaJson.width}x${metaJson.height}` : '',
-                    seed: metaJson.seed || '',
-                    model: (metaJson.baseModel && metaJson.baseModel.modelFileName) || '',
-                    steps: metaJson.steps || 0,
-                    sampler: metaJson.samplerName || '',
-                    ksampler: metaJson.ksamplerName || '',
-                    schedule: metaJson.schedule || '',
-                    cfgScale: metaJson.cfgScale || 0,
-                    guidance: metaJson.guidance || 0,
-                    vae: metaJson.sdVae || '',
-                    denoisingStrength: metaJson.denoisingStrength || 0,
-                    clipSkip: metaJson.clipSkip || 0,
-                    lora: extractLoraList(metaJson.models),
-                    hires: {
-                        resize: (metaJson.hrResizeX && metaJson.hrResizeY) ? `${metaJson.hrResizeX}x${metaJson.hrResizeY}` : '',
-                        steps: metaJson.hrSecondPassSteps || 0,
-                        upscaler: metaJson.hrUpscaler || ''
-                        }
-                    }
+            return {
+                prompt: metaJson.prompt || '',
+                negativePrompt: metaJson.negativePrompt || '',
+                size: (metaJson.width && metaJson.height) ? `${metaJson.width}x${metaJson.height}` : '',
+                seed: metaJson.seed || '',
+                model: (metaJson.baseModel && metaJson.baseModel.modelFileName) || '',
+                steps: metaJson.steps || 0,
+                sampler: metaJson.samplerName || '',
+                ksampler: metaJson.ksamplerName || '',
+                schedule: metaJson.schedule || '',
+                cfgScale: metaJson.cfgScale || 0,
+                guidance: metaJson.guidance || 0,
+                vae: metaJson.sdVae || '',
+                denoisingStrength: metaJson.denoisingStrength || 0,
+                clipSkip: metaJson.clipSkip || 0,
+                lora: extractLoraList(metaJson.models),
+                hires: {
+                    resize: (metaJson.hrResizeX && metaJson.hrResizeY) ? `${metaJson.hrResizeX}x${metaJson.hrResizeY}` : '',
+                    steps: metaJson.hrSecondPassSteps || 0,
+                    upscaler: metaJson.hrUpscaler || ''
                 }
-            function allowDrop(e) {
-                e.preventDefault();
-                }
+            }
+        }
 
-            function handleDrop(e) {
-                e.preventDefault();
-                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+        function allowDrop(e) {
+            e.preventDefault();
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            if (files.length > 0) {
                 decodeImage(files[0])
-                }
-            function clearImageData() {
-                // 清空所有SD生成信息
-                const sdFields = [
-                    "gen-prompt",
-                    "gen-negative-prompt",
-                    "gen-size",
-                    "gen-seed",
-                    "gen-model",
-                    "gen-steps",
-                    "gen-sampler",
-                    "gen-schedule",
-                    "gen-cfg-scale",
-                    "gen-denoising-strength",
-                    "gen-clip-skip",
-                    "gen-vae",
-                    "gen-lora",
-                    "gen-hires-resize",
-                    "gen-hires-steps",
-                    "gen-hires-upscaler"
-                    ];
+            }
+        }
 
-                sdFields.forEach(id => {
-                    document.getElementById(id).textContent = "";
-                    });
+        function clearImageData() {
+            const sdFields = [
+                "gen-prompt",
+                "gen-negative-prompt",
+                "gen-size",
+                "gen-seed",
+                "gen-model",
+                "gen-steps",
+                "gen-sampler",
+                "gen-schedule",
+                "gen-cfg-scale",
+                "gen-denoising-strength",
+                "gen-clip-skip",
+                "gen-vae",
+                "gen-lora",
+                "gen-hires-resize",
+                "gen-hires-steps",
+                "gen-hires-upscaler"
+            ];
 
-                // 隐藏结果区域
-                document.getElementById("result-section").classList.add("hidden");
-                }
+            sdFields.forEach(id => {
+                document.getElementById(id).textContent = "";
+            });
+        }
     </script>
 </BaseLayout>

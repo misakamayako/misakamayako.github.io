@@ -8,7 +8,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^6.3.2",
+    "@astrojs/markdown-remark": "^6.3.3",
     "@astrojs/react": "^4.3.0",
     "@astrojs/sitemap": "^3.4.1",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -17,20 +17,23 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@tailwindcss/postcss": "^4.0.9",
     "@tailwindcss/vite": "^4.0.9",
-    "astro": "^5.11.0",
+    "astro": "^5.12.0",
+    "colorjs.io": "^0.5.2",
     "matewind": "1.2.1",
     "postcss": "^8.5.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "rehype-mermaid": "^3.0.0",
-    "sharp": "^0.34.2"
+    "rehype-pretty-code": "^0.14.1",
+    "sharp": "^0.34.2",
+    "shiki": "^3.8.0"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.4",
     "@types/node": "22.15.30",
     "@webgpu/types": "^0.1.61",
     "autoprefixer": "^10.4.8",
-    "eslint": "^9.21.0",
+    "eslint": "^9.31.0",
     "lightningcss": "^1.30.1",
     "playwright": "^1.53.2",
     "tailwindcss": "^4.0.9",

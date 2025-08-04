@@ -7,11 +7,106 @@ const baseURL = import.meta.env.BASE_URL
 ---
 <HomeLayout pageTitle={title}>
     <div class= {HomeStyle.home}>
+        <canvas id="wall" class="absolute t-0 l-0"></canvas>
+        <div class={HomeStyle.water}></div>
         <div class={HomeStyle.menu}>
             <a href={`${baseURL}blog/`}>blog</a>
+            <a href={`${baseURL}utils/`}>utils</a>
             <a href={`${baseURL}dream-map/`}>dream map</a>
             <a href={`${baseURL}album/`}>album</a>
             <a href={`${baseURL}about-me/`}>about me</a>
         </div>
     </div>
+    <script is:inline>
+        const canvas = document.getElementById("wall");
+        const ctx = canvas.getContext("2d");
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", resize);
+
+        const fontSize = 14;
+        const fontWidth = 9;
+        const groupSize = 8;
+        const groupGap = 4;
+
+        const hexChars = "0123456789ABCDEF";
+
+        // 计算横向可以容纳多少组
+        const cols = () => Math.floor(canvas.width / ((fontWidth * groupSize) + groupGap));
+        const rows = () => Math.floor((canvas.height * 0.65) / fontSize);
+
+        // 初始化二维字符数组
+        let grid = [];
+
+        function generateGroup() {
+            return Array.from({length: groupSize}, () =>
+                hexChars[Math.floor(Math.random() * hexChars.length)]
+            ).join("");
+        }
+
+        function initGrid() {
+            grid = Array.from({length: cols() + 1}, () =>
+                Array.from({length: rows() + 1}, () => generateGroup())
+            );
+        }
+
+        window.addEventListener("resize", initGrid);
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillColor='#000'
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `bold ${fontSize}px monospace`;
+            ctx.textAlign = "left";
+            ctx.textBaseline = "top";
+
+            for (let x = 0; x < grid.length; x++) {
+                for (let y = 0; y < grid[0].length; y++) {
+                    // 随机替换字符组（5% 概率）
+                    if (Math.random() < 0.05) {
+                        grid[x][y] = generateGroup();
+                    }
+
+                    const text = grid[x][y];
+                    const posX = x * ((groupSize * fontWidth) + groupGap);
+                    const posY = y * fontSize;
+
+                    ctx.shadowColor = "black";
+                    ctx.shadowBlur = 6;
+                    ctx.fillStyle = "#757575";
+                    ctx.fillText(text, posX, posY);
+                }
+            }
+            drawGradient()
+        }
+        function drawGradient() {
+            const width = window.innerWidth
+            const height = window.innerHeight
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY);
+            const percent =0.5;
+            const gradient = ctx.createRadialGradient(
+                centerX, centerY, 0,
+                centerX, centerY, maxRadius
+            );
+
+            // 添加色标
+            gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(percent, 'rgba(0, 0, 0, 0)');
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+
+            // 应用渐变
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+        }
+        resize()
+        initGrid()
+        draw()
+        setInterval(draw, 1500)
+    </script>
 </HomeLayout>

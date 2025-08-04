@@ -1,8 +1,10 @@
 ---
-
 import BaseLayout from "../../layouts/home.astro"
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
 ---
 <BaseLayout pageTitle="WebGPU vs CPU 性能对比">
+    <Navigation/>
     <style>
         :root {
             --primary: #4a6fa5;
@@ -22,16 +24,6 @@ import BaseLayout from "../../layouts/home.astro"
             margin: 0;
             padding: 0;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
-            color: var(--light);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
         .container {
             max-width: unset;
             margin: 0 auto;
@@ -326,7 +318,7 @@ import BaseLayout from "../../layouts/home.astro"
             }
         }
     </style>
-    <div class="container">
+    <div class="container" style="background: linear-gradient(135deg, #1a2a6c, #2c3e50);color: var(--light);">
         <header>
             <h1>WebGPU vs CPU 性能对比</h1>
             <p class="subtitle">本演示使用 WebGPU 和 JavaScript 计算最近邻点，对比 GPU 和 CPU
@@ -340,7 +332,7 @@ import BaseLayout from "../../layouts/home.astro"
                 <div class="controls">
                     <div class="control-group">
                         <label for="pointCount">点的数量:</label>
-                        <input id="pointCount"  value="500000">
+                        <input id="pointCount"  value="1000000">
                     </div>
 
                     <div class="control-group">
@@ -412,7 +404,7 @@ import BaseLayout from "../../layouts/home.astro"
             </div>
         </main>
     </div>
-
+    <Footer/>
     <script is:inline>
         /// <reference types="@webgpu/types" />
         document.addEventListener('DOMContentLoaded', () => {

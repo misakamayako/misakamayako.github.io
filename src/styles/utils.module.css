@@ -1,0 +1,176 @@
+@reference "./global.css";
+@layer components {
+    header {
+        @apply text-center px-5 py-10 mb-8 relative;
+    }
+
+    header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: #0ea5e9;
+        border-radius: 2px;
+    }
+
+    h1 {
+        @apply text-5xl mb-2 bg-linear-to-br from-sky-500 to-violet-100;
+        @apply bg-clip-text text-transparent font-extrabold;
+    }
+
+    .subtitle {
+        @apply leading-5 text-violet-100;
+    }
+
+    .controls {
+        @apply flex justify-center flex-wrap gap-5 my-10 py-5;
+    }
+
+    .searchBox {
+        @apply relative w-full max-w-100;
+    }
+
+    .searchBox input {
+        @apply w-full rounded-2xl border-2 border-slate-600;
+        @apply bg-slate-700/60 text-stone-50 outline-none;
+        @apply transition-colors duration-300;
+        padding: 15px 20px 15px 50px;
+    }
+
+    .searchBox input:focus {
+        @apply border-sky-500 shadow-cyan-600/70;
+    }
+    .utilsContainer {
+        @apply grid gap-6 p-5;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    }
+    .utilCard {
+        @apply text-base bg-slate-900/70 overflow-hidden shadow;
+        @apply transition-all duration-300 ease-in relative;
+        @apply flex flex-col h-full border border-black/5;
+        @apply rounded-2xl hover:-translate-y-2 hover:border-slate-800/30;
+    }
+    .cardHeader {
+        @apply px-6 pt-4;
+        background: rgba(30, 41, 59, 0.5);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .cardIcon {
+        @apply w-15 h-15 bg-slate-600 rounded-2xl flex items-center justify-center;
+        @apply mb-5;
+    }
+    .cardTitle{
+        @apply text-xl mb-2 text-stone-50;
+    }
+    .cardBody {
+        @apply px-5 py-6 grow;
+    }
+    .cardDescription{
+        @apply text-stone-200 leading-5 mb-6;
+    }
+    .cardFooter {
+        @apply px-6 flex justify-between items-center pb-4;
+    }
+    .cardDate{
+        @apply text-stone-200 text-sm;
+    }
+    .card-link {
+        display: inline-flex;
+        align-items: center;
+        background: #0ea5e9;
+        color: white;
+        text-decoration: none;
+        padding: 10px 25px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+
+    .card-link:hover {
+        background: #0284c7;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4);
+    }
+}
+
+@layer base {
+    .body {
+        @apply text-teal-50 grow-1 p-5;
+        @apply bg-linear-to-br from-slate-600 to-slate-700;
+    }
+}
+
+
+
+
+
+/*.card-category {*/
+/*    display: inline-block;*/
+/*    background: rgba(14, 165, 233, 0.2);*/
+/*    color: #0ea5e9;*/
+/*    padding: 5px 15px;*/
+/*    border-radius: 6px;*/
+/*    font-size: 0.85rem;*/
+/*    font-weight: 600;*/
+/*}*/
+
+
+
+
+
+/*.card-link i {*/
+/*    margin-left: 8px;*/
+/*    font-size: 0.9rem;*/
+/*}*/
+
+/*.no-results {*/
+/*    grid-column: 1 / -1;*/
+/*    text-align: center;*/
+/*    padding: 60px 20px;*/
+/*    font-size: 1.2rem;*/
+/*    color: #94a3b8;*/
+/*}*/
+
+/*footer {*/
+/*    text-align: center;*/
+/*    padding: 40px 20px 20px;*/
+/*    color: #94a3b8;*/
+/*    font-size: 1rem;*/
+/*    margin-top: 50px;*/
+/*}*/
+
+/*.card-badge {*/
+/*    position: absolute;*/
+/*    top: 15px;*/
+/*    right: 15px;*/
+/*    background: #10b981;*/
+/*    color: white;*/
+/*    padding: 5px 15px;*/
+/*    border-radius: 6px;*/
+/*    font-size: 0.8rem;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    h1 {*/
+/*        font-size: 2.5rem;*/
+/*    }*/
+
+/*    .utils-container {*/
+/*        grid-template-columns: 1fr;*/
+/*        padding: 10px;*/
+/*    }*/
+
+/*    .controls {*/
+/*        flex-direction: column;*/
+/*        align-items: center;*/
+/*    }*/
+
+/*    .search-box {*/
+/*        max-width: 100%;*/
+/*    }*/
+/*}*/
+/*</style>*/

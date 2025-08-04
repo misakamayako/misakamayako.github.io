@@ -1,0 +1,73 @@
+---
+import Home from "../layouts/home.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faImage, faMicrochip, faPalette, faSearch} from "@fortawesome/free-solid-svg-icons";
+import localStyle from "../styles/utils.module.css"
+const pages = [
+    {
+        icon: faMicrochip,
+        title: 'GPU性能测试',
+        description: "比较WebGPU vs CPU 在简短计算上的性能对比",
+        date: "2025/07/14",
+        url: "/extras/GPUTestCase/"
+    },
+    {
+        icon: faImage,
+        title: 'SD decoder',
+        description: "解析stable diffusion AI绘画的生成数据",
+        date: "2025/07/15",
+        url: "/extras/sd-decode/"
+    },
+    {
+        icon: faPalette,
+        title: 'color to tailwind',
+        description: "将任意色彩空间的颜色转换为最接近的tailwind颜色",
+        date: "2025/07/21",
+        url: "/extras/colorsToTailwind/"
+    }
+]
+---
+<Home pageTitle="工具列表">
+    <Navigation/>
+    <div class={localStyle.body}>
+        <div class="container m-auto">
+            <header>
+                <h1>实用工具集合</h1>
+                <p class="subtitle">这里汇集了我开发的各种实用小工具，帮助您提高工作效率，解决日常开发中的常见问题。</p>
+            </header>
+
+            <div class={localStyle.controls}>
+                <div class={localStyle.searchBox}>
+                    <FontAwesomeIcon icon={faSearch} className="w-3.5 absolute left-6 top-6"/>
+                    <input type="text" id="search-input" placeholder="搜索工具...">
+                </div>
+            </div>
+
+            <div class={localStyle.utilsContainer} id="utils-container">
+                {
+                    pages.map(it => (
+                            <div class={localStyle.utilCard}>
+                                <div class={localStyle.cardHeader}>
+                                    <div class={localStyle.cardIcon}>
+                                        <FontAwesomeIcon icon={it.icon} className="w-8"/>
+                                    </div>
+                                    <h3 class={localStyle.cardTitle}>{it.title}</h3>
+                                </div>
+                                <div class={localStyle.cardBody}>
+                                    <p class={localStyle.cardDescription}>{it.description}</p>
+                                </div>
+                                <div class={localStyle.cardFooter}>
+                                    <span class={localStyle.cardDate}>{it.date}</span>
+                                    <a href={it.url} class="card-link">立即使用 <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                    ))
+                }
+
+            </div>
+        </div>
+    </div>
+    <Footer/>
+</Home>

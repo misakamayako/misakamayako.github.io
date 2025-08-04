@@ -32,7 +32,7 @@ pnpm build
 ```
 ### Docker部署
 ```bash
-docker-compose -f docker-compose.prod.yml up -d
+docker compose -f .\docker-compose.prod.yml up --build
 ```
 ## 📂 项目结构
 ```
@@ -61,7 +61,7 @@ tags: [技术, 前端]
 1. **新增文章**：在`src/content/blog/`创建`.md`文件
 2. **样式开发**：
    - 全局样式：`src/styles/global.css`
-   - 模块化CSS：`*.module.css/scss`
+   - 模块化CSS：`*.module.css`
 3. **组件开发**：使用React+TypeScript编写
 
 ## 📦 核心依赖

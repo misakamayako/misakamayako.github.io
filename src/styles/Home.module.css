@@ -1,36 +1,30 @@
 @reference "./global.css";
 .home {
-  background: url("/img/background.jpg") no-repeat;
-  @apply bg-cover;
-  @apply h-screen;
-  @apply w-screen;
-  @apply flex;
-  @apply flex-col;
-  @apply flex-nowrap;
-  @apply content-center;
-  @apply items-center;
-  @apply justify-center;
+    @apply bg-black h-screen w-screen flex flex-col;
+    @apply flex-nowrap content-center items-center justify-center;
+}
+
+.water {
+    @apply absolute bottom-0 h-[47%] w-full bg-no-repeat;
+    background: url('/img/background.jpg') no-repeat center bottom;
+    @apply bg-cover;
 }
 
 .menu {
-  @apply bg-clip-text;
-  @apply text-6xl;
-  @apply text-center;
-  @apply uppercase;
-  @apply leading-relaxed;
-  background-image: linear-gradient(225deg,#fff 35%,#4e6773);
-  -webkit-text-fill-color: transparent;
-  font-family: "Phage Rough";
-  a{
-    @apply block;
-    &:hover::after{
-      content: '';
-      @apply block;
-      @apply w-full;
-      @apply left-0;
-      @apply bottom-0;
-      height: 2px;
-      background-color: aliceblue;
+    @apply bg-clip-text text-6xl text-center  uppercase leading-relaxed z-50;
+    @apply bg-linear-to-bl from-zinc-100 via-slate-500 to-zinc-500;
+    @apply text-transparent;
+    font-family: "Phage Rough";
+
+    a {
+        @apply block bg-clip-text static;
+        &::after {
+            content: '';
+            @apply w-full left-0 bottom-0 block opacity-0 bg-sky-50;
+            @apply h-0.5 transition-opacity;
+        }
+        &:hover::after{
+            @apply opacity-100;
+        }
     }
-  }
 }

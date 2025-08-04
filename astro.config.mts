@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import react from "@astrojs/react"
 import {rehypeHeadingIds} from '@astrojs/markdown-remark';
 import rehypeMermaid from 'rehype-mermaid';
+import rehypePrettyCode from "rehype-pretty-code";
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -23,7 +24,8 @@ export default defineConfig({
                         theme: "dark"
                     }
                 }
-            ]
+            ],
+            rehypePrettyCode
         ],
     },
     site: "https://misakamayako.github.io/",

@@ -83,7 +83,7 @@ fun main() = Arena.ofConfined().use { arena ->
 
 * **FFM 安全机制**：FFM API 引入了多项内置安全措施。`MemorySegment` 在默认情况下会进行边界检查，防止越界访问；`Arena` 自动管理本地内存生命周期，出作用域即释放，减少泄漏风险。此外，FFM 的函数签名（`FunctionDescriptor`）在编译时可检查参数类型和数量是否匹配，降低调用错误率。阿里云社区指出，FFM 对类型检查和内存管理进行了全面升级，可以减少类型不匹配或内存泄漏导致的崩溃和安全问题。Java 团队也表示，相比 JNI 的“不安全”方法，FFM 的不安全操作易于从 Java 代码中调用，并且通过更多限制（例如 JEP 472 对JNI使用的限制）提高了整体安全性。
 
-* **访问权限控制**：在更高版本的 JDK 中，Java 开始对本地访问施加严格控制。JEP 472 即建议在未来对 JNI 调用发出警告或错误。FFM API 同样受限于“本地访问”策略，但由于 FFM 不支持直接访问 Java 对象（只能操作原生数据），对 JVM 内部状态干扰较少。因此，开发者可以更安全地在 Java 代码中使用 FFM，而减少产生 `--enable-native-access` 等安全风险。
+* **访问权限控制**：在更高版本的 JDK 中，Java 开始对本地访问施加严格控制。JEP 472 即建议在未来对 JNI 调用发出警告或错误。FFM API 同样受限于“本地访问”策略，但由于 FFM 不支持直接访问 Java 对象（只能操作原生数据），对 JVM 内部状态干扰较少。因此，开发者可以更安全地在 Java 代码中使用 FFM，从而减少产生 `--enable-native-access` 等安全风险。
 
 ## 可维护性与易用性
 
@@ -99,7 +99,7 @@ fun main() = Arena.ofConfined().use { arena ->
 
 * **JNI 的限制**：虽然 JNI 规范本身跨平台，但每种操作系统/CPU 架构都需要提供编译后的本地库（.so、.dll 等），并确保正确加载。不同平台可能存在 ABI 差异或对齐规则不同，JNI 接口代码常常需要针对平台进行调整。正因如此，以前的 Java 版本存在多种原生接口规范（如 Netscape JRI、RNI）并存的情况。即使现在大多数 JVM 遵循 JNI，开发者仍需为每个平台维护编译流程。
 
-* **FFM 的优势**：FFM API 采用标准的 C ABI（多数通过 libffi 实现），并内置对 Linux、macOS、Windows、AIX 等平台的支持。只要目标平台有相应的 C 库，Java 程序即可通过 FFM 调用，无需修改 Java 代码或重新生成 JNI 接口。Belief-driven-design 博客指出，FFM 有“更好的可移植性”，因为它不再依赖复杂而脆弱的 JNI 样板。在可移植性方面，FFM 让跨平台开发更加平滑：只需使用统一的 Java API，底层由 JVM 负责适配底层 ABI，从而避免了传统 JNI 在不同系统间反复编译的麻烦。
+* **FFM 的优势**：FFM API 采用标准的 C ABI（多数通过 libffi 实现），并内置对 Linux、macOS、Windows、AIX 等平台的支持。只要目标平台有相应的 C 库，Java 程序即可通过 FFM 调用，无需修改 Java 代码或重新生成 JNI 接口。Belief-driven-design 博客指出，FFM 有“更好的可移植性”，因为它不再依赖复杂而脆弱的 JNI 样板。在可移植性方面，FFM 让跨平台开发更加平滑：只需使用统一的 Java API，由 JVM 负责适配底层 ABI，从而避免了传统 JNI 在不同系统间反复编译的麻烦。
 
 ## C/C++ 代码实现差异
 

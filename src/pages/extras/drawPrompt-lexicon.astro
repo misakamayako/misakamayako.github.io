@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../../layouts/home.astro"
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import localCssModule from "../../styles/tag-collection.module.css"
+import {faCopy} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+import img1 from "../../assets/img/9234adc1b7f3df8cb96584adcd1feb04_720.png?url"
+import img2 from "../../assets/img/14ab4b5889df42d04e87279a9e30086f.png?url"
+import img3 from "../../assets/img/7dd2a76e54dd67b9e5fcb10099a05de7_720.png?url"
+import img4 from "../../assets/img/6c785ddf10a7d8f1a19a4827c79a141e_720.png?url"
+
+const collections = [
+    {
+        name:"魅态面容",
+        type:"氛围与情态",
+        content:"seductive pose, bedroom eyes, inviting expression",
+        url:img1
+    },
+    {
+        name:"更好看的高跟鞋",
+        type:"穿搭",
+        content:"christian louboutin (brand),stiletto heels)",
+        url:img2
+    },
+    {
+        name:"材质更好的黑丝",
+        type:"穿搭",
+        content:"black pantyhose,brown pantyhose",
+        url:img3
+    },
+    {
+        name:"乳胶光泽套装",
+        type:"穿搭",
+        content:"latex bodysuit,latex gloves,skin-tight latex catsuit,glossy, reflective",
+        url:img4
+    },
+]
+---
+<BaseLayout pageTitle="SD 词条收藏">
+    <Navigation/>
+    <div class="bg-slate-800 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto mb-12 text-center">
+            <h1 class="text-4xl font-bold mb-4">我的SD词条收藏</h1>
+            <p class="text-slate-400 text-lg">精心收集的优质Stable Diffusion提示词，点击复制按钮即可快速使用</p>
+        </div>
+
+        <!-- 复制成功提示 -->
+        <div id="copyNotification"
+             class="copy-notification fixed top-24 right-8 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 opacity-0 hidden">
+            <i class="fas fa-check-circle mr-2"></i>提示词已复制到剪贴板！
+        </div>
+
+        <!-- 词条卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+                collections.map(it=>(
+                        <div class={localCssModule.card}>
+                            <div class="relative">
+                                <img src={it.url} alt={it.name} class="w-full h-48 object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+                                <button class={localCssModule.copyButton}>
+                                    <FontAwesomeIcon icon={faCopy} className="w-3.5" data-content={it.content} />
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-bold text-lg">{it.name}</h3>
+                                    <span class="text-xs bg-blue-500 px-2 py-1 rounded select-none">{it.type}</span>
+                                </div>
+                                <p class="text-slate-300 text-sm mb-4 whitespace-pre-wrap max-h-16 overflow-auto">{it.content}</p>
+                            </div>
+                        </div>
+                ))
+            }
+        </div>
+    </main>
+    </div>
+    <Footer/>
+    <script define:vars={{visibleClass:localCssModule.copyNotification}}>
+        const copies = document.querySelectorAll("[data-content]");
+        const copyNotificationEl = document.querySelector("#copyNotification")
+        copies.forEach(it=>{
+            it.addEventListener("click",()=>{
+                navigator.clipboard.writeText(`(${it.dataset.content})`)
+                copyNotificationEl.classList.remove("hidden")
+                copyNotificationEl.classList.add(visibleClass)
+                setTimeout(()=>{
+                    copyNotificationEl.classList.add("hidden")
+                    copyNotificationEl.classList.remove(visibleClass)
+                },2000)
+            })
+        })
+    </script>
+</BaseLayout>

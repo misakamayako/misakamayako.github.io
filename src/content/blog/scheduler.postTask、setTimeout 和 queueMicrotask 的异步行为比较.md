@@ -4,7 +4,7 @@ title: scheduler.postTask、setTimeout 和 queueMicrotask 的异步行为比较
 slug: a09fa4518107
 pubDate: 2025/07/23
 description: 本篇文章深入比较了 scheduler.postTask(fn)、setTimeout(fn, 0) 和 queueMicrotask(fn) 三种在浏览器中创建异步任务的方法，详解它们在事件循环中的优先级、性能、调度行为与使用场景，帮助开发者在不同情境下选择最合适的异步调度工具。
-tags: [JavaScript, 异步编程, 事件循环,浏览器性能优化]
+tags: [JavaScript, 异步编程, 性能优化]
 ---
 在浏览器的事件循环模型中，**微任务**（Microtask）和**任务**（Task）是两种独立的队列。微任务队列会在当前任务结束后立刻被清空（渲染前执行所有微任务），而任务则在每轮事件循环执行一个任务后才处理微任务。`queueMicrotask(fn)` 将函数放入**微任务队列**，回调会在当前执行栈清空后马上执行（优先级最高）。而 `setTimeout(fn, 0)` 和 `scheduler.postTask(fn)` 都属于**任务**，它们的回调将在当前任务和所有微任务完成之后的下一个事件循环回合中运行。
 

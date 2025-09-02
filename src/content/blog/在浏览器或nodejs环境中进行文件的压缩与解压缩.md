@@ -1,6 +1,6 @@
 ---
 title: 前端数据压缩与解压缩实践指南
-tags: [ 前端开发, 数据压缩, gzip, 性能优化 ]
+tags: [ 前端开发, 数据压缩, 性能优化 ]
 description: 详细介绍前端环境中使用CompressionStream API进行文本数据压缩和解压缩的完整方案，包括适用场景、代码实现、注意事项以及浏览器兼容性要求。
 auth: misakamayako
 slug: 66edd596bab7

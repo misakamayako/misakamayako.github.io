@@ -3,7 +3,7 @@ import Home from "../layouts/home.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faImage, faMicrochip, faPalette, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faBrain, faImage, faMicrochip, faPalette, faSearch} from "@fortawesome/free-solid-svg-icons";
 import localStyle from "../styles/utils.module.css"
 const pages = [
     {
@@ -16,7 +16,7 @@ const pages = [
     {
         icon: faImage,
         title: 'SD decoder',
-        description: "解析stable diffusion AI绘画的生成数据",
+        description: "解析stable diffusion 绘画的生成数据",
         date: "2025/07/15",
         url: "/extras/sd-decode/"
     },
@@ -26,6 +26,13 @@ const pages = [
         description: "将任意色彩空间的颜色转换为最接近的tailwind颜色",
         date: "2025/07/21",
         url: "/extras/colorsToTailwind/"
+    },
+    {
+        icon: faBrain,
+        title: '绘想词典',
+        description: "收录并整理各类 Stable Diffusion 绘图提示词组合",
+        date: "2025/08/06",
+        url: "/extras/drawPrompt-lexicon/"
     }
 ]
 ---

@@ -1,7 +1,7 @@
 ---
 title: 如何优雅地处理用户取消文件上传的操作
 description: 用户点击文件上传后取消选择，不会触发 change 事件，本文介绍如何结合 blur 和 change 事件检测用户取消上传的行为，提升用户体验。
-tags: [ 文件上传, JavaScript, 用户体验, 前端开发, Web交互 ]
+tags: [ 文件上传, JavaScript, 用户体验, 前端开发 ]
 slug: 60810af53675
 auth: misakamayako
 pubDate: 2024/06/18

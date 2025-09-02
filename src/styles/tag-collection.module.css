@@ -1,0 +1,30 @@
+@import "./card.css";
+
+@reference "./global.css";
+@layer components{
+    .card:hover .copyButton{
+        @apply opacity-100;
+    }
+    .copyButton{
+        @apply  absolute top-3 right-3 bg-slate-800/80 text-white p-2;
+        @apply rounded-full opacity-0 transition-opacity;
+        @apply hover:bg-blue-600 cursor-pointer;
+    }
+    .copyNotification{
+        animation: fadeOut 2s forwards;
+    }
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        70% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+    }
+}

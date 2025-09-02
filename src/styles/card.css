@@ -1,0 +1,8 @@
+@reference "./global.css";
+@layer components {
+    .card{
+        @apply bg-slate-900/50 backdrop-blur-md rounded-xl shadow-lg overflow-hidden;
+        @apply p-6 border border-slate-700/30 transition-transform h-min;
+        @apply hover:border-cyan-300/50 hover:-translate-y-0.5;
+    }
+}

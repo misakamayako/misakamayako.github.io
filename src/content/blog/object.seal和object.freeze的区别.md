@@ -1,7 +1,7 @@
 ---
 title: Object.seal 和 Object.freeze 的区别
 description: 本文深入讲解 JavaScript 中 Object.seal() 和 Object.freeze() 的使用方式与区别，涵盖属性的可修改性、添加/删除限制，以及它们的浅冻结特性等内容。
-tags: [JavaScript, 对象操作, 前端开发]
+tags: [JavaScript, 前端开发]
 slug: 33d0f9bc90ea
 auth: misakamayako
 pubDate: 2024/05/23

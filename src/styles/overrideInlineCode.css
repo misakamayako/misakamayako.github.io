@@ -5,3 +5,6 @@
         content: none;
     }
 }
+blockquote code{
+    @apply italic;
+}

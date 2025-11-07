@@ -34,7 +34,7 @@ const baseURL = import.meta.env.BASE_URL
     <div class="bg-slate-800 h-screen flex flex-col">
         <Navigation/>
         <div class="flex p-4 grow flex-row h-full overflow-hidden">
-            <aside class="w-1/4 ml-4 md:block min-w-[200px]">
+            <aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto">
                 <div class="sticky top-4 space-y-6">
                     <div class="bg-slate-700 p-4 rounded-lg">
                         <img src={frontmatter.avatar ?? `${baseURL}avatar.jpg`} class="w-16 h-16 rounded-full mx-auto"/>

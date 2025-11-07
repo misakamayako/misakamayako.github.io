@@ -1,7 +1,7 @@
 ---
 title: Sass 与 Less：哪种 CSS 预处理器更适合你？
 description: 比较 Sass 和 Less 这两种主流 CSS 预处理器，从语法、功能、安装方式到适用场景，帮助你选择最适合的工具。
-tags: [CSS, Sass, Less, 前端开发]
+tags: [CSS, 样式预处理, 前端开发]
 translated: true
 translator: misakamayako
 auth: Juan Salas

@@ -1,7 +1,7 @@
 ---
 title: Kotlin 引用操作符(::)的使用
 description: 本文介绍了 Kotlin 中双冒号（::）引用操作符的基本语法和典型用法，包括函数引用、类成员函数引用与伴生对象函数引用等场景，帮助开发者编写更简洁高效的代码。
-tags: [Kotlin, 引用操作符, 函数引用, 语法特性]
+tags: [Kotlin, 语法特性]
 slug: 18b5a9299ef3
 auth: misakamayako
 pubDate: 2024/08/09

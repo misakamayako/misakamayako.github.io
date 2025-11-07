@@ -1,7 +1,7 @@
 ---
 title: BroadcastChannel API 概述
 description: 本文详细介绍了 BroadcastChannel API 的用法、特性、浏览器兼容性及与其他前端通信方式的对比，帮助开发者理解如何在同源多页面环境中高效实现消息广播。
-tags: [ BroadcastChannel, 前端通信, Web API, 多标签页通信 ]
+tags: [ BroadcastChannel, 前端通信, Web API ]
 auth: misakamayako
 slug: 8b40690e60a0
 pubDate: 2025/05/20

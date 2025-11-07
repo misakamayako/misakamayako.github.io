@@ -4,7 +4,7 @@ title: axios在node环境中使用时不能正确访问本地服务的问题
 slug: 7631b3f6f737
 pubDate: 2023/01/10
 description: 本文介绍了在 Node.js 环境中使用 Axios 请求本地服务时可能遇到 ECONNREFUSED ::1:80 错误的原因，并解释了为何需要显式指定 host 来避免请求失败的问题。
-tags: [axios,nodejs,本地服务,网络请求,代理,nginx]
+tags: [nodejs,代理,nginx]
 ---
 在nodejs开发中可能需要访问本地的其他服务的接口，但是如果按照前端开发中的惯用写法，很可能会定义成这样:
 ```javascript

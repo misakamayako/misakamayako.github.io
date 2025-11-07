@@ -1,7 +1,7 @@
 ---
 title: Web Worker 类型概览
 description: 本文系统梳理了 Web 平台三种主要 Worker 类型——DedicatedWorker、SharedWorker 和 ServiceWorker，详细解析它们的通信机制、作用域、生命周期、浏览器支持及典型应用场景，帮助开发者选择合适的 Worker 类型提升性能与用户体验。
-tags: [Web Worker, DedicatedWorker, SharedWorker, ServiceWorker, 多线程, 前端性能, 离线缓存]
+tags: [Web Worker, 多线程, 前端性能, 离线缓存]
 slug: 15b29448545c
 auth: misakamayako
 pubDate: 2025/05/15

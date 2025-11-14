@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "6.3.8",
-    "@astrojs/react": "^4.4.0",
+    "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "3.6.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
@@ -17,7 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.6",
     "@tailwindcss/postcss": "^4.1.12",
     "@tailwindcss/vite": "^4.1.12",
-    "astro": "^5.14.4",
+    "astro": "^5.15.5",
     "colorjs.io": "^0.5.2",
     "matewind": "1.2.1",
     "postcss": "^8.5.6",

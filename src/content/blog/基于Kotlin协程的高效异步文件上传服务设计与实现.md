@@ -1,7 +1,7 @@
 ---
 title: 基于Kotlin协程的高效异步文件上传服务设计与实现
 description: 本文介绍如何使用Kotlin协程设计一个高效、可靠的异步文件上传服务，解决背压带来的资源瓶颈问题，并详细讲解协程管理、任务状态追踪、安全关闭等关键实现。
-tags: [Kotlin, 协程, 文件上传, OSS, 异步编程, 后端设计]
+tags: [Kotlin,Kotlin 协程, 文件上传, OSS, 异步编程, 后端设计]
 slug: 2b6de1fc1e65
 auth: misakamayako
 pubDate: 2024/07/03

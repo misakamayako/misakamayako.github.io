@@ -1,7 +1,7 @@
 ---
 title: 构建终极跨平台应用：Kotlin Multiplatform 与 Compose 共享 UI 架构指南
 description: 本指南深入探讨了采用Kotlin Multiplatform (KMP) 和 Compose Multiplatform 框架，构建高性能、高复用率跨平台应用的现代架构。文章详细阐述了如何在一个统一的composeApp模块中，实现业务逻辑、UI、导航、状态管理和数据层的极致代码共享，覆盖Android、iOS和桌面平台。您将了解KMP源集（commonMain, jvmMain, androidMain, iosMain, desktopMain）的精准分层与职责，以及如何运用Voyager进行共享导航、MVIKotlin进行声明式状态管理、Koin进行依赖注入、Room进行本地数据持久化以及Ktor进行网络通信。本架构旨在通过单一代码库，显著加速开发周期，确保跨平台用户体验的一致性，并构建高度可测试、可维护的未来就绪型应用。
-tags: [ Kotlin Multiplatform, 软件架构, Android,iOS,Desktop,Kotlin ]
+tags: [ KMP, 软件架构, Android,iOS,Desktop,Kotlin ]
 auth: misakamayako
 slug: 8b44690e60a0
 pubDate: 2025/09/01

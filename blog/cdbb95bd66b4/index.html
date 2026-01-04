@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.16.6"><title>✨御坂网络-深入理解 Kotlin 冷流 (Cold Flow)：异步数据流的基础✨</title><link rel="stylesheet" href="/_astro/index.BT8t14_1.css">
+<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88047 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% -.0000298023 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.BOOrbLic.css"><script type="module" src="/_astro/page.D1uwR3nK.js"></script></head> <body class="w-full h-full flex flex-col">  <div class="bg-slate-800 h-screen flex flex-col"> <div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div> <div class="flex p-4 grow flex-row h-full overflow-hidden"> <aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto"> <div class="sticky top-4 space-y-6"> <div class="bg-slate-700 p-4 rounded-lg"> <img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"> <p class="text-white text-center mt-2">作者：misakamayako</p>  <p class="text-white text-center mt-2">发布时间：2025/11/13</p> </div> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">简介</h3> <p class="text-white font-light mb-2">本文深入探讨了 Kotlin 协程中的核心概念——冷流 (Cold Flow)。文章通过生动的“点播视频”类比，详细解释了冷流的惰性本质，即只有在被订阅时才会执行。将学习到冷流的核心特性，包括其独立的执行实例、天然的背压机制以及与传统集合相比在内存效率和异步处理上的巨大优势。此外，文章还涵盖了 buffer 操作符对数据流的影响，并通过处理大型文件的实战案例，直观展示了冷流在性能优化中的强大作用。</p> </div> <!-- 2. 文章目录 --> <!--<div class="bg-slate-700 p-4 rounded-lg">--> <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>--> <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;--> <!--</div>--> <!-- 3. 随机文章 --> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">随便看看</h3> <div class="flex flex-wrap gap-2"> <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/33d0f9bc90ea/"> Object.seal 和 Object.freeze 的区别 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/3a01f54a22b0/"> 通过 Kotlin 反射获取属性注解并进行校验 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/8b40690e60a0/"> BroadcastChannel API 概述 </a> </div> </div> </div> </aside> <main class="grow h-full overflow-auto w-3/4 px-8"> <article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100">  <header> <h1>深入理解 Kotlin 冷流 (Cold Flow)：异步数据流的基础</h1> </header> <h2 id="1-什么是冷流">1. 什么是冷流？</h2>
+<p>冷流 (Cold Flow) 是 Kotlin 协程 Flow 中最基础也最重要的概念。用一个生活中的比喻来理解：</p>
+<blockquote>
+<p><strong>冷流就像视频平台上的点播视频</strong></p>
+<ul>
+<li><strong>被动播放</strong>：视频虽然存在于服务器上，但不会主动播放。只有当用户点击 <strong>播放 (<code>collect</code>)</strong> 时，视频才会开始传输。</li>
+<li><strong>独立进度</strong>：每个观众都有自己独立的播放进度。A 看到第 5 分钟，B 可能刚开始看，他们互不干扰。</li>
+</ul>
+</blockquote>
+<p>与之相对，<strong>热流 (Hot Flow)</strong> 就像直播，无论有没有人看，都在持续播放，且所有观众看到的是同一画面。</p>
+<p>简单来说，冷流是 <strong>惰性 (Lazy)</strong> 的。这意味着在没有订阅者调用 <code>collect()</code> 方法之前，<code>Flow</code> 构建块内部的代码 <strong>完全不执行</strong>。</p>
+<hr>
+<h2 id="2-核心特性">2. 核心特性</h2>
+<p>冷流具备以下四大核心特性：</p>
+<ol>
+<li><strong>惰性执行</strong>
+只有当终端操作符（如 <code>collect</code>）被调用时，生产者的代码才会真正开始运行。</li>
+<li><strong>独立实例</strong>
+每次调用 <code>collect()</code> 都会触发 <code>Flow</code> 的一次<strong>完整重新执行</strong>。每个订阅者都会获得一个全新的、从头开始的数据流，彼此之间没有任何关联。</li>
+<li><strong>无状态</strong>
+冷流本身不持有状态（如“当前最新的值”）。它只是一个定义了“如何生产数据”的蓝图或发射口。</li>
+<li><strong>响应取消</strong>
+冷流严格遵循协程的结构化并发原则。当收集流的协程被取消时，<code>flow{...}</code> 内部的生产者代码也会自动取消。这能有效防止资源泄漏（如网络请求或数据库连接会在界面关闭时自动断开）。</li>
+</ol>
+<h3 id="典型代表">典型代表</h3>
+<ul>
+<li>通过 <code>flow { ... }</code> 构建器创建的流。</li>
+<li>通过 <code>flowOf(...)</code>, <code>.asFlow()</code> 等工厂函数创建的流。</li>
+</ul>
+<hr>
+<h2 id="3-基础示例与分析">3. 基础示例与分析</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 定义冷流：仅仅定义了 "如何" 产生数据</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> coldFlow </span><span style="color:#F97583">=</span><span style="color:#B392F0"> flow</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Flow 开始执行..."</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 这行代码只会在 collect 时被调用</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> (i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583">..</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">        delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 模拟耗时操作</span></span>
+<span class="line"><span style="color:#B392F0">        emit</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">=</span><span style="color:#B392F0"> runBlocking</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"即将开始收集..."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 第一个订阅者</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者1 开始收集"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        coldFlow.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者1 收到: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 延迟一段时间，让第一个订阅者先运行</span></span>
+<span class="line"><span style="color:#B392F0">    delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2500</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 第二个订阅者</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者2 开始收集"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">        // 注意：这里再次调用 collect，会触发 Flow 重新执行</span></span>
+<span class="line"><span style="color:#E1E4E8">        coldFlow.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者2 收到: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="输出结果">输出结果</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>即将开始收集...</span></span>
+<span class="line"><span>订阅者1 开始收集</span></span>
+<span class="line"><span>Flow 开始执行...</span></span>
+<span class="line"><span>订阅者1 收到: 1</span></span>
+<span class="line"><span>订阅者1 收到: 2</span></span>
+<span class="line"><span>订阅者2 开始收集</span></span>
+<span class="line"><span>Flow 开始执行...  &#x3C;-- 重点：Flow 为订阅者2重新开始执行了</span></span>
+<span class="line"><span>订阅者1 收到: 3</span></span>
+<span class="line"><span>订阅者2 收到: 1</span></span>
+<span class="line"><span>订阅者2 收到: 2</span></span>
+<span class="line"><span>订阅者2 收到: 3</span></span></code></pre>
+<p><strong>分析</strong>：从输出可以看到，<code>Flow 开始执行...</code> 被打印了两次。这意味着每个 <code>collect</code> 都触发了一次全新的、独立的执行流程。订阅者 2 并没有“接入”订阅者 1 的进度，而是从头开始接收数据。</p>
+<hr>
+<h2 id="4-背压-backpressure-与缓冲区">4. 背压 (Backpressure) 与缓冲区</h2>
+<p>通常情况下，冷流的生产速度是由消费速度决定的。<code>emit</code> 是一个 <strong>挂起函数</strong>，如果消费者处理得慢，生产者就会在 <code>emit</code> 处挂起等待。</p>
+<h3 id="默认行为同步等待">默认行为：同步等待</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> coldFlow </span><span style="color:#F97583">=</span><span style="color:#B392F0"> flow</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> (i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583">..</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">        delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 生产快</span></span>
+<span class="line"><span style="color:#B392F0">        emit</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">$i</span><span style="color:#9ECBFF"> 发送结束"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">(): </span><span style="color:#B392F0">Unit</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> runBlocking</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">        coldFlow.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000L</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 消费慢</span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"消费: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>输出：</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>消费: 1</span></span>
+<span class="line"><span>1 发送结束</span></span>
+<span class="line"><span>消费: 2</span></span>
+<span class="line"><span>2 发送结束</span></span>
+<span class="line"><span>...</span></span></code></pre>
+<p><strong>结论</strong>：数据是一个接一个按需生产和消费的，不会在流内部积压。</p>
+<h3 id="使用-buffer-修改行为">使用 <code>.buffer()</code> 修改行为</h3>
+<p>使用 <code>buffer()</code> 操作符可以并发地运行生产者和消费者，并在它们之间插入一个缓冲区，从而<strong>破坏</strong>这种同步等待机制。</p>
+<h4 id="buffer-的参数配置"><code>.buffer</code> 的参数配置</h4>
+<ul>
+<li><strong><code>capacity: Int</code></strong> (缓冲区大小):
+<ul>
+<li><code>Channel.BUFFERED</code> (-2): 默认值，通常为 64。</li>
+<li><code>Channel.CONFLATED</code> (-1): 仅保留最新值，相当于容量为 1 且策略为 DROP_OLDEST。</li>
+<li><code>Channel.RENDEZVOUS</code> (0): 无缓冲。</li>
+<li><code>Channel.UNLIMITED</code> (Int.MAX_VALUE): 无限容量。</li>
+<li>或者其他指定的大小。</li>
+</ul>
+</li>
+<li><strong><code>onBufferOverflow: BufferOverflow</code></strong> (溢出策略):
+<ul>
+<li><code>SUSPEND</code> (默认): 缓冲区满时，生产者挂起。</li>
+<li><code>DROP_OLDEST</code>: 丢弃缓冲区中最老的数据，腾出空间给新数据。</li>
+<li><code>DROP_LATEST</code>: 直接丢弃当前准备发送的新数据。</li>
+</ul>
+</li>
+</ul>
+<h4 id="缓冲区代码示例">缓冲区代码示例</h4>
+<p>使用容量为 3 的缓冲区，且策略为“丢弃旧数据”：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> coldFlow </span><span style="color:#F97583">=</span><span style="color:#B392F0"> flow</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> (i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583">..</span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">        delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100L</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 100ms 生产一个</span></span>
+<span class="line"><span style="color:#B392F0">        emit</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">(): </span><span style="color:#B392F0">Unit</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> runBlocking</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">        // 缓冲区容量 3，溢出时丢弃最老的数据</span></span>
+<span class="line"><span style="color:#E1E4E8">        coldFlow.</span><span style="color:#B392F0">buffer</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, BufferOverflow.DROP_OLDEST).</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">800L</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 800ms 消费一个</span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"消费: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>输出结果：</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>消费: 1</span></span>
+<span class="line"><span>消费: 6</span></span>
+<span class="line"><span>消费: 13</span></span>
+<span class="line"><span>消费: 21</span></span>
+<span class="line"><span>消费: 28</span></span>
+<span class="line"><span>消费: 29</span></span>
+<span class="line"><span>消费: 30</span></span></code></pre>
+<p><strong>结果分析 (Timeline)</strong>：</p>
+<ol>
+<li><strong>开始时</strong>：生产者迅速发出 <code>1, 2, 3, 4</code> 填满缓冲区（容量 3 + 内部槽位）。消费者取走 <code>1</code> 开始慢速处理。</li>
+<li><strong>消费者处理期间</strong>：生产者继续飞速生产。由于缓冲区已满且策略是 <code>DROP_OLDEST</code>，缓冲区内较老的数据（如 2, 3, 4…）不断被新数据挤出并丢弃。</li>
+<li><strong>消费者处理完后</strong>：当消费者终于处理完 <code>1</code> (800ms后) 并请求下一个数据时，它拿到的是当时缓冲区里幸存下来的“最老”的数据（此时已经是 <code>6</code> 了）。</li>
+<li><strong>最终现象</strong>：消费者打印出的数字不连续，丢失了中间大量的数据。</li>
+</ol>
+<hr>
+<h2 id="5-冷流-vs-collectiont">5. 冷流 vs <code>Collection&#x3C;T></code></h2>
+<p>冷流与集合 (<code>List</code>, <code>Set</code>) 都可以表示一系列数据，但它们在处理时间、内存和复杂性上有本质区别。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">特性</th><th align="left">Collection (List/Set)</th><th align="left">Cold Flow</th></tr></thead><tbody><tr><td align="left"><strong>本质</strong></td><td align="left">数据的<strong>容器</strong> (Storage)</td><td align="left">数据的<strong>生产者</strong> (Producer)</td></tr><tr><td align="left"><strong>数据存在形式</strong></td><td align="left">所有数据必须<strong>同时</strong>存在于内存中</td><td align="left">数据<strong>逐个</strong>生成和处理</td></tr><tr><td align="left"><strong>求值策略</strong></td><td align="left">及早求值</td><td align="left">惰性求值</td></tr><tr><td align="left"><strong>异步支持</strong></td><td align="left">困难 (需手动管理协程)</td><td align="left"><strong>原生支持</strong> (emit/collect 是挂起的)</td></tr></tbody></table>
+<h4 id="1-异步性-asynchronicity">1. 异步性 (Asynchronicity)</h4>
+<ul>
+<li><strong>List</strong>: 获取 <code>list[i]</code> 是同步瞬间完成的。如果需要对列表元素进行耗时操作（如网络请求），需要手动遍历并启动协程，代码复杂且难以组合。</li>
+<li><strong>Flow</strong>: 专为异步设计。在 <code>flow</code> 中可以直接调用 <code>suspend</code> 函数。Flow 的管道式操作符（<code>map</code>, <code>filter</code>）天然支持异步，且不会阻塞主线程。</li>
+</ul>
+<h4 id="2-内存效率-memory-efficiency">2. 内存效率 (Memory Efficiency)</h4>
+<ul>
+<li><strong>List</strong>: 如果要处理 1GB 的文件，必须先分配 1GB 内存将文件全部读入。容易导致 <code>OutOfMemoryError</code>。</li>
+<li><strong>Flow</strong>: 像流水线一样，读一行、处理一行、扔掉一行。无论文件多大，内存占用始终维持在处理“单行数据”的水平，极度节省内存。</li>
+</ul>
+<h4 id="3-惰性计算-lazy-computation">3. 惰性计算 (Lazy Computation)</h4>
+<ul>
+<li><strong>List</strong>: 链式调用（<code>map</code>, <code>filter</code>）会产生中间集合。例如 <code>list.map{...}.filter{...}</code> 会创建两个临时的完整列表，浪费计算资源和内存。</li>
+<li><strong>Flow</strong>: 只有需要下一个数据时，上游才会计算。
+<ul>
+<li><em>示例</em>: <code>flow.map{...}.filter{...}.take(1).collect()</code></li>
+<li>一旦 <code>take(1)</code> 拿到了它需要的 1 个数据，它会立即<strong>取消</strong>整个上游流。哪怕源数据有 100 万条，后续的 999_999 条都不会被计算或读取。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="6-应用场景示例处理大型日志文件">6. 应用场景示例：处理大型日志文件</h2>
+<p><strong>任务</strong>：在一个 2GB 的日志文件中，找出前 5 个包含 “FATAL_ERROR” 的行并解析。</p>
+<h3 id="-方式一使用-list-低效">❌ 方式一：使用 List (低效)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> processLogsWithList</span><span style="color:#E1E4E8">(file: </span><span style="color:#B392F0">File</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6A737D">    // 试图将 2GB 文件一次性读入内存 -> 可能导致 OOM 崩溃</span></span>
+<span class="line"><span style="color:#6A737D">    // 即使内存足够大，这也会消耗大量时间和算力在新建 String 对象和 ArrayList 的扩容上</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> allLines: </span><span style="color:#B392F0">List</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">> </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> file.</span><span style="color:#B392F0">readLines</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> errorLines </span><span style="color:#F97583">=</span><span style="color:#B392F0"> mutableListOf</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>()</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> (line </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> allLines) {</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> (line.</span><span style="color:#B392F0">contains</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"FATAL_ERROR"</span><span style="color:#E1E4E8">)) {</span></span>
+<span class="line"><span style="color:#6A737D">             // ... 逻辑处理</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#6A737D">    // 后续 JVM GC 会消耗大量资源回收 2GB 的内存</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="-方式二使用-flow-高效">✅ 方式二：使用 Flow (高效)</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> processLogsWithFlow</span><span style="color:#E1E4E8">(file: </span><span style="color:#B392F0">File</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=</span><span style="color:#B392F0"> runBlocking</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    file.</span><span style="color:#B392F0">bufferedReader</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">lineSequence</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">asFlow</span><span style="color:#E1E4E8">() </span><span style="color:#6A737D">// 1. 转换为流，零内存负担</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">filter</span><span style="color:#E1E4E8"> { it.</span><span style="color:#B392F0">contains</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"FATAL_ERROR"</span><span style="color:#E1E4E8">) }    </span><span style="color:#6A737D">// 2. 按需过滤</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">take</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)                                  </span><span style="color:#6A737D">// 3. 只要前 5 个</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">onEach</span><span style="color:#E1E4E8"> { line </span><span style="color:#F97583">-></span><span style="color:#B392F0"> parseAndReport</span><span style="color:#E1E4E8">(line) }  </span><span style="color:#6A737D">// 4. 支持异步解析函数</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8">()                                </span><span style="color:#6A737D">// 5. 启动流水线</span></span>
+<span class="line"><span style="color:#6A737D">    // 只要收集满 5 条，文件读取会自动停止，哪怕文件后面还有 1GB 内容</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">suspend</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> parseAndReport</span><span style="color:#E1E4E8">(logLine: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">    delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 模拟网络上报</span></span>
+<span class="line"><span style="color:#B392F0">    println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Reported: </span><span style="color:#79B8FF">$logLine</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>  </article> <div class="tags"> <div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/Kotlin/">Kotlin</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/Kotlin 协程/">Kotlin 协程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/异步编程/">异步编程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/性能优化/">性能优化</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/内存管理/">内存管理</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/响应式编程/">响应式编程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/软件架构/">软件架构</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/JVM/">JVM</a> </div> </div> </main> </div> <div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div> </div> <script type="module" is:global>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script>  </body></html>

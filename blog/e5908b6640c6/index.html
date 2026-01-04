@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.16.6"><title>✨御坂网络-精通 Kotlin 热流 (Hot Flow)：StateFlow 与 SharedFlow 实战指南✨</title><link rel="stylesheet" href="/_astro/index.BT8t14_1.css">
+<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88047 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% -.0000298023 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% -.0000298023 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.BOOrbLic.css"><script type="module" src="/_astro/page.D1uwR3nK.js"></script></head> <body class="w-full h-full flex flex-col">  <div class="bg-slate-800 h-screen flex flex-col"> <div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div> <div class="flex p-4 grow flex-row h-full overflow-hidden"> <aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto"> <div class="sticky top-4 space-y-6"> <div class="bg-slate-700 p-4 rounded-lg"> <img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"> <p class="text-white text-center mt-2">作者：misakamayako</p>  <p class="text-white text-center mt-2">发布时间：2025/11/17</p> </div> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">简介</h3> <p class="text-white font-light mb-2">本文是 Kotlin 协程热流 (Hot Flow) 的实用指南。通过清晰的示例，讲解了 StateFlow 和 SharedFlow 如何在 Android/KMP 项目中高效管理 UI 状态和处理一次性事件通知，并介绍了 stateIn/shareIn 这两个关键操作符的最佳用法。</p> </div> <!-- 2. 文章目录 --> <!--<div class="bg-slate-700 p-4 rounded-lg">--> <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>--> <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;--> <!--</div>--> <!-- 3. 随机文章 --> <div class="bg-slate-700 p-4 rounded-lg"> <h3 class="text-emerald-400 mb-2">随便看看</h3> <div class="flex flex-wrap gap-2"> <a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/c4382b9758ce/"> 幽灵节点的原因和解决方案 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/d3c1a1ce0c18/"> 深入解析 MVIKotlin：CoroutineExecutor 泛型参数全解 </a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/8b40690e60a0/"> BroadcastChannel API 概述 </a> </div> </div> </div> </aside> <main class="grow h-full overflow-auto w-3/4 px-8"> <article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100">  <header> <h1>精通 Kotlin 热流 (Hot Flow)：StateFlow 与 SharedFlow 实战指南</h1> </header> <h2 id="1-什么是热流">1. 什么是热流？</h2>
+<p>热流 (Hot Flow) 是 Kotlin 协程 Flow 中的重要概念。用一个生活中的比喻来理解：</p>
+<blockquote>
+<p><strong>热流就像直播平台上的直播流视频</strong></p>
+<ul>
+<li><strong>主动播放</strong>：视频一旦创建就会主动播放，无论是否有人订阅。</li>
+<li><strong>共享进度</strong>：每个观众的播放进度都是相同的。A 从第 5 分钟开始看，30 分钟后 B 再开始看，他们看到的画面都是一样的。</li>
+</ul>
+</blockquote>
+<p>简单来说，<strong>热流</strong> 一旦开始发射，就不会因为订阅者的加入或离开而改变自己的“时间线”。通常情况下，它不会等待订阅者，也不会倒带。
+此外，与冷流不同的是，<code>SharedFlow</code> 与 <code>StateFlow</code> 并不会自动产生数据。它们只是承载数据，真正的来源始终是发射它们的生产者（emit）。</p>
+<hr>
+<h2 id="2-核心特性">2. 核心特性</h2>
+<ol>
+<li><strong>主动执行</strong>
+热流一旦创建便开始发射数据，无需等待订阅者的订阅操作。</li>
+<li><strong>共享实例</strong>
+多个订阅者共享同一个数据流实例，订阅者接收到的是热流当前的最新数据，不会从头开始重放。</li>
+<li><strong>有状态</strong>
+热流通可以保存最新的数据状态（如 <code>StateFlow</code> 持有当前状态），方便新订阅者立即获得当前值。</li>
+<li><strong>持续发射</strong>
+热流不会因为某个订阅者取消而停止发射数据，通常独立于订阅者生命周期持续运行，除非显式停止。</li>
+</ol>
+<h3 id="典型代表">典型代表</h3>
+<ul>
+<li>通过 <code>SharedFlow</code> 或者 <code>StateFlow</code> 的构建器创建的流。</li>
+<li>通过 <code>shareIn</code> 或者 <code>stateIn</code> 将一个冷流转换为热流。</li>
+</ul>
+<h3 id="stateflow-vs-sharedflow状态-vs-事件">StateFlow vs. SharedFlow：状态 vs. 事件</h3>
+<p>如果说热流是“直播”，那么：</p>
+<ul>
+<li><code>SharedFlow</code> 就是直播本身：它持续不断地广播事件。你中途加入，只能看到加入后的新内容（除非配置了 replay 缓存）。它非常适合发送“阅后即焚”的通知，如 <code>Toast</code> 或导航事件。</li>
+<li><code>StateFlow</code> 就像是直播间顶部的“当前比分”或“主播状态”公告牌：它永远只显示最新的状态。你任何时候进入直播间，看到的比分都是最新的。新订阅者会立即收到当前值。因此，它天生就是用来管理 UI 状态的。</li>
+</ul>
+<p>另外，一个特别的点是：<code>StateFlow</code> 本质上是一个配置为 <code>replay = 1</code>、<code>onBufferOverflow = DROP_OLDEST</code> 且行为特殊的 <code>SharedFlow</code>。</p>
+<hr>
+<h2 id="3-基础示例与分析">3. 基础示例与分析</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">(): </span><span style="color:#B392F0">Unit</span><span style="color:#F97583"> =</span><span style="color:#B392F0"> runBlocking</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // 1. 创建一个 MutableSharedFlow</span></span>
+<span class="line"><span style="color:#6A737D">    // 这是一个可变的 SharedFlow，我们可以通过它来发射 (emit) 值。</span></span>
+<span class="line"><span style="color:#6A737D">    // 默认情况下，新订阅者不会收到任何历史值 (replay = 0)。</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> sharedFlow </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableSharedFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">>()</span></span>
+<span class="line"><span style="color:#6A737D">    // 启动一个协程作为发射器 (Emitter)</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"发射器已启动"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">        delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1L</span><span style="color:#E1E4E8">)</span><span style="color:#6A737D">// 短暂让出CPU，让其他协程有启动和执行的机会</span></span>
+<span class="line"><span style="color:#6A737D">        // 或者使用这个挂起，等待至少有一个订阅者 sharedFlow.subscriptionCount.first { count -> count > 0 }</span></span>
+<span class="line"><span style="color:#F97583">        for</span><span style="color:#E1E4E8"> (i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> 1</span><span style="color:#F97583">..</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"发射数据: </span><span style="color:#79B8FF">$i</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">            sharedFlow.</span><span style="color:#B392F0">emit</span><span style="color:#E1E4E8">(i)</span></span>
+<span class="line"><span style="color:#B392F0">            delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 每秒发射一个</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#6A737D">        // SharedFlow 不会像普通 Flow 那样因为上游结束而结束。</span></span>
+<span class="line"><span style="color:#6A737D">        // 除非你停止发射它（取消发射器协程），否则它会一直保持活跃。</span></span>
+<span class="line"><span style="color:#B392F0">        cancel</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 启动第一个订阅者 (Collector 1)</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者1 已启动"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        sharedFlow.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"--- 订阅者1 收到: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 延迟 1.5 秒，让发射器先发射一些数据</span></span>
+<span class="line"><span style="color:#B392F0">    delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1500</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 启动第二个订阅者 (Collector 2)，它会加入得比较晚</span></span>
+<span class="line"><span style="color:#B392F0">    launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"订阅者2 已启动"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        sharedFlow.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">value</span><span style="color:#F97583"> -></span></span>
+<span class="line"><span style="color:#B392F0">            println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"------ 订阅者2 收到: </span><span style="color:#79B8FF">$value</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="输出结果">输出结果</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>发射器已启动</span></span>
+<span class="line"><span>订阅者1 已启动</span></span>
+<span class="line"><span>发射数据: 1</span></span>
+<span class="line"><span>--- 订阅者1 收到: 1</span></span>
+<span class="line"><span>发射数据: 2</span></span>
+<span class="line"><span>--- 订阅者1 收到: 2</span></span>
+<span class="line"><span>订阅者2 已启动</span></span>
+<span class="line"><span>发射数据: 3</span></span>
+<span class="line"><span>--- 订阅者1 收到: 3</span></span>
+<span class="line"><span>------ 订阅者2 收到: 3</span></span>
+<span class="line"><span>发射数据: 4</span></span>
+<span class="line"><span>--- 订阅者1 收到: 4</span></span>
+<span class="line"><span>------ 订阅者2 收到: 4</span></span></code></pre>
+<p><strong>分析</strong>：</p>
+<ul>
+<li><strong>订阅者1</strong> 几乎是立即开始订阅的，所以它从第一个值 <code>1</code> 开始，收到了所有发射的数据。</li>
+<li><strong>订阅者2</strong> 在程序启动后 2.5秒 才开始订阅。在这段时间里，数据 1 和 2 已经被发射出去了。</li>
+<li>因此，订阅者2 错过了 1 和 2，它收到的第一个值是 3，也就是它开始订阅后 sharedFlow 发射的第一个值。</li>
+<li>从值 3 开始，两个订阅者都会同时收到所有后续的数据（3, 4）。</li>
+</ul>
+<p>另外需要说明的是，<code>MutableSharedFlow</code> 是一个可高度配置的构造器，使得它可以满足各种常见的应用场景：</p>
+<ol>
+<li>
+<p><strong>replay: Int</strong>：缓存并向新订阅者重放的最新值的数量。默认是 0，即不重放。如果设为 10，新订阅者会立刻收到最近的 10 条消息。StateFlow 就可以看作是 replay = 1 的特殊 SharedFlow。</p>
+</li>
+<li>
+<p><strong>extraBufferCapacity: Int</strong>：除 <code>replay</code> 缓存外，额外提供的缓冲容量。当发射速度快于收集速度时，数据会暂存在这里，避免阻塞发射者。</p>
+</li>
+<li>
+<p>onBufferOverflow: BufferOverflow：当缓冲区（replay + extraBufferCapacity）满了之后，如何处理新数据。</p>
+<ul>
+<li><strong>SUSPEND (默认)</strong>: 挂起（阻塞）发射者，直到缓冲区有空间。</li>
+<li><strong>DROP_OLDEST</strong>: 丢弃缓冲区中最旧的数据，为新数据腾出空间。</li>
+<li><strong>DROP_LATEST</strong>: 丢弃最新的数据。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="4-从冷到热的桥梁statein-和-sharein">4. 从冷到热的桥梁：<code>stateIn</code> 和 <code>shareIn</code></h3>
+<p>在实际开发中，我们很少直接创建 <code>MutableSharedFlow</code> 或 <code>MutableStateFlow</code>。更常见的场景是，我们有一个“冷”的数据源（比如从 Room 数据库查询数据的 <code>Flow&#x3C;List&#x3C;User>></code>，或者一次性的网络请求），但我们希望多个订阅者能够高效地共享这份数据，而不是每次订阅都重新触发一次数据库查询或网络请求。</p>
+<p>这时，<code>stateIn</code> 和 <code>shareIn</code> 就派上了用场。它们是转换操作符，可以将任意冷流（Cold Flow）转换为热流（Hot Flow）。</p>
+<ul>
+<li><strong><code>shareIn</code></strong>：将冷流转换为 <code>SharedFlow</code>。它非常适合广播事件或需要多个订阅者共享但没有“当前状态”概念的数据。</li>
+<li><strong><code>stateIn</code></strong>：将冷流转换为 <code>StateFlow</code>。它在 <code>shareIn</code> 的基础上，额外提供了“状态”的特性，即它总是会缓存最新的值。这让它成为 UI 状态管理的完美选择。</li>
+</ul>
+<p>这两个操作符的核心在于它们的配置参数，尤其是 <code>SharingStarted</code> 策略，它精确地定义了冷流何时启动以及何时停止。</p>
+<h4 id="sharingstarted热流的生命周期控制器"><code>SharingStarted</code>：热流的生命周期控制器</h4>
+<p><code>SharingStarted</code> 定义了上游冷流何时开始发射数据，以及在没有订阅者时何时停止。</p>
+<ol>
+<li>
+<p><strong><code>SharingStarted.Eagerly</code></strong></p>
+<ul>
+<li><strong>行为</strong>：立即启动上游冷流，并且永远不会停止。</li>
+<li><strong>场景</strong>：适用于那些必须立即开始并持续运行的数据源，无论是否有 UI 在观察。例如，持续收集传感器数据并写入日志。</li>
+<li><strong>缺点</strong>：如果没有任何订阅者，会浪费资源。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SharingStarted.Lazily</code></strong></p>
+<ul>
+<li><strong>行为</strong>：当第一个订阅者出现时启动上游冷流，并且永远不会停止。</li>
+<li><strong>场景</strong>：比 <code>Eagerly</code> 稍好，可以延迟启动。但一旦启动，即使所有订阅者都离开了，它也不会停止。</li>
+<li><strong>缺点</strong>：在订阅者来了又走的情况下，同样会浪费资源。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>SharingStarted.WhileSubscribed(stopTimeoutMillis: Long = 0, replayExpirationMillis: Long = Long.MAX_VALUE)</code></strong></p>
+<ul>
+<li><strong>行为</strong>：当第一个订阅者出现时启动，当最后一个订阅者消失后，等待 <code>stopTimeoutMillis</code> 毫秒。如果在这期间没有新的订阅者出现，则停止上游冷流。</li>
+<li><strong>优势</strong>：这是最常用、最高效的策略。它完美地处理了 Android 应用中的屏幕旋转等配置变更。例如，当屏幕旋转时，旧的 UI 实例会取消订阅，新的 UI 实例会重新订阅。如果 <code>stopTimeoutMillis</code> 设置为 5000ms（5秒），那么在这 5 秒的配置变更窗口期内，上游冷流（如网络请求）不会被取消和重启，数据得以保留，从而避免了不必要的重复加载，并保证了 UI 的流畅。</li>
+</ul>
+</li>
+</ol>
+<p><strong>代码示例</strong>
+假设我们有一个从网络获取用户列表的冷流：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 这是一个冷流，每次 collect 都会触发 "Fetching data..."</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> userListFlow: </span><span style="color:#B392F0">Flow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">List</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>> </span><span style="color:#F97583">=</span><span style="color:#B392F0"> flow</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Fetching data from network..."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">    delay</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">2000</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 模拟网络延迟</span></span>
+<span class="line"><span style="color:#B392F0">    emit</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">listOf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Alice"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Bob"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Charlie"</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>在 ViewModel 中，我们可以将其转换为一个热的 <code>StateFlow</code>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> MyViewModel</span><span style="color:#E1E4E8">(userRepository: </span><span style="color:#B392F0">UserRepository</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">ViewModel</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#6A737D">    // 将冷流转换为一个热的 StateFlow</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> usersState: </span><span style="color:#B392F0">StateFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">List</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>> </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> userRepository.</span><span style="color:#B392F0">getUsersFlow</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">        .</span><span style="color:#B392F0">stateIn</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">            scope </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> viewModelScope, </span><span style="color:#6A737D">// 在 ViewModel 的生命周期内运行</span></span>
+<span class="line"><span style="color:#E1E4E8">            started </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> SharingStarted.</span><span style="color:#B392F0">WhileSubscribed</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">5000</span><span style="color:#E1E4E8">), </span><span style="color:#6A737D">// 智能启停策略</span></span>
+<span class="line"><span style="color:#E1E4E8">            initialValue </span><span style="color:#F97583">=</span><span style="color:#B392F0"> emptyList</span><span style="color:#E1E4E8">() </span><span style="color:#6A737D">// 初始值，在数据返回前 UI 可以显示空列表</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>通过这种方式，<code>getUsersFlow()</code> 只会在第一个 UI 订阅者出现时被调用一次。后续的所有订阅者（包括屏幕旋转后重建的 UI）都会共享这同一个数据流和它的最新状态。</p>
+<hr>
+<h3 id="5-跨平台实战热流的应用">5. 跨平台实战：热流的应用</h3>
+<p>热流，特别是 <code>StateFlow</code> 和 <code>SharedFlow</code>，是现代响应式编程的核心，在 Android 和 Kotlin Multiplatform (KMP) 项目中扮演着至关重要的角色。</p>
+<h4 id="ui-状态管理-stateflow"><strong>UI 状态管理 (<code>StateFlow</code>)</strong></h4>
+<p>在 MVVM (Model-View-ViewModel) 架构中，ViewModel 负责准备并管理与 UI 相关的数据。<code>StateFlow</code> 是暴露 UI 状态的理想选择。</p>
+<p><strong>场景</strong>: 一个典型的用户资料页面，需要处理加载中、加载成功、加载失败三种状态。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 1. 定义 UI 状态的密封类</span></span>
+<span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UserProfileUiState</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    object</span><span style="color:#B392F0"> Loading</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">UserProfileUiState</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> Success</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> user: </span><span style="color:#B392F0">User</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">UserProfileUiState</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> Error</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> message: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">UserProfileUiState</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 2. 在 ViewModel 中管理和暴露状态</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> UserProfileViewModel</span><span style="color:#E1E4E8">(api: </span><span style="color:#B392F0">UserApi</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">ViewModel</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#6A737D">    // 私有的、可变的 MutableStateFlow，仅在 ViewModel 内部修改</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#F97583"> val</span><span style="color:#E1E4E8"> _uiState </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableStateFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">UserProfileUiState</span><span style="color:#E1E4E8">>(UserProfileUiState.Loading)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#6A737D">    // 公开的、不可变的 StateFlow，供 UI 订阅</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> uiState: </span><span style="color:#B392F0">StateFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">UserProfileUiState</span><span style="color:#E1E4E8">> </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> _uiState.</span><span style="color:#B392F0">asStateFlow</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    init</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">        fetchUserProfile</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> fetchUserProfile</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">        viewModelScope.</span><span style="color:#B392F0">launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            _uiState.</span><span style="color:#F97583">value</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> UserProfileUiState.Loading</span></span>
+<span class="line"><span style="color:#F97583">            try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">                val</span><span style="color:#E1E4E8"> user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> api.</span><span style="color:#B392F0">getUser</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">                _uiState.</span><span style="color:#F97583">value</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> UserProfileUiState.</span><span style="color:#B392F0">Success</span><span style="color:#E1E4E8">(user)</span></span>
+<span class="line"><span style="color:#E1E4E8">            } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (e: </span><span style="color:#B392F0">Exception</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">                _uiState.</span><span style="color:#F97583">value</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> UserProfileUiState.</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Failed to load user"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>UI 层 (Jetpack Compose)</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">@Composable</span></span>
+<span class="line"><span style="color:#F97583">fun</span><span style="color:#B392F0"> UserProfileScreen</span><span style="color:#E1E4E8">(viewModel: </span><span style="color:#B392F0">UserProfileViewModel</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#6A737D">    // a. collectAsStateWithLifecycle 自动处理生命周期</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> uiState </span><span style="color:#F97583">by</span><span style="color:#E1E4E8"> viewModel.uiState.</span><span style="color:#B392F0">collectAsStateWithLifecycle</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    when</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> uiState) {</span></span>
+<span class="line"><span style="color:#F97583">        is</span><span style="color:#E1E4E8"> UserProfileUiState.Loading </span><span style="color:#F97583">-></span><span style="color:#B392F0"> ShowLoadingSpinner</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">        is</span><span style="color:#E1E4E8"> UserProfileUiState.Success </span><span style="color:#F97583">-></span><span style="color:#B392F0"> ShowUserProfile</span><span style="color:#E1E4E8">(user </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> state.user)</span></span>
+<span class="line"><span style="color:#F97583">        is</span><span style="color:#E1E4E8"> UserProfileUiState.Error </span><span style="color:#F97583">-></span><span style="color:#B392F0"> ShowError</span><span style="color:#E1E4E8">(message </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> state.message)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>优势</strong>:</p>
+<ul>
+<li><strong>单一数据源</strong>: UI 的所有状态都来自 <code>uiState</code> 这一个流。</li>
+<li><strong>状态保留</strong>: <code>StateFlow</code> 会持有最新状态。当屏幕旋转时，新的 UI 会立即收到当前的状态（例如 <code>Success</code> 状态），而不会闪烁或显示错误的加载界面。</li>
+<li><strong>线程安全</strong>: ViewModel 在后台线程更新状态，UI 在主线程安全地观察变化。</li>
+</ul>
+<h4 id="一次性事件通知-sharedflow"><strong>一次性事件通知 (<code>SharedFlow</code>)</strong></h4>
+<p>有时我们需要从 ViewModel 向 UI 发送一些“阅后即焚”的事件，比如弹出一个 Toast、显示一个 Snackbar 或者导航到新页面。这类事件不应被视为“状态”。如果使用 <code>StateFlow</code>，屏幕旋转后 UI 会重新收到旧的事件，导致 Toast 被重复弹出。</p>
+<p><code>SharedFlow</code> (通常 <code>replay = 0</code>) 是处理这类事件的完美工具。</p>
+<p><strong>场景</strong>: 用户点击“保存”按钮后，ViewModel 保存数据，然后通知 UI 显示“保存成功”的 Snackbar。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 在 ViewModel 中</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EditProfileViewModel</span><span style="color:#E1E4E8">(repository: </span><span style="color:#B392F0">ProfileRepository</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">ViewModel</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#F97583"> val</span><span style="color:#E1E4E8"> _events </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableSharedFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">>() </span><span style="color:#6A737D">// replay = 0 by default</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> events: </span><span style="color:#B392F0">SharedFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">> </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> _events.</span><span style="color:#B392F0">asSharedFlow</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    fun</span><span style="color:#B392F0"> onSaveClick</span><span style="color:#E1E4E8">(newName: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        viewModelScope.</span><span style="color:#B392F0">launch</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">            repository.</span><span style="color:#B392F0">saveName</span><span style="color:#E1E4E8">(newName)</span></span>
+<span class="line"><span style="color:#E1E4E8">            _events.</span><span style="color:#B392F0">emit</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Profile saved successfully!"</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D">// 发射一次性事件</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 在 UI 层 (Fragment 或 Composable)</span></span>
+<span class="line"><span style="color:#6A737D">// 使用 LaunchedEffect 保证只在 key 变化或首次组合时执行一次订阅</span></span>
+<span class="line"><span style="color:#B392F0">LaunchedEffect</span><span style="color:#E1E4E8">(Unit) {</span></span>
+<span class="line"><span style="color:#E1E4E8">    viewModel.events.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { message </span><span style="color:#F97583">-></span></span>
+<span class="line"><span style="color:#6A737D">        // 显示 Snackbar</span></span>
+<span class="line"><span style="color:#E1E4E8">        scaffoldState.snackbarHostState.</span><span style="color:#B392F0">showSnackbar</span><span style="color:#E1E4E8">(message)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>优势</strong>:</p>
+<ul>
+<li><strong>事件不重放</strong>: 新的订阅者（或屏幕旋转后的 UI）不会收到过去的旧事件。</li>
+<li><strong>解耦</strong>: ViewModel 只负责发射事件，不关心谁在监听以及如何处理。</li>
+<li><strong>广播机制</strong>: 如果有多个观察者，它们都可以同时收到这个事件。</li>
+</ul>
+<hr>
+<h3 id="6-结论如何选择冷流与热流">6. 结论：如何选择冷流与热流</h3>
+<p>理解冷流和热流的区别并知道何时使用它们，是编写高效、健壮的 Kotlin 协程代码的关键。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">特性</th><th align="left">冷流 (<code>Flow</code>)</th><th align="left">热流 (<code>StateFlow</code> / <code>SharedFlow</code>)</th></tr></thead><tbody><tr><td align="left"><strong>执行时机</strong></td><td align="left">当 <code>collect</code> 被调用时才执行。</td><td align="left">创建后（或根据 <code>SharingStarted</code> 策略）就主动执行。</td></tr><tr><td align="left"><strong>数据共享</strong></td><td align="left">每个 <code>collect</code> 都是一次独立的、全新的执行。</td><td align="left">多个订阅者共享同一个数据流实例。</td></tr><tr><td align="left"><strong>状态</strong></td><td align="left">无状态。</td><td align="left"><strong>有状态</strong>。<code>StateFlow</code> 总是持有最新值。</td></tr><tr><td align="left"><strong>订阅者关系</strong></td><td align="left">生产者与消费者是一对一关系。</td><td align="left">生产者与消费者是一对多关系（广播）。</td></tr><tr><td align="left"><strong>生命周期</strong></td><td align="left">与调用 <code>collect</code> 的协程绑定。</td><td align="left">独立于订阅者，与创建它的 <code>CoroutineScope</code> 绑定。</td></tr></tbody></table>
+<h4 id="黄金原则默认用冷流需要时才转热流"><strong>黄金原则：默认用冷流，需要时才转热流</strong></h4>
+<ol>
+<li>
+<p><strong>默认使用冷流 (<code>Flow</code>)</strong>：
+对于大多数一次性的数据操作，如执行一次网络请求、从数据库读取一次数据或处理文件，冷流是最简单、最安全的选择。它们遵循结构化并发，当消费者的作用域结束时，它们会自动清理资源，不会造成资源泄漏。</p>
+</li>
+<li>
+<p><strong>当需要“共享”或“状态”时，才使用热流</strong>：
+只有在以下明确的场景下，才应该考虑将冷流通过 <code>stateIn</code> 或 <code>shareIn</code> 转换为热流，或者直接使用 <code>MutableStateFlow</code>/<code>MutableSharedFlow</code>：</p>
+<ul>
+<li><strong>UI 状态管理</strong>：当多个 UI 组件需要观察并响应同一个应用状态时，使用 <code>StateFlow</code>。</li>
+<li><strong>昂贵计算的共享</strong>：当一个数据源（如复杂的数据库查询、网络请求）的创建成本很高，并且其结果需要被多个下游消费者共享时，使用 <code>shareIn</code> 或 <code>stateIn</code> 来避免重复计算。</li>
+<li><strong>事件广播</strong>：当你需要向多个监听器广播一次性事件时（如用户操作通知、推送消息），使用 <code>SharedFlow</code>。</li>
+<li><strong>持续的数据源</strong>：当数据源本身就是持续不断的（如 GPS 位置更新、蓝牙设备信号），并且需要被应用的多个部分使用时，热流是自然的选择。</li>
+</ul>
+</li>
+</ol>
+<p>总之，将冷流视为基础构建块，将热流视为一种为实现状态共享和高效广播而生的特殊工具。正确地运用它们，将使你的应用逻辑更加清晰、性能更高。</p>  </article> <div class="tags"> <div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/Kotlin/">Kotlin</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/Kotlin 协程/">Kotlin 协程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/响应式编程/">响应式编程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/异步编程/">异步编程</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/软件架构/">软件架构</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/发布订阅/">发布订阅</a> </div><div class="_tailmateTag_u5zwa_5"> <a href="/blog/tag/性能优化/">性能优化</a> </div> </div> </main> </div> <div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div> </div> <script type="module" is:global>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script>  </body></html>

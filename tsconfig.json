@@ -1,4 +1,5 @@
 {
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "experimentalDecorators": true,
     "target": "ESNext",
@@ -20,7 +21,10 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "paths": {
+      "astro:content": [".astro/types.d.ts"]
+    }
   },
   "include": [
     "next-env.d.ts",

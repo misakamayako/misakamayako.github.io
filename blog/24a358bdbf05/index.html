@@ -1,0 +1,326 @@
+<!DOCTYPE html><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous"><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.17.2"><title>✨御坂网络-MVI 在真实项目中该怎么落地：State、Intent 与 Effect 的边界✨</title><link rel="stylesheet" href="/_astro/index.C6IHRFDG.css">
+<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88044 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% 0 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% 0 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.aUcrWOZv.css"><script type="module" src="/_astro/page.D1uwR3nK.js"></script></head> <body class="w-full h-full flex flex-col"> <div class="bg-slate-800 h-screen flex flex-col"><div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div><div class="flex p-4 grow flex-row h-full overflow-hidden"><aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2"><div class="sticky top-4 space-y-6"><div class="bg-slate-700 p-4 rounded-lg"><img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"><p class="text-white text-center mt-2">作者：misakamayako</p><p class="text-white text-center mt-2">发布时间：2026/01/14</p></div><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">简介</h3><p class="text-white font-light mb-2">传统的 MVVM 往往会导致 ViewModel 状态碎片化，而 MVI 则通过“单向数据流”构建起绝对可靠的状态管理逻辑。本文深度探讨 MVI 在 Android 项目中的落地实践：如何定义不可变的 State 唯一真理，如何通过 Bootstrapper 与 Action 区分用户意图与系统驱动，以及如何利用纯函数 Reducer 打造 100% 可测试的业务逻辑。彻底解决 Compose 重组带来的状态同步难题。</p></div><!-- 2. 关联文章 --><div class="mb-4 rounded-xl bg-slate-700 p-5 shadow-xl border border-slate-600/50"><div class="mb-4 flex items-center justify-between border-b border-slate-600 pb-3"><div><h3 class="text-xs tracking-widest font-bold text-emerald-400 uppercase">
+Series</h3><h2 class="text-base font-bold text-slate-100">在 Android 中构建可长期演化的 Feature 架构：从模块边界到单向数据流</h2></div><span class="rounded-sm bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-300 border border-slate-600">4/5</span></div><div class="relative flex flex-col"><div class="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-600 rounded-full"></div><a href="/blog/057931ede756/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-2.5 w-2.5 rounded-full bg-slate-500 group-hover:bg-slate-400 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-400 group-hover:text-slate-200">为什么你的多模块项目一定会互相污染</span></div></a><a href="/blog/45493f6eef9d/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-2.5 w-2.5 rounded-full bg-slate-500 group-hover:bg-slate-400 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-400 group-hover:text-slate-200">Core 模块不是工具箱：Android 架构里的“地基层”该放什么</span></div></a><a href="/blog/ea305ecafca7/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-2.5 w-2.5 rounded-full bg-slate-500 group-hover:bg-slate-400 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-400 group-hover:text-slate-200">让 Feature 像第三方库一样被使用：API 与 Internal 的边界设计</span></div></a><a href="/blog/24a358bdbf05/" class="group relative flex gap-4 py-2 transition-all items-center pointer-events-none"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full bg-blue-400 shadow-[0_0_8px_var(--color-blue-400)] ring-4 ring-blue-400/20"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors font-bold text-blue-400">MVI 在真实项目中该怎么落地：State、Intent 与 Effect 的边界</span></div></a><a href="/blog/435a921db46b/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">当导航变成状态：彻底抛弃 NavController 的纯 MVI 导航</span></div></a></div></div><!-- 3. 随机文章 --><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">随便看看</h3><div class="flex flex-wrap gap-2"><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/15b29448545c/">Web Worker 类型概览</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/cdbb95bd66b4/">深入理解 Kotlin 冷流 (Cold Flow)：异步数据流的基础</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/cb3ac2e417a0/">Java VarHandle 与 Reflection 的对比及性能测试</a></div></div></div></aside><main class="grow h-full overflow-auto w-3/4 px-8"><article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100"> <header> <h1>MVI 在真实项目中该怎么落地：State、Intent 与 Effect 的边界</h1> </header> <p>这是系列文章的第四篇。</p>
+<p>在前三篇中，我们将 Feature 变成了“孤岛”，并用 API 接口强制隔离了物理依赖。现在，我们进入了 Feature 的<strong>内部（Internal）</strong>。</p>
+<p>在传统的 MVVM 中，ViewModel 往往是混乱之源：</p>
+<ul>
+<li>十几个 <code>MutableLiveData</code> 或 <code>MutableStateFlow</code> 散落在各个角落。</li>
+<li><code>isLoading</code> 在这个函数里变 <code>true</code>，却忘了在那个异常捕获里变 <code>false</code>。</li>
+<li>UI 层直接调用 ViewModel 的方法，逻辑分散在 View 和 VM 之间。</li>
+</ul>
+<p>当 Compose 遇到这种混乱时，UI 的 <strong>重组（Recomposition）</strong> 会把你所有的状态同步 bug 放大十倍。</p>
+<p>为了解决这个问题，我们需要引入 <strong>MVI (Model-View-Intent)</strong>。但这不只是改个名字，而是要建立一条<strong>绝对单向的数据流水线</strong>。</p>
+<hr>
+<blockquote>
+<p><strong>“如果不限制数据的流向，你就永远不知道 Bug 是从哪里流出来的。”</strong></p>
+</blockquote>
+<p>MVI 的核心哲学只有一句话：<strong>状态（State）是唯一的真理，而真理只能通过纯函数来改变。</strong></p>
+<p>我们将一个页面的逻辑拆解为三个核心概念：<strong>State（状态）</strong>、<strong>Intent（意图）</strong>、<strong>Effect/Label（一次性事件）</strong>。</p>
+<h2 id="一-state唯一的真理">一、 State：唯一的真理</h2>
+<p>在 MVVM 中，你可能有：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// ❌ 传统的 MVVM 噩梦</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> isLoading </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableStateFlow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> userList </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableStateFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">List</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">User</span><span style="color:#E1E4E8">>>(</span><span style="color:#B392F0">emptyList</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> error </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableStateFlow</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">?>(</span><span style="color:#79B8FF">null</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> isEndReached </span><span style="color:#F97583">=</span><span style="color:#B392F0"> MutableStateFlow</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>当这四个变量独立变化时，你很难保证它们组合起来是合法的。比如：<code>isLoading</code> 是 <code>true</code>，但 <code>error</code> 也是 <code>String</code>，UI 该显示 Loading 还是 Error？</p>
+<p>在 MVI 中，我们将它们合并为一个 <strong>不可变（Immutable）</strong> 的数据类：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// ✅ MVI 的做法：单一数据源</span></span>
+<span class="line"><span style="color:#B392F0">@Immutable</span></span>
+<span class="line"><span style="color:#F97583">data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserListState</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> isLoading: </span><span style="color:#B392F0">Boolean</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> userList: </span><span style="color:#B392F0">PersistentList</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">User</span><span style="color:#E1E4E8">> </span><span style="color:#F97583">=</span><span style="color:#B392F0"> persistentListOf</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> errorMessage: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">? </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> isEndReached: </span><span style="color:#B392F0">Boolean</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> false</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>UI 只需要盯着这一个 State 对象</strong>。无论发生什么，只要拿到 State，UI 就能像画快照一样把它画出来。</p>
+<h2 id="二-intent用户的想">二、 Intent：用户的“想”</h2>
+<p>用户点击了按钮，不是调用 <code>viewModel.loadMore()</code>，而是发送一个 <strong>Intent（意图）</strong>。
+Intent 描述了 <strong>“用户想做什么”</strong>，而不是 <strong>“程序该怎么运行”</strong>。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UserListIntent</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> object</span><span style="color:#B392F0"> LoadMore</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">UserListIntent</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> OnUserClick</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> userId: </span><span style="color:#B392F0">Long</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">UserListIntent</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> object</span><span style="color:#B392F0"> Refresh</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">UserListIntent</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>UI 层变得极度简单，只负责分发事件：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">Button</span><span style="color:#E1E4E8">(onClick </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> { </span><span style="color:#B392F0">onIntent</span><span style="color:#E1E4E8">(UserListIntent.LoadMore) }) { </span><span style="color:#B392F0">Text</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"加载更多"</span><span style="color:#E1E4E8">) }</span></span></code></pre>
+<h2 id="三-the-enginestore-的内部循环">三、 The Engine：Store 的内部循环</h2>
+<p>这是 MVI 最复杂也最精髓的部分。从 Intent 到新的 State，中间经历了什么？
+通常我们需要两个组件：<strong>Executor（执行器）</strong> 和 <strong>Reducer（聚合器）</strong>。</p>
+<h3 id="1-executor处理副作用脏活累活">1. Executor：处理副作用（脏活累活）</h3>
+<p>Executor 负责处理所有的<strong>不确定性</strong>：网络请求、数据库查询、埋点上报。
+它接收 <code>Intent</code>，执行异步操作，然后产出 <strong>Message（内部消息）</strong>。</p>
+<ul>
+<li><strong>输入</strong>：Intent (LoadMore)</li>
+<li><strong>动作</strong>：调用 <code>UserRepository.getUserList()</code>（上一篇定义的接口）</li>
+<li><strong>输出</strong>：Message (LoadingStarted, DataLoaded, ErrorOccurred)</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ExecutorImpl</span><span style="color:#E1E4E8"> :</span></span>
+<span class="line"><span style="color:#B392F0">    CoroutineExecutor</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">Intent</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Nothing</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">State</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Message</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Label</span><span style="color:#E1E4E8">>() {</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> executeIntent</span><span style="color:#E1E4E8">(intent: </span><span style="color:#B392F0">Intent</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        when</span><span style="color:#E1E4E8">(intent) {</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> LoadMore </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">                dispatch</span><span style="color:#E1E4E8">(Message.LoadingStarted) </span><span style="color:#6A737D">// 立即发个消息说开始了</span></span>
+<span class="line"><span style="color:#F97583">                try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">                    val</span><span style="color:#E1E4E8"> users </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> repo.</span><span style="color:#B392F0">getUsers</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">                    dispatch</span><span style="color:#E1E4E8">(Message.</span><span style="color:#B392F0">DataLoaded</span><span style="color:#E1E4E8">(users)) </span><span style="color:#6A737D">// 数据回来了</span></span>
+<span class="line"><span style="color:#E1E4E8">                } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (e: </span><span style="color:#B392F0">Exception</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#B392F0">                    dispatch</span><span style="color:#E1E4E8">(Message.</span><span style="color:#B392F0">ErrorOccurred</span><span style="color:#E1E4E8">(e.message)) </span><span style="color:#6A737D">// 出错了</span></span>
+<span class="line"><span style="color:#E1E4E8">                }</span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="2-reducer纯函数的艺术">2. Reducer：纯函数的艺术</h3>
+<p>Reducer 是一个<strong>纯函数</strong>。它不查库、不联网，只做数学题。
+公式：<strong>Old State + Message = New State</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">private</span><span style="color:#F97583"> object</span><span style="color:#B392F0"> ReducerImpl</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">Reducer</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">State</span><span style="color:#E1E4E8">,</span><span style="color:#B392F0">Message</span><span style="color:#E1E4E8">> {</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> State</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">reduce</span><span style="color:#E1E4E8">(msg: </span><span style="color:#B392F0">Message</span><span style="color:#E1E4E8">): </span><span style="color:#B392F0">State</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#F97583"> when</span><span style="color:#E1E4E8">(msg) {</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> Message.LoadingStarted </span><span style="color:#F97583">-></span><span style="color:#B392F0"> copy</span><span style="color:#E1E4E8">(isLoading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> Message.DataLoaded </span><span style="color:#F97583">-></span><span style="color:#B392F0"> copy</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">                isLoading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">                userList </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> oldState.userList </span><span style="color:#F97583">+</span><span style="color:#E1E4E8"> msg.users</span></span>
+<span class="line"><span style="color:#E1E4E8">            )</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> Message.ErrorOccurred </span><span style="color:#F97583">-></span><span style="color:#B392F0"> copy</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">                isLoading </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">                errorMessage </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> msg.error</span></span>
+<span class="line"><span style="color:#E1E4E8">            )</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>这一步的价值在于</strong>：因为 Reducer 是纯逻辑，<strong>你可以为它编写 100% 覆盖率的单元测试</strong>，而不需要 Mock 任何网络或数据库。</p>
+<h3 id="进阶如何优雅地初始化数据">进阶：如何优雅地初始化数据</h3>
+<ol>
+<li><strong>在 <code>ViewModel.init {}</code> 块里？</strong>
+<ul>
+<li>缺点：如果不小心在测试时实例化了 ViewModel，它就开始联网了，导致单元测试很难写。</li>
+</ul>
+</li>
+<li><strong>在 Compose 的 <code>LaunchedEffect(Unit)</code> 里？</strong>
+<ul>
+<li>缺点：配置旋转（Configuration Change）导致 Activity 重建时，UI 会重新挂载，请求可能会被再次触发（虽然 ViewModel 还在，但触发逻辑在 UI 层）。</li>
+</ul>
+</li>
+</ol>
+<p><strong>Bootstrapper (启动器)</strong> 就是为了解决这个问题而生的。</p>
+<h4 id="1-它的位置在哪里">1. 它的位置在哪里？</h4>
+<p>请看这张升级版的 MVI 流程图：</p>
+<ul>
+<li><strong>Intent (意图)</strong>：来自 <strong>UI</strong>（用户点击加载）。</li>
+<li><strong>Action (动作)</strong>：来自 <strong>内部</strong>（Bootstrapper 启动、系统事件）。</li>
+</ul>
+<p><strong>Executor（执行器）</strong> 是一个“双插头”组件：它既处理外部来的 <code>Intent</code>，也处理内部产生的 <code>Action</code>。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>       [User Click]                 [System Start]</span></span>
+<span class="line"><span>            ↓                             ↓</span></span>
+<span class="line"><span>        (Intent)                   (Bootstrapper)</span></span>
+<span class="line"><span>            ↓                             ↓</span></span>
+<span class="line"><span>            ╰-----> [Executor] &#x3C;----------╯</span></span>
+<span class="line"><span>                         ↓</span></span>
+<span class="line"><span>                      (Message)</span></span>
+<span class="line"><span>                         ↓</span></span>
+<span class="line"><span>                     [Reducer]</span></span></code></pre>
+<h4 id="2-代码如何实现">2. 代码如何实现？</h4>
+<p>让我们回到之前的 <code>UserListFactory</code>，补全这块逻辑：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 1. 定义 Action (内部动作，UI 不可见)</span></span>
+<span class="line"><span style="color:#F97583">private</span><span style="color:#F97583"> sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> Action</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> object</span><span style="color:#B392F0"> InitLoad</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">Action</span><span style="color:#6A737D"> // 初始化加载</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 2. 实现 Bootstrapper</span></span>
+<span class="line"><span style="color:#F97583">private</span><span style="color:#F97583"> inner</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> BootstrapperImpl</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">CoroutineBootstrapper</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">Action</span><span style="color:#E1E4E8">>() {</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> invoke</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#6A737D">        // 当 Store 创建并启动时，自动分发这个 Action</span></span>
+<span class="line"><span style="color:#B392F0">        dispatch</span><span style="color:#E1E4E8">(Action.InitLoad)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3. Executor 处理 Action (和处理 Intent 类似)</span></span>
+<span class="line"><span style="color:#F97583">private</span><span style="color:#F97583"> inner</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> ExecutorImpl</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">CoroutineExecutor</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">Intent</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Action</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">State</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Message</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Label</span><span style="color:#E1E4E8">>() {</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#6A737D">    // 处理 Action (来自 Bootstrapper)</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> executeAction</span><span style="color:#E1E4E8">(action: </span><span style="color:#B392F0">Action</span><span style="color:#E1E4E8">, getState: () </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> State) {</span></span>
+<span class="line"><span style="color:#F97583">        when</span><span style="color:#E1E4E8"> (action) {</span></span>
+<span class="line"><span style="color:#E1E4E8">            Action.InitLoad </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">                // 复用加载逻辑</span></span>
+<span class="line"><span style="color:#B392F0">                loadData</span><span style="color:#E1E4E8">(isRefresh </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 处理 Intent (来自 UI)</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> executeIntent</span><span style="color:#E1E4E8">(intent: </span><span style="color:#B392F0">Intent</span><span style="color:#E1E4E8">, getState: () </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> State) {</span></span>
+<span class="line"><span style="color:#F97583">        when</span><span style="color:#E1E4E8"> (intent) {</span></span>
+<span class="line"><span style="color:#E1E4E8">            Intent.Refresh </span><span style="color:#F97583">-></span><span style="color:#B392F0"> loadData</span><span style="color:#E1E4E8">(isRefresh </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">            // ...</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> loadData</span><span style="color:#E1E4E8">(isRefresh: </span><span style="color:#B392F0">Boolean</span><span style="color:#E1E4E8">) { </span><span style="color:#F97583">..</span><span style="color:#E1E4E8">. }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h4 id="3-为什么要区分-intent-和-action">3. 为什么要区分 Intent 和 Action？</h4>
+<p>你可能会问：“为什么不直接让 Bootstrapper 发送一个 <code>UserListIntent.Refresh</code>？”</p>
+<p>这是一个非常好的设计哲学问题：</p>
+<ul>
+<li><strong>Intent 是“外部契约”</strong>：它代表<strong>用户</strong>的操作。用户能“点击刷新按钮”，但用户不能“初始化 ViewModel”。</li>
+<li><strong>Action 是“内部驱动”</strong>：它代表<strong>系统</strong>的行为。初始化数据、定时器触发、或者来自其他 Service 的回调，这些都是系统行为。</li>
+</ul>
+<p>通过区分 <code>Intent</code> 和 <code>Action</code>，我们实现了：</p>
+<ol>
+<li><strong>语义清晰</strong>：UI 只能发 Intent，系统只能发 Action。</li>
+<li><strong>权限控制</strong>：UI 永远无法伪造一个“内部 Action”。</li>
+</ol>
+<h2 id="四-label--effect处理一次性事件">四、 Label / Effect：处理一次性事件</h2>
+<p>有些事情不是状态。比如“弹出一个 Toast”或者“跳转到详情页”。
+如果你把“显示 Toast”放进 <code>State</code> 里（比如 <code>val showToast: Boolean</code>），你会遇到经典的 <strong>“旋转屏幕后 Toast 又弹一次”</strong> 的 Bug。</p>
+<p>在 MVI 中，我们用 <strong>Label (或 Effect)</strong> 来处理这种<strong>一次性事件</strong>。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UserListLabel</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> NavigateToDetail</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> userId: </span><span style="color:#B392F0">Long</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">UserListLabel</span></span>
+<span class="line"><span style="color:#F97583">    data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> ShowToast</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">val</span><span style="color:#E1E4E8"> msg: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">UserListLabel</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Executor 在处理逻辑时，可以同时发射 Label：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// Executor 内部</span></span>
+<span class="line"><span style="color:#F97583">is</span><span style="color:#E1E4E8"> OnUserClick </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // 这不是状态变化，这是副作用</span></span>
+<span class="line"><span style="color:#B392F0">    publish</span><span style="color:#E1E4E8">(UserListLabel.</span><span style="color:#B392F0">NavigateToDetail</span><span style="color:#E1E4E8">(intent.userId))</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>UI 层（Compose）监听这个流，用完即弃：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// Compose UI</span></span>
+<span class="line"><span style="color:#B392F0">LaunchedEffect</span><span style="color:#E1E4E8">(Unit) {</span></span>
+<span class="line"><span style="color:#E1E4E8">    viewModel.labels.</span><span style="color:#B392F0">collect</span><span style="color:#E1E4E8"> { label </span><span style="color:#F97583">-></span></span>
+<span class="line"><span style="color:#F97583">        when</span><span style="color:#E1E4E8">(label) {</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> NavigateToDetail </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> router.</span><span style="color:#B392F0">navigateTo</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">..</span><span style="color:#E1E4E8">.)</span></span>
+<span class="line"><span style="color:#F97583">            is</span><span style="color:#E1E4E8"> ShowToast </span><span style="color:#F97583">-></span><span style="color:#E1E4E8"> snackbar.</span><span style="color:#B392F0">show</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">..</span><span style="color:#E1E4E8">.)</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="五-完整的单向数据流闭环双触发模型">五、 完整的单向数据流闭环：双触发模型</h2>
+<p>现在，我们把<strong>用户交互</strong>（Intent）和<strong>系统初始化</strong>（Bootstrapper）结合起来，这才是真实项目中完整的 MVI 心跳图。</p>
+<p>Executor 是整个系统的“心脏”，它同时接收两路血液输入：</p>
+<h3 id="1-两条输入路径">1. 两条输入路径</h3>
+<ul>
+<li><strong>路径 A (用户驱动)</strong>：UI 按钮点击 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Intent</strong> (如 <code>LoadMore</code>) <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> Executor</li>
+<li><strong>路径 B (系统驱动)</strong>：Store 创建/生命周期开始 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Bootstrapper</strong> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Action</strong> (如 <code>InitLoad</code>) <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> Executor</li>
+</ul>
+<h3 id="2-统一处理-executor">2. 统一处理 (Executor)</h3>
+<p>无论来自 Intent 还是 Action，Executor 都会统一调用 Repository（API 层接口）执行业务逻辑。</p>
+<ul>
+<li><em>Executor: “我不管你是用户点的，还是自动加载的，反正我就负责去拿数据。“</em></li>
+</ul>
+<h3 id="3-两条输出路径">3. 两条输出路径</h3>
+<ul>
+<li><strong>路径 C (状态更新)</strong>：Executor <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Message</strong> (如 <code>DataLoaded</code>) <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Reducer</strong> (纯计算) <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>New State</strong> <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> UI 刷新。</li>
+<li><strong>路径 D (一次性事件)</strong>：Executor <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> <strong>Label</strong> (如 <code>ShowToast</code>) <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.3669em;"></span><span class="mrel">→</span></span></span></span> UI 监听处理 (导航/弹窗)。</li>
+</ul>
+<p><strong>这个闭环的价值在于</strong>：UI 层变得极度<strong>愚蠢</strong>。UI 不知道何时该初始化数据，它只负责两件事：</p>
+<ol>
+<li>画出当前的 <strong>State</strong>。</li>
+<li>告诉 Store 用户做了什么 (<strong>Intent</strong>)。</li>
+</ol>
+<p>剩下的所有逻辑调度，全部被关在了 Store 的黑盒子里。</p>
+<hr>
+<h2 id="六-the-containerviewmodel-扮演什么角色">六、 The Container：ViewModel 扮演什么角色？</h2>
+<p>在 MVI 中，ViewModel 的地位被“降级”了。它不再负责业务逻辑，它现在只是一个 <strong>“Store 容器”</strong>。</p>
+<p>它的职责只有两件事：</p>
+<ol>
+<li><strong>持有 Store</strong>：保证屏幕旋转时 Store 不死，状态不丢。</li>
+<li><strong>桥接流</strong>：把 Store 的 <code>State</code> 转换成 Compose 喜欢的 <code>StateFlow</code>。</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#6A737D">// 示例代码：极简的 ViewModel</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> UserViewModel</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">private</span><span style="color:#F97583"> val</span><span style="color:#E1E4E8"> store: </span><span style="color:#B392F0">UserStore</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">ViewModel</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> state </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> store.stateFlow.</span><span style="color:#B392F0">stateIn</span><span style="color:#E1E4E8">(viewModelScope, </span><span style="color:#F97583">..</span><span style="color:#E1E4E8">.)</span></span>
+<span class="line"><span style="color:#F97583">    fun</span><span style="color:#B392F0"> accept</span><span style="color:#E1E4E8">(intent: </span><span style="color:#B392F0">Intent</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> store.</span><span style="color:#B392F0">accept</span><span style="color:#E1E4E8">(intent)</span></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> onCleared</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> store.</span><span style="color:#B392F0">dispose</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<h2 id="七-presentationmodule-中组装">七、 PresentationModule 中组装</h2>
+<p>MVI 的组件很多（Executor, Reducer, Bootstrapper），我们不能在 ViewModel 里手动 <code>new</code> 它们。我们需要在 DI 模块里完成组装。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> userPresentationModule </span><span style="color:#F97583">=</span><span style="color:#B392F0"> module</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#6A737D">    // 1. 提供 Factory (装配 Executor, Reducer)</span></span>
+<span class="line"><span style="color:#B392F0">    factory</span><span style="color:#E1E4E8"> { </span><span style="color:#B392F0">UserStoreFactory</span><span style="color:#E1E4E8">(storeFactory </span><span style="color:#F97583">=</span><span style="color:#F97583"> get</span><span style="color:#E1E4E8">(), repo </span><span style="color:#F97583">=</span><span style="color:#F97583"> get</span><span style="color:#E1E4E8">()) }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 2. 提供 Store (通过 Factory 创建)</span></span>
+<span class="line"><span style="color:#B392F0">    factory</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">get&#x3C;</span><span style="color:#E1E4E8">UserStoreFactory</span><span style="color:#F97583">></span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">create</span><span style="color:#E1E4E8">() }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">    // 3. 提供 ViewModel (注入 Store)</span></span>
+<span class="line"><span style="color:#B392F0">    viewModelOf</span><span style="color:#E1E4E8">(::</span><span style="color:#B392F0">UserViewModel</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">    //-----------或者携带路由参数-------------//</span></span>
+<span class="line"><span style="color:#B392F0">    factory</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">UserDetailStore</span><span style="color:#E1E4E8">> {(user:</span><span style="color:#B392F0">User</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">-></span></span>
+<span class="line"><span style="color:#B392F0">        UserDetailStoreFactory</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">            get</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#F97583">            get</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">        ).</span><span style="color:#B392F0">create</span><span style="color:#E1E4E8">(id)</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#B392F0">    viewModel</span><span style="color:#E1E4E8"> { (user:</span><span style="color:#B392F0">User</span><span style="color:#E1E4E8">)</span><span style="color:#F97583">-></span></span>
+<span class="line"><span style="color:#B392F0">        UserDetailViewModel</span><span style="color:#E1E4E8">(store </span><span style="color:#F97583">=</span><span style="color:#F97583"> get&#x3C;</span><span style="color:#E1E4E8">UserDetailStore</span><span style="color:#F97583">></span><span style="color:#E1E4E8">{</span><span style="color:#B392F0">parametersOf</span><span style="color:#E1E4E8">(user)})</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>这样，ViewModel 彻底干净了，所有的组装逻辑都留在了 DI 层。</p>
+<hr>
+<h2 id="八-总结为什么要交样板代码税">八、 总结：为什么要交“样板代码税”？</h2>
+<p>MVI 看起来确实比 MVVM 写了更多的代码：你需要定义 <code>State</code>、<code>Intent</code>、<code>Action</code>、<code>Message</code>、<code>Label</code> 五个密封接口（Sealed Interface）。</p>
+<p>很多人会问：“值得吗？”
+答案是：<strong>当项目复杂度超过某个临界点时，非常值得。</strong></p>
+<ol>
+<li>
+<p><strong>语义的绝对清晰</strong>：</p>
+<ul>
+<li>看到 <code>Intent</code>，你就知道<strong>用户</strong>能干什么。</li>
+<li>看到 <code>Action</code>，你就知道<strong>系统</strong>自己在干什么。</li>
+<li>看到 <code>Message</code>，你就知道<strong>状态</strong>是如何一步步变化的。</li>
+<li>这种代码是“自解释”的，新来的同事不需要问你逻辑，看接口定义就懂了。</li>
+</ul>
+</li>
+<li>
+<p><strong>调试的上帝视角</strong>：</p>
+<ul>
+<li>遇到 Bug？只需要在 <code>Reducer</code> 里打个断点，打印出的 <code>Message</code> 序列就是完整的“案发现场录像”。</li>
+<li>你可以轻易复现任何诡异的并发状态问题，因为 Reducer 是单线程运行的纯函数。</li>
+</ul>
+</li>
+<li>
+<p><strong>测试的安乐窝</strong>：</p>
+<ul>
+<li>你不需要 Mock 复杂的 Android SDK 或生命周期。</li>
+<li>你只需要创建一个 State，喂给 Reducer 一个 Message，断言输出的新 State 是否符合预期。这是单元测试最舒服的形式。</li>
+</ul>
+</li>
+</ol>
+<p>现在，Feature 内部的逻辑（Data + Logic）已经无懈可击了。
+但还有一个东西游离在 MVI 之外，那就是<strong>导航</strong>。</p>
+<p>在 MVVM 里，导航通常是 Fragment 的跳转；但在我们的架构里，导航其实只是<strong>另一种形式的状态变化</strong>。</p>
+<p>如何把 Nav3 (Jetpack Navigation Compose) 也纳入这个优雅的单向数据流？</p>
+<p><strong>下一篇：<a href="/blog/435a921db46b/">《当导航变成状态：把 Nav3、MVI 与 Compose 串成一条单向数据流》</a></strong></p> </article><div class="tags"><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/MVIKotlin/">MVIKotlin</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/异步编程/">异步编程</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/响应式编程/">响应式编程</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/发布订阅/">发布订阅</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/事件总线/">事件总线</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Kotlin 协程/">Kotlin 协程</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/状态管理/">状态管理</a></div></div></main></div><div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div></div><script type="module" is:global>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script> </body></html>

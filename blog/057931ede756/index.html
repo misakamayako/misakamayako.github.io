@@ -1,0 +1,153 @@
+<!DOCTYPE html><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous"><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v5.17.2"><title>✨御坂网络-为什么你的多模块项目一定会互相污染✨</title><link rel="stylesheet" href="/_astro/index.C6IHRFDG.css">
+<style>/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25/.875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem)*4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:color(display-p3 0 0 0)){.okTgGW_footer{color:var(--color-stone-400,color(display-p3 .647628 .627105 .61098));border-top-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256));background-color:var(--color-slate-900,color(display-p3 .0639692 .0891152 .163036))}}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88044 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% 0 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.1.18 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem)*16);padding-right:calc(var(--spacing,.25rem)*16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% 0 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem)*-.5);translate:var(--tw-translate-x)var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4,0,.2,1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem)*2);padding-block:calc(var(--spacing,.25rem)*2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75/1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem)*2.5);display:inline-block}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,color(display-p3 .980256 .980256 .980256))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:color(display-p3 0 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,color(display-p3 .219113 .639027 .931479))}}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.aUcrWOZv.css"><script type="module" src="/_astro/page.D1uwR3nK.js"></script></head> <body class="w-full h-full flex flex-col"> <div class="bg-slate-800 h-screen flex flex-col"><div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div><div class="flex p-4 grow flex-row h-full overflow-hidden"><aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2"><div class="sticky top-4 space-y-6"><div class="bg-slate-700 p-4 rounded-lg"><img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"><p class="text-white text-center mt-2">作者：misakamayako</p><p class="text-white text-center mt-2">发布时间：2026/01/05</p></div><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">简介</h3><p class="text-white font-light mb-2">分了 Module 并不等于架构解耦。本文深度解析 Android 多模块开发中常见的“依赖陷阱”，提出 Feature as Library 的核心世界观。通过物理隔离、API 与 Internal 分离以及 App 壳去业务化等实战策略，彻底解决编译缓慢与模块污染问题，构建真正可扩展的软件架构。</p></div><!-- 2. 关联文章 --><div class="mb-4 rounded-xl bg-slate-700 p-5 shadow-xl border border-slate-600/50"><div class="mb-4 flex items-center justify-between border-b border-slate-600 pb-3"><div><h3 class="text-xs tracking-widest font-bold text-emerald-400 uppercase">
+Series</h3><h2 class="text-base font-bold text-slate-100">在 Android 中构建可长期演化的 Feature 架构：从模块边界到单向数据流</h2></div><span class="rounded-sm bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-300 border border-slate-600">1/5</span></div><div class="relative flex flex-col"><div class="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-600 rounded-full"></div><a href="/blog/057931ede756/" class="group relative flex gap-4 py-2 transition-all items-center pointer-events-none"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full bg-blue-400 shadow-[0_0_8px_var(--color-blue-400)] ring-4 ring-blue-400/20"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors font-bold text-blue-400">为什么你的多模块项目一定会互相污染</span></div></a><a href="/blog/45493f6eef9d/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">Core 模块不是工具箱：Android 架构里的“地基层”该放什么</span></div></a><a href="/blog/ea305ecafca7/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">让 Feature 像第三方库一样被使用：API 与 Internal 的边界设计</span></div></a><a href="/blog/24a358bdbf05/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">MVI 在真实项目中该怎么落地：State、Intent 与 Effect 的边界</span></div></a><a href="/blog/435a921db46b/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">当导航变成状态：彻底抛弃 NavController 的纯 MVI 导航</span></div></a></div></div><!-- 3. 随机文章 --><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">随便看看</h3><div class="flex flex-wrap gap-2"><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/cdd26be77a2a/">数据库设计的六种范式</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/45493f6eef9d/">Core 模块不是工具箱：Android 架构里的“地基层”该放什么</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/60810af53675/">如何优雅地处理用户取消文件上传的操作</a></div></div></div></aside><main class="grow h-full overflow-auto w-3/4 px-8"><article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100"> <header> <h1>为什么你的多模块项目一定会互相污染</h1> </header> <blockquote>
+<p><strong>“如果不定义边界，熵增会吞噬一切。”</strong></p>
+</blockquote>
+<p>在 Android 开发中，我经常问一个问题：“你们的项目架构是什么？”
+十个人里有八个会回答：“我们用了多模块（Multi-Module）。”</p>
+<p>继续追问：“那你们的模块之间怎么交互？”
+这时候，空气通常会突然安静，或者我听到类似的回答：</p>
+<ul>
+<li>“哦，我们有一个 <code>Common</code> 模块，所有东西都在里面。”</li>
+<li>“<code>Home</code> 模块依赖了 <code>User</code> 模块，因为首页要显示头像。”</li>
+<li>“我们在 <code>App</code> 壳里写了一些胶水代码，因为有时候 A 模块需要调 B 模块的方法。”</li>
+</ul>
+<p>半年后，这些项目通常会面临同一个结局：<strong>编译速度极慢，模块间依赖成网，改一个 Data Class 导致全量重新编译。</strong></p>
+<p>为什么你明明拆分了 Module，架构却依然是一团乱麻？
+因为<strong>分了 Module <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo mathvariant="normal">≠</mo></mrow><annotation encoding="application/x-tex">\neq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span></span></span></span> 架构解耦</strong>。</p>
+<p>这篇作为系列的开篇，我们要先达成一个共识：<strong>模块边界本身，就是一种最高级别的设计决策。</strong></p>
+<h2 id="一-物理隔离-vs-逻辑隔离">一、 物理隔离 vs 逻辑隔离</h2>
+<p>很多团队拆分模块的初衷非常朴素：文件太多了，把它们分装到不同的文件夹里（Gradle Module）看起来整洁一点。</p>
+<p>这种做法我称之为 <strong>“文件夹式的多模块”</strong>。它最大的问题在于，开发者依然保留着 <strong>“全局视野”</strong>。</p>
+<p>当你在 <code>feature:cart</code>（购物车）写代码时，IDE 告诉你 <code>feature:goods</code>（商品）就在隔壁。只要你在 <code>build.gradle</code> 里敲下一行 <code>implementation(project(":feature:goods"))</code>，你就可以直接调用商品模块的代码。</p>
+<p>这一行代码敲下去的那一刻，你的架构就开始崩塌了。</p>
+<p>一旦开启了“Feature 互调”的口子，业务压力会迅速把依赖网变成这就图：
+<code>A -> B -> C -> A</code></p>
+<p>这就是<strong>循环依赖</strong>的温床。为了解决循环依赖，你可能会把公共部分下沉到 <code>Core</code>，久而久之，<code>Core</code> 变成了垃圾堆，里面塞满了各种业务的实体类、工具类和常量，原本的“多模块”名存实亡。</p>
+<h2 id="二-核心世界观feature-as-library">二、 核心世界观：Feature as Library</h2>
+<p>要解决这个问题，我们需要引入一个新的心智模型：<strong>Feature as Library（将业务模块视为第三方库）</strong>。</p>
+<p>想象一下，你正在开发的 <code>feature:user</code> 模块，并不是你项目的一部分，而是一个发布在 Maven Central 上的第三方 SDK（比如像 Retrofit 那样）。</p>
+<p>在这个设定下，你必须遵守以下铁律：</p>
+<ol>
+<li><strong>你不知道谁在用你</strong>：你不能依赖 <code>:app</code> 壳工程，也不能依赖具体的业务场景。</li>
+<li><strong>你不知道谁和你在一起</strong>：你不能假设 <code>:feature:chat</code> 和你在同一个 App 里，你绝对不能依赖其他 Feature。</li>
+<li><strong>你只能依赖基础设施</strong>：你可以依赖 <code>:core</code>（因为它是 Android 标准库级别的存在）。</li>
+</ol>
+<p>在这个架构下，我们的依赖关系树是非常干净的单向流动：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">层级</th><th align="left">模块</th><th align="left">职责与视角</th><th align="left">依赖规则</th></tr></thead><tbody><tr><td align="left"><strong>Top</strong></td><td align="left"><strong><code>app</code> (壳)</strong></td><td align="left"><strong>上帝视角</strong>。它知道所有 Feature 的存在，负责把它们组装起来（依赖注入、导航注册）。</td><td align="left">依赖所有 <code>feature</code></td></tr><tr><td align="left"><strong>Mid</strong></td><td align="left"><strong><code>feature:*</code></strong></td><td align="left"><strong>孤岛视角</strong>。只关注自己的业务闭环。不知道其他兄弟模块的存在。</td><td align="left">依赖 <code>core</code>，<strong>绝不互赖</strong></td></tr><tr><td align="left"><strong>Base</strong></td><td align="left"><strong><code>core:*</code></strong></td><td align="left"><strong>工具视角</strong>。提供基础设施（Log, Net, UI System），完全不懂业务。</td><td align="left">无项目内依赖</td></tr></tbody></table>
+<h2 id="三-为什么-feature-之间坚决不能直接依赖">三、 为什么 Feature 之间坚决不能直接依赖？</h2>
+<p>你可能会问：“但是，购物车模块确实需要获取用户信息啊！如果不让依赖 <code>feature:user</code>，我怎么拿数据？”</p>
+<p>这是一个经典误区。<strong>“需要数据” <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo mathvariant="normal">≠</mo></mrow><annotation encoding="application/x-tex">\neq</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mrel"><span class="mrel"><span class="mord vbox"><span class="thinbox"><span class="rlap"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="inner"><span class="mord"><span class="mrel"></span></span></span><span class="fix"></span></span></span></span></span><span class="mrel">=</span></span></span></span></span> “需要依赖模块”</strong>。</p>
+<p>当你让 <code>feature:cart</code> 直接依赖 <code>feature:user</code> 时，你付出的代价是巨大的：</p>
+<ol>
+<li><strong>编译灾难</strong>：<code>User</code> 模块哪怕改了一行注释，<code>Cart</code> 模块也要重新编译。如果依赖链很长，增量编译就变成了全量编译。</li>
+<li><strong>泄露实现细节</strong>：<code>Cart</code> 可能会不小心调用了 <code>User</code> 的内部数据库逻辑，导致两个模块在数据库层级耦合。</li>
+<li><strong>无法独立测试</strong>：你很难单独运行 <code>Cart</code> 模块，因为它拖家带口。</li>
+</ol>
+<p><strong>正确的做法是</strong>：
+定义一个<strong>接口</strong>（Abstractions）。</p>
+<ul>
+<li>如果需要数据：在 <code>core</code> 或共享的 API 层定义接口 <code>UserProvider</code>。</li>
+<li>如果需要跳转：在 <code>core</code> 定义路由接口。</li>
+<li><strong>谁来实现接口？</strong> <code>feature:user</code> 实现。</li>
+<li><strong>谁来注入实现？</strong> <code>app</code> 壳工程（通过 DI 容器）。</li>
+</ul>
+<p>这就是为什么我们在架构图里强调 <strong>DI Container</strong> 必须在 <code>app</code> 层。它是唯一的胶水。</p>
+<h2 id="四-引入-api-与-internal物理上的强制约束">四、 引入 API 与 Internal：物理上的强制约束</h2>
+<p>为了从物理上杜绝“不小心依赖了实现细节”的情况，我们在后续的文章中会引入一种特殊的工程结构：<strong>API / Internal 分离</strong>。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>feature/user/</span></span>
+<span class="line"><span>├── api/       &#x3C;-- 只有这里对外可见</span></span>
+<span class="line"><span>│   ├── model/</span></span>
+<span class="line"><span>│   ├── UserRepository.kt (Interface)</span></span>
+<span class="line"><span>│   └── UserGraph.kt</span></span>
+<span class="line"><span>└── internal/  &#x3C;-- 这里全是秘密</span></span>
+<span class="line"><span>    ├── data/</span></span>
+<span class="line"><span>    ├── presentation/</span></span>
+<span class="line"><span>    └── di/</span></span></code></pre>
+<ul>
+<li>其他模块（如 App 壳）只能依赖 <code>feature:user:api</code>。</li>
+<li><code>feature:user:internal</code> 实现了 API，但对外部完全隐藏。</li>
+</ul>
+<p>这就像 Retrofit：你只能看到 <code>Call&#x3C;T></code> 接口（API），你看不到它底层是怎么解析 Socket 的（Internal）。</p>
+<p>这种结构强制实现了 <strong>“接口编程”</strong>。即便你想犯错，IDE 也会告诉你：<code>Unresolved reference</code>。</p>
+<h2 id="五-为什么-app-壳不该有业务逻辑">五、 为什么 App 壳不该有业务逻辑？</h2>
+<p>在很多项目中，<code>MainActivity</code> 承载了太多的逻辑：初始化推送、判断登录状态跳转、处理全局弹窗……</p>
+<p>在这个架构中，<strong><code>app</code> 模块应该极度“愚蠢”</strong>。</p>
+<p>它的职责只有两个：</p>
+<ol>
+<li><strong>初始化</strong>：启动 Application，初始化 DI 容器（Koin/Hilt）。</li>
+<li><strong>聚合</strong>：把各个 <code>feature</code> 的导航图（Graph）拼在一起。</li>
+</ol>
+<p>如果 <code>app</code> 模块里出现了 <code>if (isLogin) { ... }</code> 这样的业务判断，说明你的架构漏水了。这些逻辑应该下沉到 <code>Core</code> 的中间件或者特定的 <code>Feature</code> 中。</p>
+<h2 id="六-总结">六、 总结</h2>
+<p>这一篇我们没有写一行代码，但我们确立了最重要的架构原则：</p>
+<ol>
+<li><strong>Feature 之间是老死不相往来的孤岛</strong>。</li>
+<li><strong>通讯靠接口，组装靠 App 壳</strong>。</li>
+<li><strong>Core 是地基，不是垃圾桶</strong>。</li>
+</ol>
+<p>这种严苛的边界划分，起初会让你觉得“写个代码怎么这么麻烦，还要定义接口”。但随着项目演进到几十个模块、几十万行代码时，你会感谢这种边界。因为它保证了你的<strong>编译速度</strong>，保证了模块的<strong>可替换性</strong>，更保证了新加入的同事不会把代码写成一团乱麻。</p>
+<p>确立了世界观后，下一篇我们将目光投向最底层。我们将探讨那个最容易被写乱的模块 —— <strong>Core</strong>。</p>
+<p><strong>下一篇：<a href="/blog/45493f6eef9d/">《Core 模块不是工具箱：Android 架构里的“地基层”该放什么》</a></strong></p> </article><div class="tags"><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/软件架构/">软件架构</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Android/">Android</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Kotlin/">Kotlin</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/性能优化/">性能优化</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/JVM/">JVM</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/后端设计/">后端设计</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/数据管理/">数据管理</a></div></div></main></div><div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div></div><script type="module" is:global>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script> </body></html>

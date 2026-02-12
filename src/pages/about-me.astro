@@ -4,7 +4,7 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import localStyle from "../styles/aboutMe.module.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faGithub, faJava, faJs, faNodeJs, faPixiv, faReact} from "@fortawesome/free-brands-svg-icons";
+import {faGithub, faJs, faNodeJs, faPixiv, faReact} from "@fortawesome/free-brands-svg-icons";
 const baseURL = import.meta.env.BASE_URL
 ---
 <Home pageTitle="✨御坂网络-关于我✨">
@@ -68,7 +68,8 @@ const baseURL = import.meta.env.BASE_URL
                                target="_blank"
                                rel="noreferrer"
                                class="text-secondary hover:underline flex items-center">
-                                <i class="fab fa-github mr-1"></i> 查看代码
+                                <FontAwesomeIcon icon={faGithub} className="w-4 mr-1"/>
+                                查看代码
                             </a>
                         </div>
                     </div>
@@ -87,7 +88,7 @@ const baseURL = import.meta.env.BASE_URL
                             </div>
                             <a href="https://github.com/misakamayako/mayako.space"
                                class="text-secondary hover:underline flex items-center">
-                                <FontAwesomeIcon icon={faGithub} className="w-4"/>
+                                <FontAwesomeIcon icon={faGithub} className="w-4 mr-1"/>
                                 查看代码
                             </a>
                         </div>
@@ -107,7 +108,7 @@ const baseURL = import.meta.env.BASE_URL
                             </div>
                             <a href="https://github.com/misakamayako/PowerTrack"
                                class="text-secondary hover:underline flex items-center">
-                                <FontAwesomeIcon icon={faGithub} className="w-4"/>
+                                <FontAwesomeIcon icon={faGithub} className="w-4 mr-1"/>
                                 查看代码
                             </a>
                         </div>

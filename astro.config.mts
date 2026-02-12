@@ -6,6 +6,8 @@ import rehypeMermaid from 'rehype-mermaid';
 import rehypePrettyCode from "rehype-pretty-code";
 
 import tailwindcss from '@tailwindcss/vite';
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 
 export default defineConfig({
     output: "static",
@@ -25,8 +27,12 @@ export default defineConfig({
                     }
                 }
             ],
-            rehypePrettyCode
+            rehypePrettyCode,
+            rehypeKatex
         ],
+        remarkPlugins:[
+            remarkMath
+        ]
     },
     site: "https://misakamayako.github.io/",
     base: "/",

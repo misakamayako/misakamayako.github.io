@@ -6,9 +6,10 @@ import "../styles/overrideInlineCode.css"
 import "matewind/matewind.css"
 import {Tag} from "matewind"
 const {frontmatter} = Astro.props;
-import {getCollection} from 'astro:content';
+import {getCollection, type CollectionEntry} from 'astro:content';
+type BlogEntry = CollectionEntry<'blog'>;
 
-const allPosts = await getCollection('blog');
+const allPosts: BlogEntry[] = await getCollection('blog');
 
 function reservoirSample<T>(items: T[], k: number): T[] {
     const result: T[] = [];
@@ -28,13 +29,36 @@ function reservoirSample<T>(items: T[], k: number): T[] {
 }
 
 const randomPosts = reservoirSample(allPosts, 3);
+let relatedPosts = [];
+const currentOrder = frontmatter.seriesOrder
+if (frontmatter.seriesId) {
+    const seriesId = frontmatter.seriesId
+    const allPosts = await getCollection('blog');
+    relatedPosts = allPosts
+        .filter((p) => {
+            return p.data.seriesId === seriesId
+        })
+        .sort((a, b) => {
+            const orderA = a.data.seriesOrder || 0;
+            const orderB = b.data.seriesOrder || 0;
+            return orderA - orderB;
+        });
+}
 const baseURL = import.meta.env.BASE_URL
 ---
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g=="
+      crossorigin="anonymous">
+<style is:global>
+    .katex {
+        position: relative;
+    }
+</style>
 <BaseLayout pageTitle={"✨御坂网络-" + frontmatter.title + "✨"}>
     <div class="bg-slate-800 h-screen flex flex-col">
         <Navigation/>
         <div class="flex p-4 grow flex-row h-full overflow-hidden">
-            <aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto">
+            <aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2">
                 <div class="sticky top-4 space-y-6">
                     <div class="bg-slate-700 p-4 rounded-lg">
                         <img src={frontmatter.avatar ?? `${baseURL}avatar.jpg`} class="w-16 h-16 rounded-full mx-auto"/>
@@ -61,12 +85,65 @@ const baseURL = import.meta.env.BASE_URL
                         <p class="text-white font-light mb-2">{frontmatter.description}</p>
                     </div>
 
-                    <!-- 2. 文章目录 -->
-                    <!--<div class="bg-slate-700 p-4 rounded-lg">-->
-                    <!--    <h3 class="text-emerald-400 mb-2">本文目录</h3>-->
-                    <!--    &lt;!&ndash;<TOC client:load /> &ndash;&gt;-->
-                    <!--</div>-->
+                    <!-- 2. 关联文章 -->
+                    {
+                        relatedPosts.length > 0 ? (
+                                <div class="mb-4 rounded-xl bg-slate-700 p-5 shadow-xl border border-slate-600/50">
+                                    <div class="mb-4 flex items-center justify-between border-b border-slate-600 pb-3">
+                                        <div>
+                                            <h3 class="text-xs tracking-widest font-bold text-emerald-400 uppercase">
+                                                Series</h3>
+                                            <h2 class="text-base font-bold text-slate-100">{frontmatter.seriesName}</h2>
+                                        </div>
+                                        <span class="rounded-sm bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-300 border border-slate-600">
+                                          {frontmatter.seriesOrder}/{relatedPosts.length}
+                                        </span>
+                                    </div>
 
+                                    <div class="relative flex flex-col">
+                                        <div class="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-600 rounded-full"></div>
+
+                                        {relatedPosts.map((post) => {
+                                            const isCurrent = post.data.seriesOrder === currentOrder;
+                                            const isPast = post.data.seriesOrder < currentOrder;
+
+                                            return (
+                                                    <a
+                                                            href={`/blog/${post.data.slug}/`}
+                                                            class:list={[
+                                                                "group relative flex gap-4 py-2 transition-all items-center",
+                                                                isCurrent ? "pointer-events-none" : "hover:pl-1"
+                                                            ]}
+                                                    >
+                                                        <div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center">
+                                                            {isCurrent ? (
+                                                                    <div class="h-3 w-3 rounded-full bg-blue-400 shadow-[0_0_8px_var(--color-blue-400)] ring-4 ring-blue-400/20"/>
+                                                            ) : isPast ? (
+                                                                    <div class="h-2.5 w-2.5 rounded-full bg-slate-500 group-hover:bg-slate-400 transition-colors"/>
+                                                            ) : (
+                                                                    <div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"/>
+                                                            )}
+                                                        </div>
+
+                                                        <div class="flex flex-col">
+                                                            <span class:list={[
+                                                                "text-sm leading-snug transition-colors",
+                                                                isCurrent
+                                                                    ? "font-bold text-blue-400"
+                                                                    : isPast
+                                                                        ? "text-slate-400 group-hover:text-slate-200"
+                                                                        : "text-slate-300 group-hover:text-white"
+                                                            ]}>
+                                                              {post.data.title}
+                                                            </span>
+                                                        </div>
+                                                    </a>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                        ) : null
+                    }
                     <!-- 3. 随机文章 -->
                     <div class="bg-slate-700 p-4 rounded-lg">
                         <h3 class="text-emerald-400 mb-2">随便看看</h3>
@@ -85,6 +162,31 @@ const baseURL = import.meta.env.BASE_URL
                 </div>
             </aside>
             <main class="grow h-full overflow-auto w-3/4 px-8">
+                {frontmatter.deprecated && (
+                        <div class="mb-8 p-4 rounded-lg border-l-4 border-amber-500 bg-amber-500/10 backdrop-blur-sm group hover:bg-amber-500/20 transition-all duration-300">
+                            <div class="flex items-start gap-3">
+                                <div class="text-amber-500 mt-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                         viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-amber-400 font-bold text-lg mb-1">文章状态更新</h4>
+                                    <p class="text-zinc-300 text-sm leading-relaxed">
+                                        {frontmatter.deprecated}
+                                        <br class="hidden md:block"/>
+                                        建议前往阅读逻辑更清晰的新版本：
+                                        <a href={"/blog/" + frontmatter.newVersionUrl + "/"}
+                                           class="text-amber-200 underline underline-offset-4 decoration-amber-500/50 hover:decoration-amber-400 font-medium transition-all ml-1">
+                                            点击跳转至新文章 →
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                )}
                 <article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
                  prose-headings:text-current prose-strong:text-current prose-code:text-current
                  prose-a:text-violet-200 prose-blockquote:text-stone-100">
@@ -106,6 +208,7 @@ const baseURL = import.meta.env.BASE_URL
     <script type="module" is:global>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
                 const button = document.createElement('button')
                 button.innerText = '复制'
                 button.className =

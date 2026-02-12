@@ -5,6 +5,8 @@ tags: [ KMP, 软件架构, Android,iOS,Desktop,Kotlin ]
 auth: misakamayako
 slug: 8b44690e60a0
 pubDate: 2025/09/01
+deprecated: 存在表述不清或者过时的部分
+newVersionUrl: 057931ede756
 ---
 
 一个采用 Compose Multiplatform 的 KMM 项目能够实现极致的代码复用，将业务逻辑、状态管理、导航甚至 UI 层都放在共享模块中。这使得开发团队可以用单一代码库为 Android、iOS、桌面和 Web 构建功能与外观高度一致的应用。

@@ -21,7 +21,7 @@ import Footer from "../../components/Footer.astro";
             <!-- 页头 -->
             <header class="text-center mb-14">
                 <div class="flex justify-center mb-6">
-                    <div class="w-24 h-24 rounded-full bg-gradient-to-br
+                    <div class="w-24 h-24 rounded-full bg-linear-to-br
                  from-slate-700 to-slate-600 flex items-center justify-center animate-bounce
                  duration-700
                  ">
@@ -138,14 +138,14 @@ import Footer from "../../components/Footer.astro";
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- 提示词 -->
                             <div class="md:col-span-2 flex items-start p-3 bg-slate-50 rounded-lg">
-                                <span class="w-32 text-slate-500 flex-shrink-0">提示词:</span>
-                                <span id="gen-prompt" class="font-medium text-slate-900 break-words"></span>
+                                <span class="w-32 text-slate-500 shrink-0">提示词:</span>
+                                <span id="gen-prompt" class="font-medium text-slate-900 wrap-break-word"></span>
                             </div>
 
                             <!-- 负面提示词 -->
                             <div class="md:col-span-2 flex items-start p-3 bg-slate-50 rounded-lg">
-                                <span class="w-32 text-slate-500 flex-shrink-0">负面提示词:</span>
-                                <span id="gen-negative-prompt" class="font-medium text-slate-900 break-words"></span>
+                                <span class="w-32 text-slate-500 shrink-0">负面提示词:</span>
+                                <span id="gen-negative-prompt" class="font-medium text-slate-900 wrap-break-word"></span>
                             </div>
 
                             <!-- 尺寸 -->
@@ -242,21 +242,21 @@ import Footer from "../../components/Footer.astro";
                 <h3 class="font-bold text-xl text-slate-900 mb-5 text-center">本地处理技术说明</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 mx-auto bg-linear-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
                             <FontAwesomeIcon icon={faLock} className="text-white w-6"/>
                         </div>
                         <h4 class="font-bold text-lg text-slate-900 mb-2">隐私保护</h4>
                         <p class="text-slate-600">图片完全在浏览器中处理，永不离开您的设备</p>
                     </div>
                     <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 mx-auto bg-linear-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
                             <FontAwesomeIcon icon={faBolt} className="text-white w-6"/>
                         </div>
                         <h4 class="font-bold text-lg text-slate-900 mb-2">快速处理</h4>
                         <p class="text-slate-600">利用现代浏览器能力实现快速元数据解析</p>
                     </div>
                     <div class="bg-slate-50 rounded-xl p-5 text-center border border-slate-100">
-                        <div class="w-16 h-16 mx-auto bg-gradient-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
+                        <div class="w-16 h-16 mx-auto bg-linear-to-br from-slate-700 to-slate-600 rounded-full flex items-center justify-center mb-4">
                             <FontAwesomeIcon icon={faCode} className="text-white w-6"/>
                         </div>
                         <h4 class="font-bold text-lg text-slate-900 mb-2">开源技术</h4>

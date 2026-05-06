@@ -50,7 +50,7 @@ const collections = [
     <div class="bg-slate-800 text-slate-100 min-h-screen flex flex-col">
 
     <!-- 主内容区 -->
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main class="grow container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto mb-12 text-center">
             <h1 class="text-4xl font-bold mb-4">我的SD词条收藏</h1>
             <p class="text-slate-400 text-lg">精心收集的优质Stable Diffusion提示词，点击复制按钮即可快速使用</p>
@@ -69,7 +69,7 @@ const collections = [
                         <div class={localCssModule.card}>
                             <div class="relative">
                                 <img src={it.url} alt={it.name} class="w-full h-48 object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+                                <div class="absolute inset-0 bg-linear-to-t from-slate-900 to-transparent"></div>
                                 <button class={localCssModule.copyButton}>
                                     <FontAwesomeIcon icon={faCopy} className="w-3.5" data-content={it.content} />
                                 </button>
@@ -88,7 +88,7 @@ const collections = [
     </main>
     </div>
     <Footer/>
-    <script define:vars={{visibleClass:localCssModule.copyNotification}}>
+    <script is:inline define:vars={{visibleClass:localCssModule.copyNotification}}>
         const copies = document.querySelectorAll("[data-content]");
         const copyNotificationEl = document.querySelector("#copyNotification")
         copies.forEach(it=>{

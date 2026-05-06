@@ -1,5 +1,6 @@
-import {defineCollection, z} from "astro:content";
+import {defineCollection} from "astro:content";
 import {glob} from "astro/loaders";
+import {z} from 'zod'
 
 const blog = defineCollection({
     loader:glob({pattern:"*.md",base:"./src/content/blog"}),
@@ -12,8 +13,8 @@ const blog = defineCollection({
         auth: z.string(),
         translated: z.boolean().optional(),
         translator: z.string().optional(),
-        avatar: z.string().url().optional(),
-        original_link: z.string().url().optional(),
+        avatar: z.url().optional(),
+        original_link: z.url().optional(),
         seriesId: z.string().optional(),
         seriesName: z.string().optional(),
         seriesOrder: z.number().int().optional(),

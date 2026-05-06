@@ -205,7 +205,7 @@ const baseURL = import.meta.env.BASE_URL
         </div>
         <Footer/>
     </div>
-    <script type="module" is:global>
+    <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('pre').forEach((block) => {
                 if (block.dataset.language === 'plaintext') return

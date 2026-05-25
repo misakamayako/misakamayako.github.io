@@ -1,7 +1,17 @@
 ---
-const {pageTitle} = Astro.props;
+const {
+    pageTitle,
+    description = "御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。",
+    image = "/favicon.jpg",
+    canonical,
+    type = "website",
+    noindex = false
+} = Astro.props;
 import "../styles/global.css";
 const baseURL = import.meta.env.BASE_URL
+
+const canonicalUrl = canonical ? new URL(canonical, Astro.site).toString() : Astro.url.toString();
+const imageUrl = new URL(image, Astro.site).toString();
 ---
 
 <html lang="zh-hans" class="h-full w-full m-0">
@@ -11,6 +21,21 @@ const baseURL = import.meta.env.BASE_URL
     <meta name="viewport" content="width=device-width"/>
     <meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs" />
     <meta name="generator" content={Astro.generator}/>
+    <meta name="description" content={description}/>
+    {noindex && <meta name="robots" content="noindex,nofollow"/>}
+    <link rel="canonical" href={canonicalUrl}/>
+
+    <meta property="og:type" content={type}/>
+    <meta property="og:title" content={pageTitle}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:url" content={canonicalUrl}/>
+    <meta property="og:image" content={imageUrl}/>
+    <meta property="og:site_name" content="御坂网络"/>
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content={pageTitle}/>
+    <meta name="twitter:description" content={description}/>
+    <meta name="twitter:image" content={imageUrl}/>
     <title>{pageTitle}</title>
 </head>
 <body class="w-full h-full flex flex-col">

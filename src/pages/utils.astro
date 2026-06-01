@@ -3,7 +3,7 @@ import Home from "../layouts/home.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBrain, faImage, faMicrochip, faPalette, faSearch} from "@fortawesome/free-solid-svg-icons";
+import {faBrain, faEye, faImage, faMicrochip, faPalette, faSearch} from "@fortawesome/free-solid-svg-icons";
 import localStyle from "../styles/utils.module.css"
 const pages = [
     {
@@ -19,6 +19,13 @@ const pages = [
         description: "解析stable diffusion 绘画的生成数据",
         date: "2025/07/15",
         url: "/extras/sd-decode/"
+    },
+    {
+        icon: faEye,
+        title: 'LSB 隐写工具',
+        description: "在线测试 LSB 图片隐写术，支持 AES 加密与拖拽操作",
+        date: "2026/05/22",
+        url: "/extras/lsb-tool/"
     },
     {
         icon: faPalette,

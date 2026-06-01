@@ -1,0 +1,958 @@
+---
+import BaseLayout from "../../layouts/home.astro"
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+---
+<BaseLayout
+  pageTitle="LSB 隐写工具"
+  description="在线 LSB 图片隐写工具，支持 PNG 图片隐藏文本或文件、AES-256-GCM 加密、RGB/RGBA 通道选择与自动解码。"
+>
+  <Navigation/>
+  <div class="flex flex-col min-h-screen bg-slate-900 text-slate-100">
+    <header class="text-center py-8">
+      <h1 class="text-3xl font-bold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+        LSB 图片隐写工具
+      </h1>
+      <p class="mt-2 text-slate-400 text-sm">拖入图片，写入秘密——基于最低有效位的隐写术在线测试</p>
+    </header>
+
+    <div class="flex-1 grid grid-cols-[1fr_380px_1fr] gap-4 px-6 pb-8 max-w-[1400px] mx-auto w-full">
+      <!-- ====== 左侧：原始图片 / 编码载体 ====== -->
+      <div class="flex flex-col gap-3 relative">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wide">原始图片（编码载体）</h2>
+          <div class="flex items-center gap-2">
+            <span id="leftBadge" class="hidden text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300">已加载</span>
+            <button id="leftClearBtn" class="hidden text-xs text-slate-500 hover:text-red-400 transition-colors">清除</button>
+          </div>
+        </div>
+        <div id="leftDropContainer" class="flex-1 min-h-[300px] relative flex items-center justify-center overflow-hidden">
+          <div id="leftDropZone" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-blue-400 hover:bg-slate-800/50">
+            <svg class="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+            </svg>
+            <p class="text-slate-500 text-sm">拖入原始 PNG 进行编码</p>
+            <p class="text-slate-600 text-xs">或点击选择文件</p>
+            <input type="file" id="leftFileInput" accept="image/png" class="hidden"/>
+          </div>
+          <canvas id="leftCanvas" class="hidden max-w-full max-h-full rounded-lg border border-slate-700 cursor-pointer" title="点击或拖入更换图片"></canvas>
+          <div id="leftInfo" class="hidden absolute top-3 left-3 z-10 text-xs text-slate-300 space-y-0.5 bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 shadow-lg backdrop-blur">
+            <p>尺寸: <span id="leftSize" class="text-slate-100"></span></p>
+            <p>类型: <span id="leftColorType" class="text-slate-100"></span></p>
+            <p>可用容量: <span id="leftCapacity" class="text-slate-100"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== 中间：配置面板 ====== -->
+      <div class="flex flex-col gap-4 bg-slate-800/60 rounded-xl p-5 border border-slate-700">
+        <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wide text-center">配置 & 控制</h2>
+
+        <!-- 加密开关 -->
+        <div class="flex items-center justify-between bg-slate-700/50 rounded-lg px-4 py-3">
+          <div>
+            <p class="text-sm text-slate-200">AES 加密</p>
+            <p class="text-xs text-slate-400">使用 AES-256-GCM 加密数据</p>
+          </div>
+          <button id="encryptToggle" type="button" class="relative w-11 h-6 rounded-full transition-colors bg-slate-500 focus:outline-none">
+            <span class="block w-5 h-5 bg-white rounded-full shadow transition-transform translate-x-0.5"></span>
+          </button>
+        </div>
+
+        <!-- 加密参数区（默认隐藏） -->
+        <div id="encryptParams" class="hidden space-y-3">
+          <div>
+            <label class="text-xs text-slate-400 block mb-1">密钥 (Password)</label>
+            <input type="password" id="encryptKey" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400" placeholder="输入加密密钥"/>
+          </div>
+          <div>
+            <label class="text-xs text-slate-400 block mb-1">IV (Hex, 24 字符, 留空自动生成)</label>
+            <div class="flex gap-2">
+              <input type="text" id="encryptIV" maxlength="24" class="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono placeholder-slate-500 focus:outline-none focus:border-blue-400" placeholder="留空自动生成" pattern="[0-9a-fA-F]{24}"/>
+              <button id="genIVBtn" type="button" class="px-3 py-2 text-xs bg-slate-600 hover:bg-slate-500 rounded-lg transition-colors whitespace-nowrap">随机生成</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分隔 -->
+        <hr class="border-slate-700"/>
+
+        <!-- 输出文件名 -->
+        <div>
+          <label class="text-xs text-slate-400 block mb-1">输出文件名 <span class="text-slate-500">(可选)</span></label>
+          <input type="text" id="extName" maxlength="120" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400" placeholder="如 secret.txt，留空则按纯文本处理"/>
+        </div>
+
+        <!-- 内容输入 -->
+        <div id="payloadDropArea" class="flex-1 flex flex-col min-h-0">
+          <label class="text-xs text-slate-400 block mb-1">隐藏内容</label>
+          <textarea id="payloadText" rows="6" class="flex-1 min-h-[120px] w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400 resize-none font-mono disabled:opacity-50 disabled:cursor-not-allowed" placeholder="输入要隐藏的文本...&#10;或拖入文件到此处"></textarea>
+          <div class="mt-2 flex gap-2 items-center">
+            <input type="file" id="payloadFileInput" class="hidden"/>
+            <button id="loadFileBtn" type="button" class="text-xs px-3 py-1.5 bg-slate-600 hover:bg-slate-500 rounded-lg transition-colors">加载文件</button>
+            <button id="clearFileBtn" type="button" class="hidden text-xs px-3 py-1.5 bg-red-600/30 hover:bg-red-500/40 text-red-300 rounded-lg transition-colors">清除文件</button>
+            <span id="payloadFileInfo" class="text-xs text-slate-500 self-center"></span>
+          </div>
+        </div>
+
+        <!-- 容量指示 -->
+        <div id="capacityBar" class="hidden space-y-1">
+          <div class="flex justify-between text-xs text-slate-400">
+            <span>容量占用</span>
+            <span id="capacityText"></span>
+          </div>
+          <div class="h-1.5 bg-slate-700 rounded-full overflow-hidden">
+            <div id="capacityFill" class="h-full bg-emerald-500 rounded-full transition-all" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="grid grid-cols-2 gap-3">
+          <button id="encodeBtn" disabled class="py-2.5 text-sm font-semibold rounded-lg transition-colors bg-blue-600 hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed">
+            编码
+          </button>
+          <button id="decodeBtn" disabled class="py-2.5 text-sm font-semibold rounded-lg transition-colors bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed">
+            解码
+          </button>
+        </div>
+
+        <!-- 状态信息 -->
+        <div id="statusMsg" class="text-xs text-center text-slate-500 min-h-[20px]"></div>
+      </div>
+
+      <!-- ====== 右侧：结果图片 / 解码源 ====== -->
+      <div class="flex flex-col gap-3 relative">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wide">含密图片（解码源）</h2>
+          <div class="flex items-center gap-2">
+            <span id="rightBadge" class="hidden text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">已加载</span>
+            <button id="rightClearBtn" class="hidden text-xs text-slate-500 hover:text-red-400 transition-colors">清除</button>
+          </div>
+        </div>
+        <div id="rightDropContainer" class="flex-1 min-h-[300px] relative flex items-center justify-center overflow-hidden">
+          <div id="rightDropZone" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-emerald-400 hover:bg-slate-800/50">
+            <svg class="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+            </svg>
+            <p class="text-slate-500 text-sm">拖入含密 PNG 进行解码</p>
+            <p class="text-slate-600 text-xs">或点击选择文件</p>
+            <input type="file" id="rightFileInput" accept="image/png" class="hidden"/>
+          </div>
+          <canvas id="rightCanvas" class="hidden max-w-full max-h-full rounded-lg border border-slate-700 cursor-pointer" title="点击或拖入更换图片"></canvas>
+          <div id="rightInfo" class="hidden absolute top-3 left-3 z-10 text-xs text-slate-300 space-y-0.5 bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 shadow-lg backdrop-blur">
+            <p>尺寸: <span id="rightSize" class="text-slate-100"></span></p>
+          </div>
+        </div>
+        <a id="downloadLink" class="hidden w-full text-center py-2 text-sm font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 transition-colors" download="lsb-encoded.png">下载含密图片</a>
+      </div>
+    </div>
+
+    <!-- RGBA 确认对话框 -->
+    <div id="rgbaDialog" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/60 flex">
+      <div class="bg-slate-800 border border-slate-600 rounded-xl p-6 shadow-2xl">
+        <h3 class="text-lg font-semibold text-slate-100 mb-2">检测到 Alpha 通道</h3>
+        <p class="text-sm text-slate-400 mb-4">该图片包含 RGBA 四通道。修改 Alpha 通道的 LSB 可能影响图片在合成场景下的显示效果。是否继续使用全部 4 个通道？</p>
+        <p class="text-xs text-slate-500 mb-5">选择"仅 RGB"将只使用 3 个颜色通道，容量减少 25%。</p>
+        <div class="flex gap-3 justify-end">
+          <button id="rgbaReject" class="px-4 py-2 text-sm rounded-lg bg-slate-600 hover:bg-slate-500 transition-colors">取消</button>
+          <button id="rgbaRgbOnly" class="px-4 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors">仅 RGB (3通道)</button>
+          <button id="rgbaConfirm" class="px-4 py-2 text-sm rounded-lg bg-emerald-600 hover:bg-emerald-500 transition-colors">使用 RGBA (4通道)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <Footer/>
+</BaseLayout>
+
+<script is:inline>
+  // ============ 常量 ============
+  const FILE_NAME_LEN_BYTES = 2;
+  const MAX_FILE_NAME_BYTES = 255;
+  const AES_SALT_LEN = 16;
+  const AES_IV_LEN = 12;
+  const AES_TAG_LEN = 16;
+
+  // ============ 状态 ============
+  let leftImageData = null;   // { file, width, height, colorType, channels, pixels: Uint8ClampedArray, capacity }
+  let rightImageData = null;
+  let leftFile = null;
+  let rightFile = null;
+  let payloadFile = null;
+  let encryptEnabled = false;
+  let pendingRgbaFile = null;
+  let pendingRgbaSide = null;
+
+  // ============ DOM 引用 ============
+  const $ = id => document.getElementById(id);
+
+  const leftDropZone = $('leftDropZone');
+  const leftFileInput = $('leftFileInput');
+  const leftCanvas = $('leftCanvas');
+  const leftInfo = $('leftInfo');
+  const leftBadge = $('leftBadge');
+  const leftSize = $('leftSize');
+  const leftColorType = $('leftColorType');
+  const leftCapacity = $('leftCapacity');
+
+  const rightDropZone = $('rightDropZone');
+  const rightFileInput = $('rightFileInput');
+  const rightCanvas = $('rightCanvas');
+  const rightInfo = $('rightInfo');
+  const rightBadge = $('rightBadge');
+  const rightSize = $('rightSize');
+  const downloadLink = $('downloadLink');
+  const leftClearBtn = $('leftClearBtn');
+  const rightClearBtn = $('rightClearBtn');
+  const leftDropContainer = $('leftDropContainer');
+  const rightDropContainer = $('rightDropContainer');
+
+  const encryptToggle = $('encryptToggle');
+  const encryptParams = $('encryptParams');
+  const encryptKey = $('encryptKey');
+  const encryptIV = $('encryptIV');
+  const genIVBtn = $('genIVBtn');
+  const extName = $('extName');
+  const payloadDropArea = $('payloadDropArea');
+  const payloadText = $('payloadText');
+  const payloadFileInput = $('payloadFileInput');
+  const loadFileBtn = $('loadFileBtn');
+  const clearFileBtn = $('clearFileBtn');
+  const payloadFileInfo = $('payloadFileInfo');
+  const encodeBtn = $('encodeBtn');
+  const decodeBtn = $('decodeBtn');
+  const statusMsg = $('statusMsg');
+  const capacityBar = $('capacityBar');
+  const capacityText = $('capacityText');
+  const capacityFill = $('capacityFill');
+
+  const rgbaDialog = $('rgbaDialog');
+  const rgbaConfirm = $('rgbaConfirm');
+  const rgbaRgbOnly = $('rgbaRgbOnly');
+  const rgbaReject = $('rgbaReject');
+
+  // ============ 加密开关 ============
+  encryptToggle.addEventListener('click', () => {
+    encryptEnabled = !encryptEnabled;
+    if (encryptEnabled) {
+      encryptToggle.classList.remove('bg-slate-500');
+      encryptToggle.classList.add('bg-emerald-500');
+      encryptToggle.querySelector('span').classList.remove('translate-x-0.5');
+      encryptToggle.querySelector('span').classList.add('translate-x-5');
+      encryptParams.classList.remove('hidden');
+    } else {
+      encryptToggle.classList.remove('bg-emerald-500');
+      encryptToggle.classList.add('bg-slate-500');
+      encryptToggle.querySelector('span').classList.remove('translate-x-5');
+      encryptToggle.querySelector('span').classList.add('translate-x-0.5');
+      encryptParams.classList.add('hidden');
+    }
+    updateButtonState();
+    updateCapacityBar();
+  });
+
+  // ============ IV 自动生成 ============
+  genIVBtn.addEventListener('click', () => {
+    if (!encryptEnabled || rightImageData) return; // 解密模式不允许随机生成
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    encryptIV.value = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
+  });
+
+  // ============ 文件加载按钮 ============
+  loadFileBtn.addEventListener('click', () => payloadFileInput.click());
+  payloadFileInput.addEventListener('change', async () => {
+    const file = payloadFileInput.files[0];
+    if (!file) return;
+    await loadPayloadFile(file);
+  });
+
+  async function loadPayloadFile(file) {
+    const buf = await file.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    payloadFile = file;
+    payloadText.value = `[文件: ${file.name}, ${formatSize(bytes.length)}]`;
+    payloadText.disabled = true;
+    extName.value = file.name;
+    payloadFileInfo.textContent = `${file.name} (${formatSize(bytes.length)})`;
+    loadFileBtn.classList.add('hidden');
+    clearFileBtn.classList.remove('hidden');
+    updateCapacityBar();
+    updateButtonState();
+  }
+
+  function setPayloadDropActive(active) {
+    payloadText.classList.toggle('border-emerald-400', active);
+    payloadText.classList.toggle('bg-slate-600', active);
+  }
+
+  payloadDropArea.addEventListener('dragover', e => {
+    e.preventDefault();
+    if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+    setPayloadDropActive(true);
+  });
+
+  payloadDropArea.addEventListener('dragleave', e => {
+    if (payloadDropArea.contains(e.relatedTarget)) return;
+    setPayloadDropActive(false);
+  });
+
+  payloadDropArea.addEventListener('drop', async e => {
+    e.preventDefault();
+    setPayloadDropActive(false);
+
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+
+    await loadPayloadFile(file);
+  });
+
+  // 清除已加载的文件
+  clearFileBtn.addEventListener('click', () => {
+    payloadFileInput.value = '';
+    payloadFile = null;
+    payloadText.value = '';
+    payloadText.disabled = false;
+    payloadFileInfo.textContent = '';
+    loadFileBtn.classList.remove('hidden');
+    clearFileBtn.classList.add('hidden');
+    updateCapacityBar();
+    updateButtonState();
+  });
+
+  // ============ 拖拽区域 & 画布点击重选 ============
+  // 容器级别统一处理拖放事件
+  [leftDropContainer, rightDropContainer].forEach(container => {
+    container.addEventListener('dragover', e => { e.preventDefault(); });
+    container.addEventListener('drop', e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const side = container === leftDropContainer ? 'left' : 'right';
+      handleImageDrop(file, side);
+    });
+  });
+
+  // 画布点击 → 重新选择图片
+  leftCanvas.addEventListener('click', () => leftFileInput.click());
+  rightCanvas.addEventListener('click', () => rightFileInput.click());
+
+  // 画布 drop → 重新处理 (容器级已处理，此处防止浏览器默认行为)
+  [leftCanvas, rightCanvas].forEach(c => {
+    c.addEventListener('dragover', e => { e.preventDefault(); });
+  });
+
+  // 清除按钮
+  leftClearBtn.addEventListener('click', () => clearPanel('left'));
+  rightClearBtn.addEventListener('click', () => clearPanel('right'));
+
+  // 文件输入变化
+  leftFileInput.addEventListener('change', () => {
+    const file = leftFileInput.files[0];
+    if (file) handleImageDrop(file, 'left');
+  });
+  rightFileInput.addEventListener('change', () => {
+    const file = rightFileInput.files[0];
+    if (file) handleImageDrop(file, 'right');
+  });
+
+  async function handleImageDrop(file, side) {
+    if (file.type !== 'image/png') {
+      setStatus('请使用 PNG 格式图片', 'error');
+      return;
+    }
+
+    const buf = await file.arrayBuffer();
+    const pngInfo = parsePNGHeader(new Uint8Array(buf));
+    if (!pngInfo) {
+      setStatus('无法解析 PNG 文件，请确认文件格式正确', 'error');
+      return;
+    }
+
+    // 检查 colorType
+    if (pngInfo.colorType === 0 || pngInfo.colorType === 3 || pngInfo.colorType === 4) {
+      setStatus(`不支持的 PNG 类型 (colorType=${pngInfo.colorType})。请使用 RGB 或 RGBA 格式的 PNG 图片。`, 'error');
+      return;
+    }
+
+    // RGBA 编码时需要用户决定是否写 Alpha；解码时可以自动探测 3/4 通道。
+    if (pngInfo.colorType === 6) {
+      if (side === 'right') {
+        await loadImageToPanel(file, buf, pngInfo, side, 4);
+        return;
+      }
+      pendingRgbaFile = { file, pngInfo, buf, side };
+      rgbaDialog.classList.remove('hidden');
+      return;
+    }
+
+    // RGB → 直接加载
+    await loadImageToPanel(file, buf, pngInfo, side, 3);
+  }
+
+  // RGBA 对话框回调
+  rgbaConfirm.addEventListener('click', async () => {
+    rgbaDialog.classList.add('hidden');
+    const { file, buf, pngInfo, side } = pendingRgbaFile;
+    await loadImageToPanel(file, buf, pngInfo, side, 4);
+    pendingRgbaFile = null;
+  });
+  rgbaRgbOnly.addEventListener('click', async () => {
+    rgbaDialog.classList.add('hidden');
+    const { file, buf, pngInfo, side } = pendingRgbaFile;
+    await loadImageToPanel(file, buf, pngInfo, side, 3);
+    pendingRgbaFile = null;
+  });
+  rgbaReject.addEventListener('click', () => {
+    rgbaDialog.classList.add('hidden');
+    pendingRgbaFile = null;
+    setStatus('已取消 RGBA 图片加载', 'warn');
+  });
+
+  async function loadImageToPanel(file, buf, pngInfo, side, channels) {
+    // 清除对侧
+    if (side === 'left') {
+      clearPanel('right');
+      rightFile = null;
+      rightImageData = null;
+    } else {
+      clearPanel('left');
+      leftFile = null;
+      leftImageData = null;
+    }
+
+    // 渲染到 canvas 获取像素
+    const blob = new Blob([buf], { type: 'image/png' });
+    const img = await createImageBitmap(blob);
+    const canvas = side === 'left' ? leftCanvas : rightCanvas;
+    const ctx = canvas.getContext('2d');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    img.close();
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const capacityBytes = Math.floor((canvas.width * canvas.height * channels) / 8);
+
+    const info = {
+      file,
+      buf,
+      width: canvas.width,
+      height: canvas.height,
+      colorType: pngInfo.colorType,
+      channels,
+      pixels: imageData.data,
+      capacity: capacityBytes
+    };
+
+    if (side === 'left') {
+      leftImageData = info;
+      leftFile = file;
+      canvas.classList.remove('hidden');
+      leftDropZone.classList.add('hidden');
+      leftInfo.classList.remove('hidden');
+      leftBadge.classList.remove('hidden');
+      leftClearBtn.classList.remove('hidden');
+      leftSize.textContent = `${canvas.width} × ${canvas.height}`;
+      leftColorType.textContent = `${channels === 4 ? 'RGBA' : 'RGB'} (${channels} 通道)`;
+      leftCapacity.textContent = formatSize(capacityBytes);
+      setStatus(`已加载载体图片，可用容量 ${formatSize(capacityBytes)}`, 'ok');
+    } else {
+      rightImageData = info;
+      rightFile = file;
+      canvas.classList.remove('hidden');
+      rightDropZone.classList.add('hidden');
+      rightInfo.classList.remove('hidden');
+      rightBadge.classList.remove('hidden');
+      rightClearBtn.classList.remove('hidden');
+      rightSize.textContent = `${canvas.width} × ${canvas.height}`;
+      downloadLink.classList.add('hidden');
+      encryptIV.value = '';
+      setStatus('已加载含密图片，点击"解码"提取隐藏内容', 'ok');
+    }
+
+    updateButtonState();
+    updateCapacityBar();
+  }
+
+  function clearPanel(side) {
+    if (side === 'left') {
+      leftCanvas.classList.add('hidden');
+      leftDropZone.classList.remove('hidden');
+      leftInfo.classList.add('hidden');
+      leftBadge.classList.add('hidden');
+      leftClearBtn.classList.add('hidden');
+      leftImageData = null;
+      leftFile = null;
+      leftFileInput.value = '';
+    } else {
+      rightCanvas.classList.add('hidden');
+      rightDropZone.classList.remove('hidden');
+      encryptIV.value = '';
+      rightInfo.classList.add('hidden');
+      rightBadge.classList.add('hidden');
+      rightClearBtn.classList.add('hidden');
+      if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+        URL.revokeObjectURL(downloadLink.href);
+      }
+      downloadLink.classList.add('hidden');
+      rightImageData = null;
+      rightFile = null;
+      rightFileInput.value = '';
+    }
+    updateButtonState();
+    updateCapacityBar();
+  }
+
+  // ============ PNG 头部解析 ============
+  function parsePNGHeader(bytes) {
+    // 检查 PNG 签名
+    const sig = [137, 80, 78, 71, 13, 10, 26, 10];
+    for (let i = 0; i < 8; i++) {
+      if (bytes[i] !== sig[i]) return null;
+    }
+    // 解析 IHDR (chunk 长度 13，type 'IHDR')
+    let pos = 8;
+    while (pos < bytes.length - 8) {
+      const len = (bytes[pos] << 24) | (bytes[pos+1] << 16) | (bytes[pos+2] << 8) | bytes[pos+3];
+      const type = String.fromCharCode(bytes[pos+4], bytes[pos+5], bytes[pos+6], bytes[pos+7]);
+      if (type === 'IHDR') {
+        const data = bytes.slice(pos + 8, pos + 8 + len);
+        const width = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+        const height = (data[4] << 24) | (data[5] << 16) | (data[6] << 8) | data[7];
+        const bitDepth = data[8];
+        const colorType = data[9];
+        return { width, height, bitDepth, colorType };
+      }
+      pos += 12 + len; // 4B len + 4B type + data + 4B CRC
+    }
+    return null;
+  }
+
+  // ============ 编码 ============
+  encodeBtn.addEventListener('click', async () => {
+    if (!leftImageData) return;
+    setStatus('正在编码...', 'info');
+
+    try {
+      let dataBuf;
+      let fileName = normalizeFileName(extName.value);
+
+      // 获取内容
+      if (payloadFile) {
+        const file = payloadFile;
+        dataBuf = new Uint8Array(await file.arrayBuffer());
+        fileName = normalizeFileName(fileName || file.name);
+        extName.value = fileName;
+      } else {
+        const text = payloadText.value;
+        if (!text || isPayloadMarker(text)) {
+          setStatus('请输入要隐藏的内容或加载文件', 'error');
+          return;
+        }
+        dataBuf = new TextEncoder().encode(text);
+      }
+
+      let bodyBuf;
+      try {
+        bodyBuf = buildBodyBuffer(fileName, dataBuf);
+      } catch (e) {
+        setStatus(e.message, 'error');
+        return;
+      }
+
+      // 加密
+      let flags = 0x00;
+      if (encryptEnabled) {
+        const keyStr = encryptKey.value;
+        if (!keyStr) { setStatus('请输入加密密钥', 'error'); return; }
+        const salt = crypto.getRandomValues(new Uint8Array(AES_SALT_LEN));
+        let iv;
+        const ivHex = encryptIV.value.trim();
+        if (ivHex) {
+          if (ivHex.length !== 24 || !/^[0-9a-fA-F]{24}$/.test(ivHex)) {
+            setStatus('IV 必须为 24 位 hex 字符串', 'error'); return;
+          }
+          iv = new Uint8Array(AES_IV_LEN);
+          for (let i = 0; i < 12; i++) {
+            iv[i] = parseInt(ivHex.substring(i*2, i*2+2), 16);
+          }
+        } else {
+          iv = crypto.getRandomValues(new Uint8Array(AES_IV_LEN));
+          encryptIV.value = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        const key = await deriveKey(keyStr, salt);
+        const ciphertext = new Uint8Array(await crypto.subtle.encrypt(
+          { name: 'AES-GCM', iv }, key, bodyBuf
+        ));
+        // 编码格式: salt + iv + ciphertext
+        const encBuf = new Uint8Array(AES_SALT_LEN + AES_IV_LEN + ciphertext.length);
+        encBuf.set(salt, 0);
+        encBuf.set(iv, AES_SALT_LEN);
+        encBuf.set(ciphertext, AES_SALT_LEN + AES_IV_LEN);
+        bodyBuf = encBuf;
+        flags = 0x01;
+      }
+
+      // 构建 payload: [4B 总长度] [1B flags] [body 或 salt+iv+ciphertext]
+      const totalLen = 1 + bodyBuf.length;
+      const payload = new Uint8Array(4 + totalLen);
+      payload[0] = (totalLen >> 24) & 0xFF;
+      payload[1] = (totalLen >> 16) & 0xFF;
+      payload[2] = (totalLen >> 8) & 0xFF;
+      payload[3] = totalLen & 0xFF;
+      // flags
+      payload[4] = flags;
+      // body 或加密数据
+      payload.set(bodyBuf, 5);
+
+      // 容量检查
+      const bitsNeeded = payload.length * 8;
+      const bitsAvailable = leftImageData.width * leftImageData.height * leftImageData.channels;
+      if (bitsNeeded > bitsAvailable) {
+        setStatus(`数据过大: 需要 ${formatSize(payload.length)}, 可用 ${formatSize(leftImageData.capacity)}`, 'error');
+        return;
+      }
+
+      // 展平为 bit 数组并写入像素
+      const channels = leftImageData.channels;
+      const pixels = leftImageData.pixels;
+      const newPixels = new Uint8ClampedArray(pixels);
+      let bitPos = 0;
+      for (let byteIdx = 0; byteIdx < payload.length; byteIdx++) {
+        for (let bitIdx = 7; bitIdx >= 0; bitIdx--) {
+          const bit = (payload[byteIdx] >> bitIdx) & 1;
+          // 计算实际像素 buffer 中的位置
+          let pixelIdx;
+          if (channels === 3) {
+            // RGBA buffer: 每 4 字节为一组 (R,G,B,A)，跳过 Alpha (第 4 字节)
+            // bitPos 0,1,2 → pixelIdx 0,1,2; bitPos 3,4,5 → pixelIdx 4,5,6; ...
+            pixelIdx = bitPos + Math.floor(bitPos / 3);
+          } else {
+            pixelIdx = bitPos;
+          }
+          if (pixelIdx < pixels.length) {
+            newPixels[pixelIdx] = (newPixels[pixelIdx] & 0xFE) | bit;
+          }
+          bitPos++;
+        }
+      }
+
+      // 渲染到右侧 canvas
+      const canvas = rightCanvas;
+      const ctx = canvas.getContext('2d');
+      canvas.width = leftImageData.width;
+      canvas.height = leftImageData.height;
+      ctx.putImageData(new ImageData(newPixels, canvas.width, canvas.height), 0, 0);
+      rightImageData = {
+        file: null,
+        buf: null,
+        width: canvas.width,
+        height: canvas.height,
+        colorType: leftImageData.colorType,
+        channels: leftImageData.channels,
+        pixels: newPixels,
+        capacity: leftImageData.capacity
+      };
+
+      // 显示
+      canvas.classList.remove('hidden');
+      rightDropZone.classList.add('hidden');
+      rightInfo.classList.remove('hidden');
+      rightBadge.classList.remove('hidden');
+      rightClearBtn.classList.remove('hidden');
+      rightSize.textContent = `${canvas.width} × ${canvas.height}`;
+
+      // 生成下载链接
+      if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
+        URL.revokeObjectURL(downloadLink.href);
+      }
+      canvas.toBlob(blob => {
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.classList.remove('hidden');
+      }, 'image/png');
+
+      setStatus(`编码成功！${encryptEnabled ? '已 AES 加密，' : ''}Payload ${formatSize(payload.length)}`, 'ok');
+      updateButtonState();
+    } catch (e) {
+      setStatus(`编码失败: ${e.message}`, 'error');
+      console.error(e);
+    }
+  });
+
+  function bitsToBytes(bits, start, count) {
+    const bytes = new Uint8Array(count);
+    for (let i = 0; i < count; i++) {
+      let b = 0;
+      for (let j = 0; j < 8; j++) {
+        b = (b << 1) | (bits[start + i * 8 + j] || 0);
+      }
+      bytes[i] = b;
+    }
+    return bytes;
+  }
+
+  function getDecodeChannelCandidates(imageData) {
+    if (imageData.colorType === 6) return [3, 4];
+    return [imageData.channels];
+  }
+
+  function normalizeFileName(name) {
+    return name.trim().replace(/[\\/:*?"<>|]/g, '_').slice(0, 120);
+  }
+
+  function buildBodyBuffer(fileName, data) {
+    const nameBytes = new TextEncoder().encode(fileName);
+    if (nameBytes.length > MAX_FILE_NAME_BYTES) {
+      throw new Error(`文件名过长：最多 ${MAX_FILE_NAME_BYTES} 字节`);
+    }
+
+    const body = new Uint8Array(FILE_NAME_LEN_BYTES + nameBytes.length + data.length);
+    body[0] = (nameBytes.length >> 8) & 0xFF;
+    body[1] = nameBytes.length & 0xFF;
+    body.set(nameBytes, FILE_NAME_LEN_BYTES);
+    body.set(data, FILE_NAME_LEN_BYTES + nameBytes.length);
+    return body;
+  }
+
+  function parseBodyBuffer(body) {
+    if (body.length < FILE_NAME_LEN_BYTES) return null;
+
+    const fileNameLen = (body[0] << 8) | body[1];
+    if (fileNameLen > MAX_FILE_NAME_BYTES) return null;
+    if (body.length < FILE_NAME_LEN_BYTES + fileNameLen) return null;
+
+    let fileName = '';
+    try {
+      fileName = new TextDecoder('utf-8', { fatal: true }).decode(
+        body.slice(FILE_NAME_LEN_BYTES, FILE_NAME_LEN_BYTES + fileNameLen)
+      );
+    } catch (e) {
+      return null;
+    }
+
+    const data = body.slice(FILE_NAME_LEN_BYTES + fileNameLen);
+    if (fileName === '') {
+      try {
+        new TextDecoder('utf-8', { fatal: true }).decode(data);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    return { fileName: normalizeFileName(fileName), data };
+  }
+
+  function extractPayloadCandidate(imageData, channels) {
+    const pixels = imageData.pixels;
+    const allBits = [];
+
+    for (let i = 0; i < pixels.length; i++) {
+      if (channels === 3 && i % 4 === 3) continue;
+      allBits.push(pixels[i] & 1);
+    }
+
+    if (allBits.length < 32) return null;
+
+    const lenBytes = bitsToBytes(allBits, 0, 4);
+    const totalLen = lenBytes[0] * 0x1000000 + (lenBytes[1] << 16) + (lenBytes[2] << 8) + lenBytes[3];
+    const capacity = Math.floor((imageData.width * imageData.height * channels) / 8);
+
+    if (totalLen <= 1 || totalLen > capacity - 4) return null;
+    if (allBits.length < 32 + totalLen * 8) return null;
+
+    const payloadBits = allBits.slice(32, 32 + totalLen * 8);
+    const payload = bitsToBytes(payloadBits, 0, totalLen);
+    const flags = payload[0];
+    if (flags !== 0x00 && flags !== 0x01) return null;
+
+    const encrypted = (flags & 0x01) !== 0;
+    const data = payload.slice(1);
+
+    if (encrypted && data.length < AES_SALT_LEN + AES_IV_LEN + AES_TAG_LEN) return null;
+    if (!encrypted && !parseBodyBuffer(data)) return null;
+
+    return { channels, totalLen, encrypted, data };
+  }
+
+  // ============ 解码 ============
+  decodeBtn.addEventListener('click', async () => {
+    if (!rightImageData) return;
+    setStatus('正在解码...', 'info');
+
+    try {
+      const candidates = getDecodeChannelCandidates(rightImageData)
+        .map(channels => extractPayloadCandidate(rightImageData, channels))
+        .filter(Boolean);
+
+      if (candidates.length === 0) {
+        setStatus('解码失败：未检测到有效 LSB 数据，该图片可能不含隐藏内容', 'error');
+        return;
+      }
+
+      const orderedCandidates = encryptEnabled
+        ? [...candidates.filter(candidate => candidate.encrypted), ...candidates.filter(candidate => !candidate.encrypted)]
+        : candidates;
+
+      let decoded = null;
+      let decryptFailed = false;
+      const encryptedCandidate = candidates.find(candidate => candidate.encrypted);
+
+      for (const candidate of orderedCandidates) {
+        let data = candidate.data;
+
+        if (candidate.encrypted) {
+          if (!encryptEnabled) continue;
+          const keyStr = encryptKey.value;
+          if (!keyStr) { setStatus('请输入解密密钥', 'error'); return; }
+
+          const salt = data.slice(0, AES_SALT_LEN);
+          const iv = data.slice(AES_SALT_LEN, AES_SALT_LEN + AES_IV_LEN);
+          const ciphertext = data.slice(AES_SALT_LEN + AES_IV_LEN);
+
+          const key = await deriveKey(keyStr, salt);
+          try {
+            data = new Uint8Array(await crypto.subtle.decrypt(
+              { name: 'AES-GCM', iv }, key, ciphertext
+            ));
+            encryptIV.value = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
+          } catch (e) {
+            decryptFailed = true;
+            continue;
+          }
+        }
+
+        const body = parseBodyBuffer(data);
+        if (!body) continue;
+
+        decoded = { ...candidate, ...body };
+        break;
+      }
+
+      if (!decoded) {
+        if (encryptedCandidate && !encryptEnabled) {
+          setStatus('该数据已 AES 加密，请开启加密开关并输入密钥', 'warn');
+          return;
+        }
+        if (decryptFailed) {
+          setStatus('解密失败：密钥错误、通道不匹配或数据已损坏', 'error');
+          return;
+        }
+        setStatus('解码失败：未能匹配有效的通道模式', 'error');
+        return;
+      }
+
+      // 输出结果
+      if (decoded.fileName === '') {
+        payloadText.value = new TextDecoder().decode(decoded.data);
+        setStatus(`解码成功：纯文本，${formatSize(decoded.data.length)}，自动识别为 ${decoded.channels} 通道`, 'ok');
+      } else {
+        const blob = new Blob([decoded.data]);
+        const url = URL.createObjectURL(blob);
+        payloadText.value = `[已提取文件: ${decoded.fileName}, ${formatSize(decoded.data.length)}]`;
+        // 自动触发下载
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = decoded.fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+        setStatus(`解码成功：已还原文件 ${decoded.fileName} (${formatSize(decoded.data.length)})，自动识别为 ${decoded.channels} 通道`, 'ok');
+      }
+
+      extName.value = decoded.fileName;
+      updateButtonState();
+    } catch (e) {
+      setStatus(`解码失败: ${e.message}`, 'error');
+      console.error(e);
+    }
+  });
+
+  // ============ 密钥派生 ============
+  async function deriveKey(password, salt) {
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+      keyMaterial,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt', 'decrypt']
+    );
+  }
+
+  // ============ 辅助函数 ============
+  function updateButtonState() {
+    encodeBtn.disabled = !leftImageData || !hasPayloadContent();
+    decodeBtn.disabled = !rightImageData;
+  }
+
+  function hasPayloadContent() {
+    return (payloadText.value.trim() && !isPayloadMarker(payloadText.value)) || !!payloadFile;
+  }
+
+  function isPayloadMarker(text) {
+    return text.startsWith('[文件:') || text.startsWith('[已提取文件:');
+  }
+
+  function updateCapacityBar() {
+    if (!leftImageData) {
+      capacityBar.classList.add('hidden');
+      return;
+    }
+    let dataSize = 0;
+    let fileName = normalizeFileName(extName.value);
+    if (payloadFile) {
+      const file = payloadFile;
+      dataSize = file.size;
+      fileName = normalizeFileName(fileName || file.name);
+    } else if (payloadText.value.trim() && !isPayloadMarker(payloadText.value)) {
+      dataSize = new TextEncoder().encode(payloadText.value).length;
+    }
+    if (dataSize === 0) {
+      capacityBar.classList.add('hidden');
+      return;
+    }
+    const fileNameSize = new TextEncoder().encode(fileName).length;
+    const overhead = 4 + 1 + FILE_NAME_LEN_BYTES + fileNameSize; // header + flags + filename length + filename
+    const encOverhead = encryptEnabled ? AES_SALT_LEN + AES_IV_LEN + AES_TAG_LEN : 0;
+    const total = dataSize + overhead + encOverhead;
+    const pct = Math.min(100, (total / leftImageData.capacity) * 100);
+
+    capacityBar.classList.remove('hidden');
+    capacityText.textContent = `${formatSize(total)} / ${formatSize(leftImageData.capacity)}`;
+    capacityFill.style.width = pct + '%';
+    if (pct > 90) {
+      capacityFill.classList.remove('bg-emerald-500');
+      capacityFill.classList.add('bg-red-500');
+    } else if (pct > 70) {
+      capacityFill.classList.remove('bg-emerald-500');
+      capacityFill.classList.add('bg-yellow-500');
+    } else {
+      capacityFill.classList.remove('bg-red-500', 'bg-yellow-500');
+      capacityFill.classList.add('bg-emerald-500');
+    }
+  }
+
+  function setStatus(msg, type) {
+    statusMsg.textContent = msg;
+    statusMsg.classList.remove('text-slate-500', 'text-emerald-400', 'text-red-400', 'text-yellow-400');
+    if (type === 'ok') statusMsg.classList.add('text-emerald-400');
+    else if (type === 'error') statusMsg.classList.add('text-red-400');
+    else if (type === 'warn') statusMsg.classList.add('text-yellow-400');
+    else statusMsg.classList.add('text-slate-500');
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(2) + ' MB';
+  }
+
+  // ============ 输入变化监听 ============
+  payloadText.addEventListener('input', () => {
+    updateButtonState();
+    updateCapacityBar();
+  });
+  extName.addEventListener('input', () => {
+    updateCapacityBar();
+  });
+  encryptKey.addEventListener('input', updateButtonState);
+</script>

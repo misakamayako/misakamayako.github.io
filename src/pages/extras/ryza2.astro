@@ -1,0 +1,237 @@
+---
+import BaseLayout from "../../layouts/home.astro"
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<BaseLayout pageTitle="莱莎2 合成路线推荐" description="莱莎的炼金工房２ 合成权重查询与原材料匹配工具" noindex>
+  <Navigation/>
+
+  <div class="flex flex-col grow overflow-auto bg-slate-900 text-slate-200">
+    <header class="text-center py-6">
+      <h1 class="text-2xl font-bold bg-linear-to-r from-amber-400 to-pink-400 bg-clip-text text-transparent">
+        莱莎的炼金工房２ — 合成路线推荐
+      </h1>
+      <p class="mt-1 text-slate-400 text-sm" id="item-count">加载中...</p>
+    </header>
+
+    <div class="px-4 py-4">
+      <div class="flex gap-3 mb-4 flex-wrap items-center">
+        <input type="text" id="search" placeholder="搜索物品..." autofocus
+          class="flex-1 min-w-[200px] px-3 py-2 text-sm bg-slate-800 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-slate-400">
+        <label class="flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer">
+          <input type="checkbox" id="filter-final" class="accent-amber-500"> 仅最终产物
+        </label>
+        <label class="flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer">
+          <input type="checkbox" id="filter-multi" class="accent-amber-500"> 仅多产物
+        </label>
+      </div>
+
+      <!-- Raw Material Panel -->
+      <div class="border border-slate-700 rounded-lg bg-slate-800 p-4 mb-4">
+        <h3 class="text-sm font-semibold text-slate-200 mb-3">原材料匹配</h3>
+        <div class="flex gap-6 flex-col lg:flex-row">
+          <div class="flex-1">
+            <p class="text-xs text-slate-400 mb-2">材料分类（多选）</p>
+            <div id="cat-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-1 max-h-48 overflow-y-auto"></div>
+          </div>
+          <div class="flex-1">
+            <p class="text-xs text-slate-400 mb-2">附魔类型（多选，留空=不限制）</p>
+            <div id="enchant-list" class="space-y-1"></div>
+          </div>
+        </div>
+        <div id="raw-result" class="text-xs text-slate-500 mt-3"></div>
+      </div>
+
+      <h2 class="text-sm font-semibold text-slate-300 mb-3">物品列表</h2>
+      <div id="results" class="space-y-2"></div>
+    </div>
+  </div>
+
+  <div class="text-center text-xs text-slate-500 pb-4 bg-slate-900">
+    数据来源特别感谢
+    <a href="https://barrelwisdom.com/ryza2/" target="_blank" rel="noopener" class="text-slate-400 hover:text-amber-400 underline underline-offset-2 transition-colors">
+      Barrel Wisdom
+    </a>
+  </div>
+  <Footer/>
+</BaseLayout>
+
+<style is:global>
+  body { background-color: #0f172a; }
+</style>
+<style>
+.bar-fill { transition: width 0.4s ease; min-width: 2px; }
+</style>
+
+<script>
+const FINAL_NAMES = {
+  medicine: "药品", food: "食品", "magic-tools": "魔法道具",
+  weapons: "武器", accessories: "装饰品", bombs: "炸弹", armor: "防具",
+};
+const FINAL_ORDER = ["medicine","food","magic-tools","weapons","accessories","bombs","armor"];
+const FINAL_COLORS = {
+  medicine: "#4ade80", food: "#fb923c", "magic-tools": "#c084fc",
+  weapons: "#f87171", accessories: "#f472b6", bombs: "#94a3b8", armor: "#60a5fa",
+};
+const FINAL_BG = {
+  medicine: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+  food: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+  "magic-tools": "bg-purple-500/20 text-purple-400 border-purple-500/30",
+  weapons: "bg-red-500/20 text-red-400 border-red-500/30",
+  accessories: "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  bombs: "bg-slate-500/20 text-slate-400 border-slate-500/30",
+  armor: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+};
+
+let CAT_NAME = {};
+let data = [];
+
+async function loadCatNames() {
+  const resp = await fetch("/data/ryza2/category.json");
+  const cats = await resp.json();
+  for (const c of cats) CAT_NAME[c.slug] = c.name.replace(/^（/, "").replace(/）$/, "");
+}
+
+function elemBadges(item) {
+  const map = { fire: ["火","bg-red-600"], ice: ["冰","bg-blue-500"], wind: ["风","bg-emerald-600"], lightning: ["雷","bg-amber-400 text-slate-900"] };
+  return ["fire","ice","wind","lightning"].filter(e => item[e]).map(e =>
+    `<span class="inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold text-white ${map[e][1]}">${map[e][0]}</span>`
+  ).join("") || '<span class="text-slate-500 text-xs">-</span>';
+}
+
+function renderVariant(v) {
+  const sorted = FINAL_ORDER.map(ft => ({ type: ft, name: FINAL_NAMES[ft], pct: Math.round((v.weights[ft] ?? 0) * 1000) / 10 }))
+    .filter(w => w.pct > 0).sort((a,b) => b.pct - a.pct);
+  const bars = sorted.map(w =>
+    `<div class="flex items-center gap-2 text-xs">
+      <span class="w-14 text-right text-slate-400 shrink-0">${w.name}</span>
+      <div class="flex-1 h-3 bg-slate-700 rounded-full overflow-hidden">
+        <div class="bar-fill h-full rounded-full" style="width:${w.pct}%;background:${FINAL_COLORS[w.type]}"></div>
+      </div>
+      <span class="w-10 text-right text-slate-500">${w.pct}%</span>
+    </div>`).join("");
+  const recs = sorted.slice(0,3).map(r =>
+    `<span class="text-xs px-1.5 py-0.5 rounded border ${FINAL_BG[r.type]}">${r.name} ${r.pct}%</span>`).join(" ");
+  const finalLabel = v.finalTypes.length > 0 ? v.finalTypes.map(ft => FINAL_NAMES[ft]).join("+") : "—";
+  return `<div class="border border-slate-700 rounded p-3 bg-slate-800/50">
+    <div class="flex items-center gap-3 mb-2 flex-wrap">
+      <span class="text-xs font-semibold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">${v.label || "基础"}</span>
+      <span class="text-xs text-slate-400">类别: ${v.allCategories.map(c => CAT_NAME[c]||c).join(", ") || "—"}</span>
+      <span class="text-xs text-slate-500">最终: ${finalLabel}</span>
+    </div><div class="space-y-1 mb-2">${bars}</div>
+    <div class="text-xs text-slate-400">推荐附魔: ${recs || "—"}</div></div>`;
+}
+
+function renderItem(entry) {
+  const multiBadge = entry.variantCount > 1
+    ? `<span class="text-xs bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded-full font-medium">${entry.variantCount}产物</span>` : "";
+  const variantRows = entry.variants.map(renderVariant).join("");
+  const firstRec = entry.variants[0]?.recommendations?.[0];
+  return `<div class="border border-slate-700 rounded-lg bg-slate-800 overflow-hidden group hover:border-slate-600 transition-colors">
+    <div class="flex items-center gap-3 px-4 py-3 cursor-pointer item-toggle flex-wrap">
+      <span class="font-medium text-slate-200 text-sm min-w-[100px]">${entry.name} ${multiBadge}</span>
+      <span class="text-xs text-slate-500 bg-slate-700 px-2 py-0.5 rounded">Lv${entry.level}</span>
+      <span class="text-xs text-slate-500 border border-slate-600 px-1.5 py-0.5 rounded">${entry.itemtype || "—"}</span>
+      <span class="text-xs text-slate-400 truncate max-w-[160px]">${entry.baseCategories.map(c => CAT_NAME[c]||c).join(", ") || "—"}</span>
+      <span class="flex gap-1">${elemBadges(entry)}</span>
+      <span class="ml-auto text-xs text-slate-500 group-hover:text-slate-300">${entry.variantCount > 1 ? "点击展开" : firstRec ? `→ ${firstRec.name}` : ""}</span>
+    </div>
+    <div class="variant-detail hidden px-4 pb-3 space-y-2">${variantRows}</div></div>`;
+}
+
+function updateRawResult() {
+  const el = document.getElementById("raw-result");
+  const selectedCats = new Set([...document.querySelectorAll(".cat-checkbox:checked")].map(cb => cb.value));
+  const selectedEnchants = new Set([...document.querySelectorAll(".enchant-checkbox:checked")].map(cb => cb.value));
+  if (selectedCats.size === 0) { el.innerHTML = "请选择至少一个分类"; return; }
+
+  const matching = [];
+  for (const entry of data) {
+    if (!entry.hasRecipe) continue;
+    const allCats = new Set([...entry.baseCategories, ...entry.variants.flatMap(v => v.addedCategories)]);
+    const common = [...allCats].filter(c => selectedCats.has(c));
+    if (common.length === 0) continue;
+
+    const v0 = entry.variants[0];
+    const sorted = FINAL_ORDER.map(ft => ({ type: ft, pct: v0.weights[ft] ?? 0 }))
+      .filter(w => w.pct > 0).sort((a,b) => b.pct - a.pct);
+
+    let best = "";
+    let bestW = 0;
+    if (selectedEnchants.size > 0) {
+      const f = sorted.filter(w => selectedEnchants.has(w.type));
+      if (f.length > 0) { best = f[0].type; bestW = f[0].pct; }
+      else { best = sorted[0].type; bestW = sorted[0].pct; }
+    } else { best = sorted[0].type; bestW = sorted[0].pct; }
+
+    matching.push({ entry, score: common.length, best, bestW });
+  }
+
+  if (matching.length === 0) { el.innerHTML = "没有物品匹配所选分类"; return; }
+  matching.sort((a,b) => b.score !== a.score ? b.score - a.score : b.bestW - a.bestW);
+
+  const items = matching.slice(0, 20).map(m => {
+    const pct = Math.round(m.bestW * 1000) / 10;
+    return `<div class="flex items-center gap-2 py-1 border-b border-slate-700/50">
+      <span class="text-slate-200 w-28 truncate">${m.entry.name}</span>
+      <span class="text-xs ${FINAL_BG[m.best]}">→ ${FINAL_NAMES[m.best]} ${pct}%</span></div>`;
+  }).join("");
+  el.innerHTML = `<p class="mb-2">匹配 ${matching.length} 个物品:</p>${items}`;
+}
+
+async function init() {
+  await loadCatNames();
+
+  // Build category checkboxes
+  const allCats = ["water","plants","uni","flowers","medicinal","poisons","elixirs","sand","stone","ore","gemstones","gunpowder","fuel","edibles","fruit","beehives","mushrooms","seafood","bugs","threads","lumber","gases","puniballs","animal-products","dragon-mat","magical","neutralizers","general-goods","metal","jewels","spices","seeds","food","medicine","bombs","magic-tools","ingots","cloth","weapons","armor","accessories","tools","furniture","key-items","essence"];
+  document.getElementById("cat-grid").innerHTML = allCats.map(c =>
+    `<label class="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 cursor-pointer py-0.5">
+      <input type="checkbox" class="cat-checkbox accent-amber-500" value="${c}"> ${CAT_NAME[c] || c}
+    </label>`).join("");
+
+  document.getElementById("enchant-list").innerHTML = FINAL_ORDER.map(ft =>
+    `<label class="flex items-center gap-1.5 text-xs hover:text-slate-200 cursor-pointer py-0.5">
+      <input type="checkbox" class="enchant-checkbox accent-amber-500" value="${ft}"> ${FINAL_NAMES[ft]}
+    </label>`).join("");
+
+  document.querySelectorAll(".cat-checkbox, .enchant-checkbox").forEach(cb =>
+    cb.addEventListener("change", updateRawResult));
+
+  // Load weights data
+  const resp = await fetch("/data/ryza2/weights.json");
+  data = await resp.json();
+  document.getElementById("item-count").textContent = `${data.length} 物品`;
+
+  // Render items
+  const resultsEl = document.getElementById("results");
+  const searchEl = document.getElementById("search");
+  const filterFinalEl = document.getElementById("filter-final");
+  const filterMultiEl = document.getElementById("filter-multi");
+
+  function filter() {
+    const q = searchEl.value.toLowerCase().trim();
+    const onlyFinal = filterFinalEl.checked;
+    const onlyMulti = filterMultiEl.checked;
+    let filtered = data;
+    if (q) filtered = filtered.filter(e =>
+      e.name.toLowerCase().includes(q) || e.slug.toLowerCase().includes(q) ||
+      e.baseCategories.some(c => (CAT_NAME[c]||c).includes(q)) ||
+      e.variants.some(v => v.addedCategories.some(c => (CAT_NAME[c]||c).includes(q))));
+    if (onlyFinal) filtered = filtered.filter(e => e.variants.some(v => v.finalTypes.length > 0));
+    if (onlyMulti) filtered = filtered.filter(e => e.variantCount > 1);
+    resultsEl.innerHTML = filtered.map(renderItem).join("") ||
+      '<div class="text-center text-slate-500 py-12">没有匹配的物品</div>';
+    resultsEl.querySelectorAll(".item-toggle").forEach(t => t.addEventListener("click", () => {
+      t.nextElementSibling.classList.toggle("hidden");
+    }));
+  }
+
+  searchEl.addEventListener("input", filter);
+  filterFinalEl.addEventListener("change", filter);
+  filterMultiEl.addEventListener("change", filter);
+  filter();
+}
+
+init();
+</script>

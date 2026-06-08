@@ -1,0 +1,139 @@
+<!DOCTYPE html><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous"><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v6.4.4"><meta name="description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><link rel="canonical" href="https://misakamayako.github.io/blog/26789e42aaa2/"><meta property="og:type" content="website"><meta property="og:title" content="✨御坂网络-像素里的秘密：LSB 隐写术核心原理✨"><meta property="og:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta property="og:url" content="https://misakamayako.github.io/blog/26789e42aaa2/"><meta property="og:image" content="https://misakamayako.github.io/favicon.jpg"><meta property="og:site_name" content="御坂网络"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="✨御坂网络-像素里的秘密：LSB 隐写术核心原理✨"><meta name="twitter:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta name="twitter:image" content="https://misakamayako.github.io/favicon.jpg"><title>✨御坂网络-像素里的秘密：LSB 隐写术核心原理✨</title><link rel="stylesheet" href="/_astro/global.iNtMyEu_.css">
+<style>/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25 / .875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem) * 4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88044 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% 0 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem) * 16);padding-right:calc(var(--spacing,.25rem) * 16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% 0 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem) * -.5);translate:var(--tw-translate-x) var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4, 0, .2, 1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D23ro5u1.css"><script type="module" src="/_astro/page.vzY--OHv.js"></script></head> <body class="w-full h-full flex flex-col"> <div class="bg-slate-800 h-screen flex flex-col"><div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div><div class="flex p-4 grow flex-row h-full overflow-hidden"><aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2"><div class="sticky top-4 space-y-6"><div class="bg-slate-700 p-4 rounded-lg"><img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"><p class="text-white text-center mt-2">作者：misakamayako</p><p class="text-white text-center mt-2">发布时间：2026/05/22</p></div><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">简介</h3><p class="text-white font-light mb-2">从 RGB 像素的二进制本质出发，直观解释最低有效位（LSB）隐写为何能让人眼完全无法察觉，以及为什么 JPEG 是 LSB 的天敌而 PNG 是最佳载体。</p></div><!-- 2. 关联文章 --><div class="mb-4 rounded-xl bg-slate-700 p-5 shadow-xl border border-slate-600/50"><div class="mb-4 flex items-center justify-between border-b border-slate-600 pb-3"><div><h3 class="text-xs tracking-widest font-bold text-emerald-400 uppercase">
+Series</h3><h2 class="text-base font-bold text-slate-100">从零到一实现图片隐写术：渐进式 LSB 加密指南</h2></div><span class="rounded-sm bg-slate-800 px-2 py-0.5 text-xs font-mono text-slate-300 border border-slate-600">1/4</span></div><div class="relative flex flex-col"><div class="absolute left-[7px] top-2 bottom-2 w-0.5 bg-slate-600 rounded-full"></div><a href="/blog/26789e42aaa2/" class="group relative flex gap-4 py-2 transition-all items-center pointer-events-none"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full bg-blue-400 shadow-[0_0_8px_var(--color-blue-400)] ring-4 ring-blue-400/20"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors font-bold text-blue-400">像素里的秘密：LSB 隐写术核心原理</span></div></a><a href="/blog/bf1ac0404cfc/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">把文本写进像素：LSB 隐写术的工程化与 TypeScript 实现</span></div></a><a href="/blog/74991bb71075/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">隐写不隐身：为 LSB 加上 HMAC 防篡改与 AES 防窃听</span></div></a><a href="/blog/ae6f1b934fe0/" class="group relative flex gap-4 py-2 transition-all items-center hover:pl-1"><div class="relative z-10 flex h-3.5 w-3.5 items-center justify-center"><div class="h-3 w-3 rounded-full border-2 border-slate-500 bg-slate-700 group-hover:border-slate-300 transition-colors"></div></div><div class="flex flex-col"><span class="text-sm leading-snug transition-colors text-slate-300 group-hover:text-white">隐写术的边界：LSB 的局限性与未来演进方向</span></div></a></div></div><!-- 3. 随机文章 --></div></aside><main class="grow h-full overflow-auto w-3/4 px-8"><article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100"> <header> <h1>像素里的秘密：LSB 隐写术核心原理</h1> </header> <p>想象一个场景：你需要在公开的图片中传递一段信息，但这张图片在任何人看来都必须是”正常的”——不能有水印，不能改变尺寸，文件大小不能异常，用任何元数据清理工具也扫不出端倪。</p>
+<p>这听起来像间谍电影，但实现它的核心技术只有三个字母：<strong>LSB</strong>。</p>
+<hr>
+<h2 id="三种思路两个陷阱">三种思路，两个陷阱</h2>
+<p>在图片里藏信息，直觉上你会想到三种方案：</p>
+<p><strong>方案 A：视觉水印。</strong> 直接在图片上写文字，或者叠加半透明图层。问题很明显——人眼可见，等于自曝。即便把透明度调到 5%，用图层差分工具几秒就能提取出原始水印。</p>
+<p><strong>方案 B：追加二进制。</strong> 把数据塞在文件尾部，或者插入自定义 Chunk（如 PNG 的 tEXt 块）。这类方案有一个致命缺陷：元数据清理工具（如 <code>exiftool -all=</code>）会直接将其抹除。CDN 服务、社交媒体平台在转储图片时也常会剥离非关键 Chunk。</p>
+<p><strong>方案 C：LSB 像素隐写。</strong> 把信息编码进图片像素本身的颜色值中。它不是图片的”附件”，它就是图片本身。这就是我们要深入的方向。</p>
+<hr>
+<h2 id="一像素的二进制本质">一、像素的二进制本质</h2>
+<p>一张 PNG 图片，放大到极致，你看到的是一个个方块——<strong>像素</strong>。每个像素由三个颜色通道构成：红（R）、绿（G）、蓝（B），每个通道的取值范围是 <strong>0 ~ 255</strong>。</p>
+<p>为什么是 255？因为每个通道用 <strong>8 个比特（bit）</strong> 存储，2^8 = 256 种可能。一个像素的颜色，在计算机眼里就是三个 8 位二进制数：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>像素颜色 RGB(100, 200, 50)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>R: 100 → 0 1 1 0 0 1 0 0</span></span>
+<span class="line"><span>G: 200 → 1 1 0 0 1 0 0 0</span></span>
+<span class="line"><span>B:  50 → 0 0 1 1 0 0 1 0</span></span></code></pre>
+<p><img alt="RGB 像素的 3 通道 × 8 bit 结构示意图，展示一个像素放大后 R/G/B 三层二进制位" loading="lazy" decoding="async" width="1536" height="1024" src="/_astro/e4b1d309-c6fe-4beb-8123-23d6e3d0b7f6.Dk9LkwMD_1edKbO.webp" srcset=""></p>
+<p>对于一个 1920×1080 的图片，有 2,073,600 个像素，每个像素 3 个通道（RGB），一共 <strong>6,220,800 个字节</strong>的数据在流动。而 LSB 隐写的核心思路就是——借用每个字节的<strong>最后一位</strong>。</p>
+<h3 id="关于-png-颜色类型的选择">关于 PNG 颜色类型的选择</h3>
+<p>PNG 规范定义了多种颜色类型（colorType），并非所有类型都适合 LSB 隐写：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>colorType</th><th>通道结构</th><th>每像素通道数</th><th>适合 LSB？</th></tr></thead><tbody><tr><td>0</td><td>灰度</td><td>1</td><td>不适合——单通道，容量太小</td></tr><tr><td>2</td><td><strong>RGB</strong></td><td><strong>3</strong></td><td><strong>推荐——三通道无 Alpha，LSB 操作最安全</strong></td></tr><tr><td>3</td><td>索引色</td><td>1（调色板索引）</td><td>不适合——修改 LSB 会跳变到完全不同的颜色</td></tr><tr><td>4</td><td>灰度 + Alpha</td><td>2</td><td>不适合——容量有限，且修改 Alpha 影响透明度</td></tr><tr><td>6</td><td>RGBA</td><td>4</td><td>可用但不推荐——修改 Alpha 通道 LSB 可能影响图片合成效果</td></tr></tbody></table>
+<p><strong>本系列所有方案均基于 colorType=2（RGB）的 PNG 文件。</strong> RGB 的三个通道都是纯颜色数据，LSB 修改不会产生任何副作用。colorType=6（RGBA）理论上多一个通道可以利用，但 Alpha 通道控制透明度，在某些合成场景（如叠加到不同背景上）中 LSB 扰动可能被放大，因此不纳入标准方案。</p>
+<blockquote>
+<p><strong>如果你用截图工具或画图软件导出 PNG，默认通常是 colorType=2（RGB）。如果你不确定手头图片的类型，可以用 <code>pngjs</code> 或 <code>exiftool</code> 查看。</strong></p>
+</blockquote>
+<hr>
+<h2 id="二1255-的微调艺术">二、“1/255” 的微调艺术</h2>
+<p>一个字节有 8 个比特。最高位（MSB，Most Significant Bit）决定了数值的大头，最低位（LSB，Least Significant Bit）只影响 “加 1 还是不加 1”。</p>
+<p>举个例子：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>颜色值 100 (二进制 01100100)</span></span>
+<span class="line"><span>把 LSB 从 0 改成 1 → 01100101 = 101</span></span>
+<span class="line"><span>把 MSB 从 0 改成 1 → 11100100 = 228</span></span></code></pre>
+<p>改最高位，颜色跳变 128，肉眼可见。改最低位，颜色变化最多 <strong>1/255 ≈ 0.4%</strong>。</p>
+<blockquote>
+<p><strong>在 24 位真彩色（1600 万色）的屏幕上，相邻像素之间的颜色差异通常远超 1，人眼根本无法察觉单个通道 ±1 的变化。</strong></p>
+</blockquote>
+<p>这就是 LSB 隐写的物理基础：把秘密信息的每一个比特，分别替换到不同像素通道的最低位中。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>原始像素:  R=100  G=200  B=50</span></span>
+<span class="line"><span>秘密比特:  1     0      1</span></span>
+<span class="line"><span>修改后:    R=101  G=200  B=51  ← 肉眼看起来和原来一模一样</span></span></code></pre>
+<p><img alt="用于说明LSB嵌入信息后的像素点对比图，颜色差异小到肉眼完全无法分辨" loading="lazy" decoding="async" width="1919" height="870" src="/_astro/9f52d11e-4067-4d64-811a-4701f5b0af1a.Ug0wLBmd_N33Hy.webp" srcset=""></p>
+<hr>
+<h2 id="三为什么-png-能胜任而-jpeg-不行">三、为什么 PNG 能胜任，而 JPEG 不行</h2>
+<p>这个问题的答案决定了你的隐写方案是<strong>有效还是白忙一场</strong>。</p>
+<h3 id="png--bmp无损格式">PNG / BMP：无损格式</h3>
+<p>PNG 使用 DEFLATE 压缩算法，<strong>是可逆的</strong>。压缩-解压后，每一个像素的每一个比特都精确还原。你嵌入 LSB 的信息，原封不动地保存在文件中。</p>
+<p>就像你把纸条夹进一本书里——把书合上再打开，纸条还在。</p>
+<h3 id="jpeg有损格式">JPEG：有损格式</h3>
+<p>JPEG 的核心是 <strong>DCT（离散余弦变换）+ 量化</strong>。它把图像从空间域转换到频域，然后丢弃人眼不敏感的高频分量。</p>
+<p>关键在这里：<strong>DCT 量化会修改像素的低位比特</strong>。你精心写入 LSB 的秘密信息，在 JPEG 保存的那一瞬间，就被量化算法当作”视觉冗余”丢弃了。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>原始 PNG 像素:  0110010[1] ← LSB 藏着我们的秘密比特</span></span>
+<span class="line"><span>                        ↓ JPEG 压缩</span></span>
+<span class="line"><span>JPEG 解压后:    0110101[0] ← LSB 已经面目全非</span></span></code></pre>
+<p><img alt="JPEG 压缩流程图——PNG 原始数据 → DCT 变换 → 量化（LSB 信息丢失）→ 熵编码 → JPEG 文件" loading="lazy" decoding="async" width="1408" height="768" src="/_astro/t2bqdet2bqdet2bq.BbWsI_9Y_9dYjj.webp" srcset=""></p>
+<blockquote>
+<p><strong>一条铁律：LSB 隐写必须使用无损格式。PNG 是最佳选择——支持透明通道、压缩率适中、Web 生态广泛兼容。</strong></p>
+</blockquote>
+<p>BMP 理论上也可以（无压缩），但文件体积巨大，不适合传播。</p>
+<hr>
+<h2 id="下一篇">下一篇</h2>
+<p>理解了 LSB 的原理，你可能会想：把文本转成比特流一个一个塞进像素，代码写起来复杂吗？如果要藏的不是文本，而是一个 PDF 文件呢？解码的时候程序怎么知道该在哪里停下来？</p>
+<p>下一篇，我们将进入真正的工程落地：<a href="/blog/bf1ac0404cfc/">《把文本写进像素：LSB 隐写术的工程化与 TypeScript 实现》</a></p> </article><div class="tags"><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/隐写术/">隐写术</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/LSB/">LSB</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/信息安全/">信息安全</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/图像处理/">图像处理</a></div></div></main></div><div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div></div><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script> </body></html>

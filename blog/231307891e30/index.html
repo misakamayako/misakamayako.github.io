@@ -1,0 +1,721 @@
+<!DOCTYPE html><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous"><html lang="zh-hans" class="h-full w-full m-0"> <head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.jpg"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v6.4.4"><meta name="description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><link rel="canonical" href="https://misakamayako.github.io/blog/231307891e30/"><meta property="og:type" content="website"><meta property="og:title" content="✨御坂网络-个人 Kotlin Android 项目代码风格规范✨"><meta property="og:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta property="og:url" content="https://misakamayako.github.io/blog/231307891e30/"><meta property="og:image" content="https://misakamayako.github.io/favicon.jpg"><meta property="og:site_name" content="御坂网络"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="✨御坂网络-个人 Kotlin Android 项目代码风格规范✨"><meta name="twitter:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta name="twitter:image" content="https://misakamayako.github.io/favicon.jpg"><title>✨御坂网络-个人 Kotlin Android 项目代码风格规范✨</title><link rel="stylesheet" href="/_astro/global.iNtMyEu_.css">
+<style>/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25 / .875)));color:var(--color-stone-400,#a6a09b);text-align:center;padding-block:calc(var(--spacing,.25rem) * 4);border-top-color:var(--color-zinc-50,#fafafa);border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,#0f172b);border-top-width:2px;width:100%;position:relative}@supports (color:lab(0% 0 0)){.okTgGW_footer{color:var(--color-stone-400,lab(66.2166% 1.88044 3.20326));border-top-color:var(--color-zinc-50,lab(98.26% 0 0));background-color:var(--color-slate-900,lab(7.78673% 1.82345 -15.0537))}}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem) * 16);padding-right:calc(var(--spacing,.25rem) * 16);border-bottom-color:var(--color-zinc-50,#fafafa);border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}@supports (color:lab(0% 0 0)){.q0UmqG_menu{border-bottom-color:var(--color-zinc-50,lab(98.26% 0 0))}}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@supports (color:lab(0% 0 0)){.q0UmqG_menu a{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem) * -.5);translate:var(--tw-translate-x) var(--tw-translate-y);color:var(--color-sky-500,#00a5ef)}@supports (color:lab(0% 0 0)){.q0UmqG_menu a:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_menu a{transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4, 0, .2, 1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,#fafafa);margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@supports (color:lab(0% 0 0)){.q0UmqG_navLink{color:var(--color-zinc-50,lab(98.26% 0 0))}}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,#00a5ef)}@supports (color:lab(0% 0 0)){.q0UmqG_navLink:hover{color:var(--color-sky-500,lab(63.3038% -18.433 -51.0407))}}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D23ro5u1.css"><script type="module" src="/_astro/page.vzY--OHv.js"></script></head> <body class="w-full h-full flex flex-col"> <div class="bg-slate-800 h-screen flex flex-col"><div class="bg-slate-700 w-full"> <div class="q0UmqG_avatar"> <img src="/favicon.jpg" width="64" height="64" alt=""> </div> <nav class="q0UmqG_menu"> <a href="/" class="q0UmqG_navLink">home</a> <a href="/blog/" class="q0UmqG_navLink">blog</a> <a href="/utils/" class="q0UmqG_navLink">utils</a> <a href="/dream-map/" class="inline-block">dream map</a> <a href="/album/" class="q0UmqG_navLink">album</a> <a href="/about-me/" class="q0UmqG_navLink">about me</a> </nav> </div><div class="flex p-4 grow flex-row h-full overflow-hidden"><aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2"><div class="sticky top-4 space-y-6"><div class="bg-slate-700 p-4 rounded-lg"><img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"><p class="text-white text-center mt-2">作者：misakamayako</p><p class="text-white text-center mt-2">发布时间：2026/05/07</p></div><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">简介</h3><p class="text-white font-light mb-2">基于 Kotlin + Jetpack Compose + Clean Architecture + MVI 的多模块 Android 项目工程规范，适用于长期维护、中大型、模块化 Android 项目。</p></div><!-- 2. 关联文章 --><!-- 3. 随机文章 --><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">随便看看</h3><div class="flex flex-wrap gap-2"><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/66edd596bab7/">前端数据压缩与解压缩实践指南</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/15b29448545c/">Web Worker 类型概览</a><a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/231307891e30/">个人 Kotlin Android 项目代码风格规范</a></div></div></div></aside><main class="grow h-full overflow-auto w-3/4 px-8"><article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100"> <header> <h1>个人 Kotlin Android 项目代码风格规范</h1> </header> <h1 id="1-总体设计原则">1. 总体设计原则</h1>
+<h2 id="11-核心原则">1.1 核心原则</h2>
+<p>项目整体遵循以下设计目标：</p>
+<ul>
+<li>强模块边界</li>
+<li>强不可变状态</li>
+<li>强分层</li>
+<li>可测试</li>
+<li>可扩展</li>
+<li>长期维护优先</li>
+<li>尽量降低 Android Framework 对业务层侵入</li>
+</ul>
+<hr>
+<h2 id="12-架构模式">1.2 架构模式</h2>
+<p>采用：</p>
+<ul>
+<li>Clean Architecture</li>
+<li>MVI（MVIKotlin）</li>
+<li>多模块 Feature 拆分</li>
+<li>Compose 单向数据流（UDF）</li>
+</ul>
+<hr>
+<h1 id="2-模块结构规范">2. 模块结构规范</h1>
+<h2 id="21-feature-双模块结构">2.1 Feature 双模块结构</h2>
+<p>每个功能拆分为：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>:feature:&#x3C;featureName>:api</span></span>
+<span class="line"><span>:feature:&#x3C;featureName>:internal</span></span></code></pre>
+<p>例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>:feature:user:api</span></span>
+<span class="line"><span>:feature:user:internal</span></span></code></pre>
+<hr>
+<h2 id="22-api-模块职责">2.2 API 模块职责</h2>
+<p><code>api</code> 模块仅暴露：</p>
+<ul>
+<li>对外数据模型</li>
+<li>Repository 接口</li>
+<li>Navigation API</li>
+<li>对外 Contract</li>
+<li>公共常量</li>
+<li>跨模块通信接口</li>
+</ul>
+<p>禁止：</p>
+<ul>
+<li>Room</li>
+<li>Retrofit</li>
+<li>ViewModel</li>
+<li>Compose Screen 实现</li>
+<li>RepositoryImpl</li>
+<li>DI 实现</li>
+</ul>
+<hr>
+<h2 id="23-internal-模块职责">2.3 Internal 模块职责</h2>
+<p><code>internal</code> 模块负责：</p>
+<ul>
+<li>Data</li>
+<li>Domain</li>
+<li>Presentation</li>
+<li>DI</li>
+<li>Store 实现</li>
+<li>数据源实现</li>
+<li>UI 实现</li>
+<li>对外暴露 Route Graph</li>
+</ul>
+<p>外部模块禁止直接依赖 internal。</p>
+<hr>
+<h2 id="24-internal-模块目录结构">2.4 Internal 模块目录结构</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>internal/</span></span>
+<span class="line"><span>├── data/</span></span>
+<span class="line"><span>│   ├── local/</span></span>
+<span class="line"><span>│   ├── remote/</span></span>
+<span class="line"><span>│   ├── mapper/</span></span>
+<span class="line"><span>│   ├── repo/</span></span>
+<span class="line"><span>│   └── source/</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── domain/</span></span>
+<span class="line"><span>│   ├── usecase/</span></span>
+<span class="line"><span>│   └── repository/</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── presentation/            # 如果模块预期只有一个表现层，可以省略下面的二级文件夹</span></span>
+<span class="line"><span>│   ├── list/</span></span>
+<span class="line"><span>│   ├── detail/</span></span>
+<span class="line"><span>│   └── component/</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>├── di/</span></span>
+<span class="line"><span>│</span></span>
+<span class="line"><span>└── common/</span></span></code></pre>
+<hr>
+<h2 id="25-包结构建议">2.5 包结构建议</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">feature.user.</span><span style="color:#F97583">internal</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">data</span><span style="color:#E1E4E8">.repo</span></span>
+<span class="line"><span style="color:#E1E4E8">feature.user.</span><span style="color:#F97583">internal</span><span style="color:#E1E4E8">.presentation.list</span></span></code></pre>
+<p>不推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">feature.user.</span><span style="color:#F97583">internal</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">internal</span><span style="color:#E1E4E8">.</span><span style="color:#F97583">internal</span></span></code></pre>
+<hr>
+<h1 id="3-可见性规范">3. 可见性规范</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>修饰符</th><th>使用范围</th></tr></thead><tbody><tr><td>public</td><td>api 模块对外接口</td></tr><tr><td>internal</td><td>internal 模块内部实现</td></tr><tr><td>private</td><td>文件/类内部实现</td></tr><tr><td>protected</td><td>仅明确需要继承扩展时使用</td></tr></tbody></table>
+<hr>
+<h2 id="31-原则">3.1 原则</h2>
+<h3 id="api-模块默认-public">api 模块默认 public</h3>
+<h3 id="internal-模块默认-internal">internal 模块默认 internal</h3>
+<p>避免：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">public</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserRepositoryImpl</span></span></code></pre>
+<hr>
+<h1 id="4-命名规范">4. 命名规范</h1>
+<hr>
+<h2 id="41-类型命名">4.1 类型命名</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型</th><th>规则</th></tr></thead><tbody><tr><td>类</td><td>PascalCase</td></tr><tr><td>接口</td><td>PascalCase</td></tr><tr><td>data class</td><td>PascalCase</td></tr><tr><td>object</td><td>PascalCase</td></tr><tr><td>enum</td><td>PascalCase</td></tr><tr><td>sealed interface</td><td>PascalCase</td></tr></tbody></table>
+<hr>
+<h2 id="42-函数命名">4.2 函数命名</h2>
+<p>函数统一使用 <strong>camelCase</strong></p>
+<p>要求：</p>
+<ul>
+<li>动词开头</li>
+<li>语义明确</li>
+<li>避免缩写</li>
+</ul>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">loadUser</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">fetchById</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">updateProfile</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<p>不推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">doData</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">handle</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">process</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<hr>
+<h2 id="43-boolean-命名">4.3 Boolean 命名</h2>
+<p>推荐使用主要关注的状态命名</p>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">isLoading</span></span></code></pre>
+<p>不推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">isIdle</span></span></code></pre>
+<p>统一：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">isXxx</span></span>
+<span class="line"><span style="color:#E1E4E8">hasXxx</span></span>
+<span class="line"><span style="color:#E1E4E8">shouldXxx</span></span>
+<span class="line"><span style="color:#E1E4E8">canXxx</span></span></code></pre>
+<p>例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">isLoading</span></span>
+<span class="line"><span style="color:#E1E4E8">hasPermission</span></span>
+<span class="line"><span style="color:#E1E4E8">shouldRefresh</span></span></code></pre>
+<hr>
+<h2 id="44-mapper-命名">4.4 Mapper 命名</h2>
+<p>统一：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">toEntity</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">toDomain</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">toUiState</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">convert</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">map</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">transform</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<hr>
+<h1 id="5-数据模型规范">5. 数据模型规范</h1>
+<hr>
+<h2 id="51-domain-model">5.1 Domain Model</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> User</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> id: </span><span style="color:#B392F0">Long</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> name: </span><span style="color:#B392F0">String</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> ""</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> avatar: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">? </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> null</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> tags: </span><span style="color:#B392F0">PersistentList</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">> </span><span style="color:#F97583">=</span><span style="color:#B392F0"> persistentListOf</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<hr>
+<h2 id="52-通用约定">5.2 通用约定</h2>
+<h3 id="所有字段必须提供默认值">所有字段必须提供默认值</h3>
+<p>目的：</p>
+<ul>
+<li>方便 Preview</li>
+<li>方便初始化 State</li>
+<li>降低空状态复杂度</li>
+</ul>
+<hr>
+<h3 id="初始为空时集合必须默认空集合">初始为空时，集合必须默认空集合</h3>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">emptyList</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">persistentListOf</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#79B8FF">null</span></span></code></pre>
+<hr>
+<h3 id="可空必须显式语义化">可空必须显式语义化</h3>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">val</span><span style="color:#E1E4E8"> avatar: </span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">?</span></span></code></pre>
+<p>不推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> avatar </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span></code></pre>
+<hr>
+<h1 id="6-compose-stability-规范">6. Compose Stability 规范</h1>
+<hr>
+<h2 id="61-state-必须稳定stable">6.1 State 必须稳定（Stable）</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">@Immutable</span></span>
+<span class="line"><span style="color:#F97583">data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UiState</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> items: </span><span style="color:#B392F0">PersistentList</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">Item</span><span style="color:#E1E4E8">>,</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<hr>
+<h2 id="62-state-内禁止出现">6.2 State 内禁止出现</h2>
+<ul>
+<li>MutableList</li>
+<li>MutableMap</li>
+<li>Context</li>
+<li>Activity</li>
+<li>Fragment</li>
+<li>NavController</li>
+<li>CoroutineScope</li>
+<li>Flow</li>
+<li>Channel</li>
+</ul>
+<hr>
+<h2 id="63-推荐使用不可变集合">6.3 推荐使用不可变集合</h2>
+<p>统一使用：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">kotlinx.collections.immutable</span></span></code></pre>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">PersistentList</span></span>
+<span class="line"><span style="color:#E1E4E8">PersistentMap</span></span></code></pre>
+<hr>
+<h1 id="7-mvi-规范">7. MVI 规范</h1>
+<hr>
+<h2 id="71-store-拆分规范">7.1 Store 拆分规范</h2>
+<p>不推荐 <code>FeatureFactory.kt</code> 单文件包含：</p>
+<ul>
+<li>Executor</li>
+<li>Reducer</li>
+<li>Action</li>
+<li>Message</li>
+<li>Bootstrapper</li>
+<li>create()</li>
+</ul>
+<hr>
+<h2 id="72-推荐结构">7.2 推荐结构</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>mvi/</span></span>
+<span class="line"><span>├── FeatureStore.kt</span></span>
+<span class="line"><span>├── action/</span></span>
+<span class="line"><span>├── bootstrapper/</span></span>
+<span class="line"><span>├── executor/</span></span>
+<span class="line"><span>├── reducer/</span></span>
+<span class="line"><span>├── message/</span></span>
+<span class="line"><span>└── factory/</span></span></code></pre>
+<hr>
+<h2 id="73-intent-规范">7.3 Intent 规范</h2>
+<p>区分：</p>
+<ul>
+<li>UI Intent</li>
+<li>Internal Action</li>
+</ul>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> UserIntent</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> Ui</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">UserIntent</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> Internal</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">UserIntent</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<h2 id="74-reducer-规范">7.4 Reducer 规范</h2>
+<p>Reducer：</p>
+<ul>
+<li>必须纯函数</li>
+<li>禁止 IO</li>
+<li>禁止日志</li>
+<li>禁止协程</li>
+<li>禁止 Repository 调用</li>
+</ul>
+<hr>
+<h2 id="75-label-规范">7.5 Label 规范</h2>
+<p>Label 仅用于：</p>
+<ul>
+<li>Toast</li>
+<li>Snackbar</li>
+<li>Navigation</li>
+<li>Dialog</li>
+<li>一次性事件</li>
+</ul>
+<p>禁止：</p>
+<ul>
+<li>保存 UI State</li>
+<li>持久化业务状态</li>
+</ul>
+<hr>
+<h1 id="8-viewmodel-规范">8. ViewModel 规范</h1>
+<hr>
+<h2 id="81-viewmodel-职责">8.1 ViewModel 职责</h2>
+<p>ViewModel 仅负责：</p>
+<ul>
+<li>生命周期桥接</li>
+<li>Store 生命周期管理</li>
+<li>StateFlow 暴露</li>
+<li>Intent 转发</li>
+</ul>
+<p>禁止：</p>
+<ul>
+<li>业务逻辑</li>
+<li>Repository 调用</li>
+<li>数据转换</li>
+</ul>
+<hr>
+<h2 id="82-推荐基类">8.2 推荐基类</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">abstract</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> StoreViewModel</span><span style="color:#E1E4E8">&#x3C;</span><span style="color:#B392F0">S</span><span style="color:#E1E4E8"> : </span><span style="color:#B392F0">Store</span><span style="color:#E1E4E8">&#x3C;*, *, *>>(</span></span>
+<span class="line"><span style="color:#F97583">    protected</span><span style="color:#F97583"> val</span><span style="color:#E1E4E8"> store: </span><span style="color:#B392F0">S</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">ViewModel</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    override</span><span style="color:#F97583"> fun</span><span style="color:#B392F0"> onCleared</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">        store.</span><span style="color:#B392F0">dispose</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<hr>
+<h1 id="9-compose-ui-规范">9. Compose UI 规范</h1>
+<hr>
+<h2 id="91-双函数模式">9.1 双函数模式</h2>
+<p>每个页面：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">FeatureScreenRoot</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#B392F0">FeatureScreen</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<hr>
+<h2 id="92-root-职责">9.2 Root 职责</h2>
+<p>负责：</p>
+<ul>
+<li>collect state</li>
+<li>collect label</li>
+<li>navigation</li>
+<li>snackbar</li>
+<li>side effect</li>
+</ul>
+<hr>
+<h2 id="93-screen-职责">9.3 Screen 职责</h2>
+<p>仅负责：</p>
+<ul>
+<li>UI 渲染</li>
+<li>事件回调</li>
+</ul>
+<p>保证：</p>
+<ul>
+<li>可 Preview</li>
+<li>可测试</li>
+<li>无副作用</li>
+</ul>
+<hr>
+<h2 id="94-composable-拆分原则">9.4 Composable 拆分原则</h2>
+<p>以下情况建议拆分为独立 Composable：</p>
+<ul>
+<li>内部 UI 状态或交互逻辑较复杂但是不需要与 ViewModel 或 MVI 绑定</li>
+<li>需要在多个页面或模块中复用</li>
+<li>已形成明确的视觉或业务语义单元</li>
+<li>参数数量过多，影响可读性</li>
+<li>存在独立 Preview 价值</li>
+<li>可以明显提升主 Screen 的可读性</li>
+</ul>
+<hr>
+<h1 id="10-preview-规范">10. Preview 规范</h1>
+<hr>
+<h2 id="101-必须覆盖状态">10.1 必须覆盖状态</h2>
+<p>每个页面至少：</p>
+<ul>
+<li>Loading</li>
+<li>Empty</li>
+<li>Error</li>
+<li>Data</li>
+</ul>
+<hr>
+<h2 id="102-preview-数据集中管理">10.2 Preview 数据集中管理</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>preview/</span></span>
+<span class="line"><span>├── PreviewData.kt</span></span>
+<span class="line"><span>└── PreviewProvider.kt</span></span></code></pre>
+<hr>
+<h1 id="11-协程与-flow-规范">11. 协程与 Flow 规范</h1>
+<hr>
+<h2 id="111-dispatcher-禁止硬编码">11.1 Dispatcher 禁止硬编码</h2>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">Dispatchers.IO</span></span></code></pre>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">withContext</span><span style="color:#E1E4E8">(ioDispatcher)</span></span></code></pre>
+<hr>
+<h2 id="112-flow-使用原则">11.2 Flow 使用原则</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>类型</th></tr></thead><tbody><tr><td>UI 状态</td><td>StateFlow</td></tr><tr><td>单次事件</td><td>SharedFlow / Label</td></tr><tr><td>数据库监听</td><td>Flow</td></tr><tr><td>网络请求</td><td>suspend</td></tr></tbody></table>
+<hr>
+<h2 id="113-ui-收集规范">11.3 UI 收集规范</h2>
+<p>Compose 必须：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">collectAsStateWithLifecycle</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<hr>
+<h2 id="114-生命周期收集规范">11.4 生命周期收集规范</h2>
+<p>使用：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">repeatOnLifecycle</span><span style="color:#E1E4E8">()</span></span></code></pre>
+<hr>
+<h2 id="115-禁止">11.5 禁止</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">GlobalScope</span></span></code></pre>
+<hr>
+<h1 id="12-room-规范">12. Room 规范</h1>
+<hr>
+<h2 id="121-entity-规范">12.1 Entity 规范</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">@Entity</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    tableName </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "user"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">internal</span><span style="color:#F97583"> data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> UserEntity</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#B392F0">    @PrimaryKey</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> id: </span><span style="color:#B392F0">Long</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<hr>
+<h2 id="122-枚举禁止-ordinal">12.2 枚举禁止 Ordinal</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">enum</span><span style="color:#E1E4E8">.name</span></span></code></pre>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">enum</span><span style="color:#E1E4E8">.ordinal</span></span></code></pre>
+<hr>
+<h2 id="123-upsert-优先">12.3 Upsert 优先</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">@Upsert</span></span></code></pre>
+<p>避免：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">OnConflictStrategy.REPLACE</span></span></code></pre>
+<p>因为：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>REPLACE = DELETE + INSERT</span></span></code></pre>
+<p>可能导致：</p>
+<ul>
+<li>ID 变化</li>
+<li>外键异常</li>
+<li>Trigger 触发</li>
+</ul>
+<hr>
+<h2 id="124-dao-原则">12.4 DAO 原则</h2>
+<p>DAO：</p>
+<ul>
+<li>只负责数据库</li>
+<li>不写业务逻辑</li>
+<li>不做 UI 转换</li>
+</ul>
+<hr>
+<h1 id="13-mapper-规范">13. Mapper 规范</h1>
+<hr>
+<h2 id="131-mapper-必须单向">13.1 Mapper 必须单向</h2>
+<p>允许：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Entity -> Domain</span></span>
+<span class="line"><span>Domain -> Entity</span></span>
+<span class="line"><span>Domain -> UiState</span></span></code></pre>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>UiState -> Entity</span></span>
+<span class="line"><span>UiState -> Domain</span></span></code></pre>
+<hr>
+<h2 id="132-mapper-必须纯函数">13.2 Mapper 必须纯函数</h2>
+<p>禁止：</p>
+<ul>
+<li>Repository 调用</li>
+<li>IO</li>
+<li>日志</li>
+<li>Context</li>
+</ul>
+<hr>
+<h1 id="14-di-规范">14. DI 规范</h1>
+<hr>
+<h2 id="141-koin-dsl">14.1 Koin DSL</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#B392F0">singleOf</span><span style="color:#E1E4E8">(::</span><span style="color:#B392F0">RepositoryImpl</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">factoryOf</span><span style="color:#E1E4E8">(::</span><span style="color:#B392F0">UserUseCase</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#B392F0">viewModelOf</span><span style="color:#E1E4E8">(::</span><span style="color:#B392F0">UserViewModel</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<hr>
+<h2 id="142-module-拆分">14.2 Module 拆分</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>di/</span></span>
+<span class="line"><span>├── DataModule.kt</span></span>
+<span class="line"><span>├── DomainModule.kt</span></span>
+<span class="line"><span>├── PresentationModule.kt</span></span>
+<span class="line"><span>└── FeatureModule.kt</span></span></code></pre>
+<hr>
+<h1 id="15-日志规范">15. 日志规范</h1>
+<hr>
+<h2 id="151-禁止直接使用-log">15.1 禁止直接使用 Log</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#E1E4E8">Logger.</span><span style="color:#B392F0">d</span><span style="color:#E1E4E8">(TAG) { </span><span style="color:#9ECBFF">"load success: id=</span><span style="color:#79B8FF">$id</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8"> }</span></span></code></pre>
+<hr>
+<h2 id="152-日志原则">15.2 日志原则</h2>
+<p>日志必须：</p>
+<ul>
+<li>可搜索</li>
+<li>可过滤</li>
+<li>避免无意义文本</li>
+</ul>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#9ECBFF">"user load success: id=</span><span style="color:#79B8FF">$id</span><span style="color:#9ECBFF">"</span></span></code></pre>
+<p>不推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#9ECBFF">"success"</span></span></code></pre>
+<hr>
+<h1 id="16-kotlin-语言规范">16. Kotlin 语言规范</h1>
+<hr>
+<h2 id="161-优先使用-data-object">16.1 优先使用 data object</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">data</span><span style="color:#F97583"> object</span><span style="color:#B392F0"> Loading</span></span></code></pre>
+<hr>
+<h2 id="162-优先-sealed-interface">16.2 优先 sealed interface</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> interface</span><span style="color:#B392F0"> Intent</span></span></code></pre>
+<p>而不是：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">sealed</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> Intent</span></span></code></pre>
+<hr>
+<h2 id="163-trailing-comma">16.3 trailing comma</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">data</span><span style="color:#F97583"> class</span><span style="color:#B392F0"> Foo</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> a:</span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> b:</span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#F97583">    val</span><span style="color:#E1E4E8"> c:</span><span style="color:#B392F0">Int</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span></code></pre>
+<hr>
+<h2 id="164-禁止使用-">16.4 禁止使用 <code>!!</code></h2>
+<p>禁止：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="kotlin"><code><span class="line"><span style="color:#F97583">value!!</span></span></code></pre>
+<hr>
+<h1 id="17-文件组织规范">17. 文件组织规范</h1>
+<hr>
+<h2 id="171-一个文件一个主类型">17.1 一个文件一个主类型</h2>
+<p>推荐：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>UserRepository.kt</span></span></code></pre>
+<hr>
+<h2 id="172-特殊情况允许聚合">17.2 特殊情况允许聚合</h2>
+<p>例如：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Models.kt</span></span>
+<span class="line"><span>Extensions.kt</span></span>
+<span class="line"><span>Enums.kt</span></span></code></pre>
+<hr>
+<h1 id="18-测试规范">18. 测试规范</h1>
+<hr>
+<h2 id="181-reducer-必须单元测试">18.1 Reducer 必须单元测试</h2>
+<p>因为：</p>
+<ul>
+<li>纯函数</li>
+<li>最稳定</li>
+<li>最容易测试</li>
+</ul>
+<hr>
+<h2 id="182-mapper-必须测试">18.2 Mapper 必须测试</h2>
+<p>重点：</p>
+<ul>
+<li>null</li>
+<li>default</li>
+<li>enum fallback</li>
+</ul>
+<hr>
+<h2 id="183-preview-不能替代测试">18.3 Preview 不能替代测试</h2>
+<p>Preview 仅用于：</p>
+<ul>
+<li>UI 快速验证</li>
+<li>视觉检查</li>
+</ul>
+<hr>
+<h1 id="19-推荐工具链">19. 推荐工具链</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型</th><th>推荐</th></tr></thead><tbody><tr><td>格式化</td><td>ktlint</td></tr><tr><td>静态分析</td><td>detekt</td></tr><tr><td>API 检查</td><td>binary-compatibility-validator</td></tr><tr><td>Benchmark</td><td>macrobenchmark</td></tr><tr><td>Baseline Profile</td><td>baselineprofile</td></tr><tr><td>不可变集合</td><td>kotlinx.collections.immutable</td></tr><tr><td>时间库</td><td>kotlinx-datetime</td></tr></tbody></table>
+<hr>
+<h1 id="20-推荐-gradle-convention-plugin">20. 推荐 Gradle Convention Plugin</h1>
+<p>建议后期抽离：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>build-logic/</span></span></code></pre>
+<p>统一管理：</p>
+<ul>
+<li>Compose</li>
+<li>Kotlin</li>
+<li>KSP</li>
+<li>Room</li>
+<li>Detekt</li>
+<li>Ktlint</li>
+<li>Android Config</li>
+</ul>
+<p>避免：</p>
+<ul>
+<li>模块重复配置</li>
+<li>版本漂移</li>
+</ul>
+<hr>
+<h1 id="21-最终目标">21. 最终目标</h1>
+<p>本规范目标：</p>
+<ul>
+<li>保持长期可维护性</li>
+<li>降低模块耦合</li>
+<li>降低状态复杂度</li>
+<li>降低 Compose 重组问题</li>
+<li>保持架构一致性</li>
+<li>提高多人协作稳定性</li>
+<li>降低后期重构成本</li>
+</ul> </article><div class="tags"><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Android/">Android</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Kotlin/">Kotlin</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Jetpack Compose/">Jetpack Compose</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/软件架构/">软件架构</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/MVIKotlin/">MVIKotlin</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/状态管理/">状态管理</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Kotlin 协程/">Kotlin 协程</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/异步编程/">异步编程</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/数据库/">数据库</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/数据库设计/">数据库设计</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/数据管理/">数据管理</a></div></div></main></div><div class="okTgGW_footer"> <p>Supported and developed by&nbsp;
+<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a> </p> <p>
+Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;
+<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp;
+        and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;
+</p> <p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p> <a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"> <img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"> </a> </div></div><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script> </body></html>

@@ -149,13 +149,14 @@ function updateRawResult() {
   const matching = [];
   for (const entry of data) {
     if (!entry.hasRecipe) continue;
-    const allCats = new Set([...entry.baseCategories, ...entry.variants.flatMap(v => v.addedCategories)]);
-    const common = [...allCats].filter(c => selectedCats.has(c));
+    const requiredCats = new Set(entry.ingredientSlots.filter(s => s.category).map(s => s.category));
+    const common = [...requiredCats].filter(c => selectedCats.has(c));
     if (common.length === 0) continue;
 
     const v0 = entry.variants[0];
     const sorted = FINAL_ORDER.map(ft => ({ type: ft, pct: v0.weights[ft] ?? 0 }))
       .filter(w => w.pct > 0).sort((a,b) => b.pct - a.pct);
+    if (sorted.length === 0) continue;
 
     let best = "";
     let bestW = 0;

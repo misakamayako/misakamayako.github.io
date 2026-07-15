@@ -1,0 +1,182 @@
+[
+  {
+    "slug": "water",
+    "name": "（水）"
+  },
+  {
+    "slug": "plants",
+    "name": "（植物）"
+  },
+  {
+    "slug": "uni",
+    "name": "（海胆）"
+  },
+  {
+    "slug": "flowers",
+    "name": "（花）"
+  },
+  {
+    "slug": "medicinal",
+    "name": "（药材）"
+  },
+  {
+    "slug": "poisons",
+    "name": "（有毒材料）"
+  },
+  {
+    "slug": "elixirs",
+    "name": "（万灵药）"
+  },
+  {
+    "slug": "sand",
+    "name": "（砂）"
+  },
+  {
+    "slug": "stone",
+    "name": "（石材）"
+  },
+  {
+    "slug": "ore",
+    "name": "（矿石）"
+  },
+  {
+    "slug": "gemstones",
+    "name": "（原石）"
+  },
+  {
+    "slug": "gunpowder",
+    "name": "（火药）"
+  },
+  {
+    "slug": "fuel",
+    "name": "（燃料）"
+  },
+  {
+    "slug": "edibles",
+    "name": "（食材）"
+  },
+  {
+    "slug": "fruit",
+    "name": "（树木果实）"
+  },
+  {
+    "slug": "beehives",
+    "name": "（蜂巢）"
+  },
+  {
+    "slug": "mushrooms",
+    "name": "（菌菇）"
+  },
+  {
+    "slug": "seafood",
+    "name": "（鱼贝类）"
+  },
+  {
+    "slug": "bugs",
+    "name": "（虫）"
+  },
+  {
+    "slug": "threads",
+    "name": "（线材）"
+  },
+  {
+    "slug": "lumber",
+    "name": "（木材）"
+  },
+  {
+    "slug": "gases",
+    "name": "（气体）"
+  },
+  {
+    "slug": "puniballs",
+    "name": "（噗尼噗尼）"
+  },
+  {
+    "slug": "animal-products",
+    "name": "（动物素材）"
+  },
+  {
+    "slug": "dragon-mat",
+    "name": "（龙素材）"
+  },
+  {
+    "slug": "magical",
+    "name": "（神秘之力）"
+  },
+  {
+    "slug": "neutralizers",
+    "name": "（中和剂）"
+  },
+  {
+    "slug": "general-goods",
+    "name": "（杂货）"
+  },
+  {
+    "slug": "metal",
+    "name": "（金属）"
+  },
+  {
+    "slug": "jewels",
+    "name": "（宝石）"
+  },
+  {
+    "slug": "spices",
+    "name": "（调味料）"
+  },
+  {
+    "slug": "seeds",
+    "name": "（种子）"
+  },
+  {
+    "slug": "food",
+    "name": "（食品）"
+  },
+  {
+    "slug": "medicine",
+    "name": "（药品）"
+  },
+  {
+    "slug": "bombs",
+    "name": "（炸弹）"
+  },
+  {
+    "slug": "magic-tools",
+    "name": "（魔法道具）"
+  },
+  {
+    "slug": "ingots",
+    "name": "（金属块）"
+  },
+  {
+    "slug": "cloth",
+    "name": "（布料）"
+  },
+  {
+    "slug": "weapons",
+    "name": "（武器）"
+  },
+  {
+    "slug": "armor",
+    "name": "（防具）"
+  },
+  {
+    "slug": "accessories",
+    "name": "（装饰品）"
+  },
+  {
+    "slug": "tools",
+    "name": "（采集）"
+  },
+  {
+    "slug": "furniture",
+    "name": "（家具）"
+  },
+  {
+    "slug": "key-items",
+    "name": "（重要）"
+  },
+  {
+    "slug": "essence",
+    "name": "（香精）"
+  }
+]

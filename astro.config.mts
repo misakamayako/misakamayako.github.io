@@ -1,7 +1,7 @@
 import {defineConfig} from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from "@astrojs/react"
-import {rehypeHeadingIds} from '@astrojs/markdown-remark';
+import {rehypeHeadingIds, unified} from '@astrojs/markdown-remark';
 import rehypeMermaid from 'rehype-mermaid';
 import rehypePrettyCode from "rehype-pretty-code";
 
@@ -17,22 +17,24 @@ export default defineConfig({
             type: 'shiki',
             excludeLangs: ['mermaid'],
         },
-        rehypePlugins: [
-            rehypeHeadingIds,
-            [
-                rehypeMermaid,
-                {
-                    mermaidConfig: {
-                        theme: "dark"
+        processor: unified({
+            rehypePlugins: [
+                rehypeHeadingIds,
+                [
+                    rehypeMermaid,
+                    {
+                        mermaidConfig: {
+                            theme: "dark"
+                        }
                     }
-                }
+                ],
+                rehypePrettyCode,
+                rehypeKatex
             ],
-            rehypePrettyCode,
-            rehypeKatex
-        ],
-        remarkPlugins:[
-            remarkMath
-        ]
+            remarkPlugins: [
+                remarkMath
+            ]
+        })
     },
     site: "https://misakamayako.github.io/",
     base: "/",

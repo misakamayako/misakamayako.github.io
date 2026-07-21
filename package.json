@@ -17,7 +17,7 @@
     "@fortawesome/react-fontawesome": "^3.4.0",
     "@tailwindcss/postcss": "^4.3.2",
     "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.0.9",
+    "astro": "^7.1.0",
     "colorjs.io": "^0.5.2",
     "matewind": "1.2.1",
     "postcss": "^8.5.19",

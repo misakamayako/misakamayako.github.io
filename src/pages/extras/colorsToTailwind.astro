@@ -415,7 +415,7 @@ const gradations = [
         function processColorMatch() {
             const userColor = colorInput.value.trim();
             if (!userColor) return;
-            if (CSS.supports("text", userColor)) {
+            if (!CSS.supports("color", userColor)) {
                 userColorInfo.textContent = "无效的颜色格式，请重试";
                 return
             }

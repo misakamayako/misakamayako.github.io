@@ -5,19 +5,30 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
-RUN pnpm i --frozen-lockfile
+RUN pnpm install --frozen-lockfile
+
 COPY . .
+ARG SITE_URL
+ENV SITE_URL=$SITE_URL
 RUN pnpm build
 
-# ---------- 部署阶段 ----------
-FROM nginx:latest AS production
+# ---------- 运行阶段 ----------
+FROM node:24 AS runtime
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+ENV NODE_ENV=production
 
-# 暴露默认端口
-EXPOSE 80
+RUN npm install -g pnpm
 
-# 启动 nginx
-CMD ["nginx", "-g", "daemon off;"]
+COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
+RUN pnpm install --prod --frozen-lockfile
+
+COPY --from=builder /app/dist ./dist
+
+ENV HOST=0.0.0.0
+ENV PORT=3000
+
+EXPOSE 3000
+
+CMD ["node", "dist/server/entry.mjs"]

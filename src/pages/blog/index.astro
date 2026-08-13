@@ -1,8 +1,5 @@
 ---
-import {getCollection} from "astro:content";
 import ListOrByTag from "../../components/ListOrByTag.astro";
-
-const articles = (await getCollection('blog')).map(it=>it.data);
 ---
 
-<ListOrByTag articles={articles} active={null} />
+<ListOrByTag active={null} />

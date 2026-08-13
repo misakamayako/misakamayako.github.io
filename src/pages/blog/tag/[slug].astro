@@ -1,34 +1,15 @@
 ---
-import {type CollectionEntry, getCollection} from "astro:content";
+import { getCollection } from "astro:content";
 import ListOrByTag from "../../../components/ListOrByTag.astro";
 
-type BlogEntry = CollectionEntry<'blog'>;
 export async function getStaticPaths() {
-    const allPosts: BlogEntry[] = await getCollection('blog');
-    const hashMap = new Map<string, BlogEntry[]>()
-    allPosts.forEach(it => {
-        (it.data.tags as string[])?.forEach(tag => {
-            if (!hashMap.has(tag)) {
-                hashMap.set(tag, [])
-            }
-            hashMap.get(tag).push(it.data)
-        })
-    })
-    const tags = Array.from(hashMap.entries())
-    return tags.map(([it, blo]) => ({
-        params: {slug: it},
-        props: {
-            articles: blo.map(it2 => ({
-                tags: it2.tags,
-                description: it2.description,
-                title: it2.title,
-                pubDate: it2.pubDate,
-                slug: it2.slug
-            })),
-            slug: it
-        }
-    }))
+    const posts = await getCollection("blog");
+    const tags = new Set<string>();
+    posts.forEach((post) => (post.data.tags ?? []).forEach((tag) => tags.add(tag)));
+    return [...tags].map((tag) => ({ params: { slug: tag } }));
 }
-const {articles, slug} = Astro.props
+
+const { slug } = Astro.params;
 ---
-<ListOrByTag articles={articles} active={slug} />
+
+<ListOrByTag active={slug} />

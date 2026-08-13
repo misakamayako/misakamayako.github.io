@@ -5,7 +5,12 @@ import Footer from "../components/Footer.astro";
 import localStyle from "../styles/aboutMe.module.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faGithub, faJs, faNodeJs, faPixiv, faReact} from "@fortawesome/free-brands-svg-icons";
+import { isMainlandChina } from "../lib/geo";
+
+export const prerender = false;
+
 const baseURL = import.meta.env.BASE_URL
+const showPixiv = isMainlandChina(Astro.request);
 ---
 <Home pageTitle="✨御坂网络-关于我✨">
     <Navigation/>
@@ -40,10 +45,12 @@ const baseURL = import.meta.env.BASE_URL
                                class="social-icon text-2xl text-light hover:text-secondary" target="_blank">
                                 <FontAwesomeIcon icon={faGithub} className="w-4 hover:text-[#181717] hover:bg-white rounded-full "/>
                             </a>
-                            <a href="https://www.pixiv.net/users/16115771"
-                               class="social-icon text-2xl text-light hover:text-secondary" target="_blank">
-                                <FontAwesomeIcon icon={faPixiv} className="w-4 hover:text-[#0096FA]"/>
-                            </a>
+                            {showPixiv && (
+                                <a href="https://www.pixiv.net/users/16115771"
+                                   class="social-icon text-2xl text-light hover:text-secondary" target="_blank">
+                                    <FontAwesomeIcon icon={faPixiv} className="w-4 hover:text-[#0096FA]"/>
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -12,3 +12,16 @@
     background: rgba(0, 245, 255, 0.5);
     border-radius: 3px;
 }
+
+/* 客户端渲染博客列表时注入的卡片样式（原 ListOrByTag.astro 的局部样式） */
+.article-card {
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.tag-pill {
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: white;
+}

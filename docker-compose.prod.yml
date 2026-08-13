@@ -1,16 +1,13 @@
+# 只负责构建并运行 Astro 应用，反向代理/HTTPS 由外部统一编排处理。
 services:
-  astro-pages:
-    container_name: astro-pages
-    image: misakanetworks-frontend:${HOST_TYPE:-latest}
+  astro-app:
     build:
       context: .
       dockerfile: docker/prod.Dockerfile
+    container_name: astro-app
     restart: always
     ports:
-      - "80:80"
-    networks:
-      - my_network
-
-networks:
-  my_network:
-    driver: bridge
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000

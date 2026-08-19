@@ -42,16 +42,14 @@ function cardHTML(item: BlogItem): string {
 
 export async function renderBlogList(container: HTMLElement): Promise<void> {
     const tag = container.dataset.tag ?? "";
-    const url = tag
-        ? `${base}api/blogs.json?tag=${encodeURIComponent(tag)}`
-        : `${base}api/blogs.json`;
+    const url = `${base}internal/blogs.json`;
 
     container.innerHTML = `<div class="col-span-2 text-gray-400 py-8 text-center">加载中…</div>`;
 
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const items: BlogItem[] = await response.json();
+        const items = (await response.json() as BlogItem[]).filter(it=>tag?it.tags?.includes(tag):it);
 
         if (items.length === 0) {
             container.innerHTML = `<div class="col-span-2 text-gray-400 py-8 text-center">暂无文章</div>`;

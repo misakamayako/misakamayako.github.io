@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import {getCollection, type InferEntrySchema} from "astro:content";
 
-// export const prerender = false;
 
 export const GET: APIRoute = async ({ url }) => {
     const tag = (url.searchParams.get("tag") ?? "").trim();

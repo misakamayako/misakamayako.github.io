@@ -1,15 +1,15 @@
 ---
-import { getCollection } from "astro:content";
+import {getCollection} from "astro:content";
 import ListOrByTag from "../../../components/ListOrByTag.astro";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blog");
     const tags = new Set<string>();
     posts.forEach((post) => (post.data.tags ?? []).forEach((tag) => tags.add(tag)));
-    return [...tags].map((tag) => ({ params: { slug: tag } }));
+    return [...tags].map((tag) => ({params: {slug: tag}}));
 }
 
-const { slug } = Astro.params;
+const {slug} = Astro.params;
 ---
 
-<ListOrByTag active={slug} />
+<ListOrByTag active={slug}/>

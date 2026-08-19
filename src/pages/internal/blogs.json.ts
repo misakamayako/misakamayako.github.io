@@ -1,12 +1,12 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import {getCollection, type InferEntrySchema} from "astro:content";
 
-export const prerender = false;
+// export const prerender = false;
 
 export const GET: APIRoute = async ({ url }) => {
     const tag = (url.searchParams.get("tag") ?? "").trim();
 
-    const posts = await getCollection("blog");
+    const posts = await getCollection("blog") as InferEntrySchema<"blog">[];
     let items = posts.map((post) => ({
         slug: post.data.slug,
         title: post.data.title,

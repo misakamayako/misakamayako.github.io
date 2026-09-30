@@ -1,0 +1,130 @@
+---
+import BaseLayout from "./home.astro";
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.astro";
+import Carousel from "../components/Carousel.astro";
+import type {ImageMetadata} from "astro";
+
+const {frontmatter} = Astro.props;
+const baseURL = import.meta.env.BASE_URL;
+
+const tags: string[] = frontmatter.tags ?? [];
+const description = frontmatter.description ?? `御坂网络的随笔：${frontmatter.title}`;
+
+// frontmatter.gallery 里写的是文件名，这里解析成可优化的 ImageMetadata
+const galleryFiles = import.meta.glob<{default: ImageMetadata}>(
+    "/src/assets/essay/*.{jpg,jpeg,png,webp}",
+    {eager: true},
+);
+const slides: {src: ImageMetadata; alt?: string}[] = [];
+for (const item of frontmatter.gallery ?? []) {
+    const mod = galleryFiles[`/src/assets/essay/${item.src}`];
+    if (mod) {
+        slides.push({src: mod.default, alt: item.alt});
+    } else {
+        console.warn(`[essayLayout] gallery 图片不存在: ${item.src}`);
+    }
+}
+---
+
+<BaseLayout pageTitle={`✨御坂网络-${frontmatter.title}✨`} description={description} type="article">
+    <Navigation/>
+    <!-- 与站点其他页面一致的滚动模型：main 自己滚（overflow-auto 同时把 flex 的 min-height 归零），footer 固定在底部 -->
+    <main class="bg-slate-800 h-1 w-full grow overflow-auto">
+        <article class="mx-auto w-full max-w-[44rem] px-6 py-14 md:py-20">
+            <header class="mb-10 md:mb-14">
+                <h1 class="text-3xl font-semibold leading-[1.4] tracking-tight text-zinc-100 md:text-[2.5rem]">
+                    {frontmatter.title}
+                </h1>
+                <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-400">
+                    <time datetime={frontmatter.pubDate}>{frontmatter.pubDate}</time>
+                    {frontmatter.author ? <span>{frontmatter.author}</span> : null}
+                </div>
+                {
+                    tags.length > 0 ? (
+                        <div class="mt-5 flex flex-wrap gap-2">
+                            {tags.map((tag: string) => (
+                                <span class="tag-pill rounded-full px-3 py-1 text-xs text-nowrap">{tag}</span>
+                            ))}
+                        </div>
+                    ) : null
+                }
+            </header>
+
+            {slides.length > 0 ? <Carousel slides={slides} label={frontmatter.title} /> : null}
+
+            <div
+                    class="essay-body prose prose-lg prose-stone lg:prose-xl max-w-none text-zinc-200
+                    prose-headings:font-semibold prose-headings:text-zinc-100
+                    prose-p:text-zinc-200 prose-p:leading-[1.95]
+                    prose-li:text-zinc-200 prose-td:text-zinc-200 prose-th:text-zinc-100
+                    prose-strong:text-zinc-100
+                    prose-a:text-violet-200 prose-a:no-underline hover:prose-a:underline
+                    prose-blockquote:border-l-violet-400/50 prose-blockquote:text-stone-100 prose-blockquote:not-italic
+                    prose-hr:border-slate-700 prose-img:rounded-lg">
+                <slot/>
+            </div>
+
+            <div class="mt-20 flex items-center justify-between border-t border-slate-700 pt-8 text-sm">
+                <a href={`${baseURL}essay/`}
+                   class="text-violet-200 transition-colors hover:text-violet-100">← 返回随笔</a>
+                <span class="text-slate-500">感谢阅读</span>
+            </div>
+        </article>
+    </main>
+    <Footer/>
+</BaseLayout>
+
+<style is:global>
+    /* 长文阅读版式：更松的段间距与行距，段首不缩进。（slot 里的 markdown 内容不受 scoped style 影响，故用 global） */
+    .essay-body p {
+        margin-top: 1.75em;
+        margin-bottom: 1.75em;
+        text-wrap: pretty;
+    }
+
+    /* 开篇第一段略作提亮，作为引子 */
+    .essay-body > p:first-child {
+        margin-top: 0;
+        font-size: 1.06em;
+        color: var(--color-zinc-100);
+    }
+
+    /* 去掉 prose 给首段加的首字下沉效果 */
+    .essay-body > p:first-child::first-letter {
+        float: none;
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+    /* 中英混排时下划线离字远一点，避免压到汉字 */
+    .essay-body a {
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+    }
+
+    /* 标题前留出更多呼吸空间 */
+    .essay-body h2 {
+        margin-top: 2.6em;
+    }
+
+    .essay-body h3 {
+        margin-top: 2.2em;
+    }
+    /* 表格：随笔栏宽较窄，收紧字号与内边距，表头不换行 */
+    .essay-body table {
+        font-size: 0.9em;
+    }
+
+    .essay-body th,
+    .essay-body td {
+        padding: 0.55em 0.7em;
+        vertical-align: top;
+    }
+
+    .essay-body thead th {
+        white-space: nowrap;
+    }
+</style>

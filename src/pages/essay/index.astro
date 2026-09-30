@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../../layouts/home.astro";
+import Footer from "../../components/Footer.astro";
+import Navigation from "../../components/Navigation.astro";
+import {getCollection} from "astro:content";
+
+const baseURL = import.meta.env.BASE_URL;
+
+// pubDate 统一写 YYYY/MM/DD 或 YYYY-MM-DD，字符串降序即时间倒序
+const essays = (await getCollection("essay"))
+    .filter((it) => !it.data.draft)
+    .sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate));
+
+const groups = essays.reduce<{ year: string; items: typeof essays }[]>((acc, essay) => {
+    const year = essay.data.pubDate.slice(0, 4);
+    const last = acc[acc.length - 1];
+    if (last?.year === year) {
+        last.items.push(essay);
+    } else {
+        acc.push({year, items: [essay]});
+    }
+    return acc;
+}, []);
+---
+
+<BaseLayout pageTitle={"✨御坂网络-随笔✨"} description="与技术无关的随笔，一些片段、一些想法。">
+    <Navigation/>
+    <!-- 与站点其他页面一致的滚动模型：main 自己滚，footer 固定在底部 -->
+    <main class="bg-slate-800 h-1 w-full grow overflow-auto">
+        <div class="mx-auto w-full max-w-[44rem] px-6 py-14 md:py-20">
+            <header class="mb-12 md:mb-16">
+                <h1 class="text-3xl font-semibold tracking-tight text-zinc-100 md:text-[2.5rem]">随笔</h1>
+                <p class="mt-4 text-slate-400">与技术无关的一些片段。</p>
+            </header>
+
+            {
+                groups.length === 0 ? (
+                    <p class="text-slate-400">还没有内容。</p>
+                ) : (
+                    <div class="space-y-12">
+                        {groups.map(({year, items}) => (
+                            <section>
+                                <h2 class="mb-5 text-sm font-mono tracking-widest text-emerald-400">{year}</h2>
+                                <ul class="space-y-7">
+                                    {items.map((essay) => (
+                                        <li>
+                                            <a href={`${baseURL}essay/${encodeURIComponent(essay.data.slug)}/`}
+                                               class="group block">
+                                                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                                                    <h3 class="text-lg font-medium text-zinc-200 transition-colors group-hover:text-violet-200">
+                                                        {essay.data.title}
+                                                    </h3>
+                                                    <span class="text-xs font-mono text-slate-500">
+                                                        {essay.data.pubDate.slice(5)}
+                                                    </span>
+                                                </div>
+                                                {essay.data.description ? (
+                                                    <p class="mt-2 text-sm leading-relaxed text-slate-400">
+                                                        {essay.data.description}
+                                                    </p>
+                                                ) : null}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+    </main>
+    <Footer/>
+</BaseLayout>

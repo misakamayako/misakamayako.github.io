@@ -1,17 +1,33 @@
 @reference "./global.css";
 .home {
-    @apply bg-black h-screen w-screen flex flex-col;
+    @apply bg-black h-screen w-screen flex flex-col overflow-hidden relative;
     @apply flex-nowrap content-center items-center justify-center;
+    /* WebGL 不可用时的兜底：取着色器基色 baseCol(34,21,40) 的暗调 */
+    background: radial-gradient(120% 90% at 50% 72%, #2a1a30 0%, #150d1a 55%, #000 100%);
 }
 
-.water {
-    @apply absolute bottom-0 h-[47%] w-full bg-no-repeat;
-    background: url('/img/background.jpg') no-repeat center bottom;
-    @apply bg-cover;
+.canvas {
+    @apply absolute inset-0 block h-full w-full;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 毛玻璃面板；渐变文字挂在内层 .menu 上，避免 background 简写把渐变覆盖掉 */
+.glass {
+    @apply relative z-10;
+    background: oklab(20.5% 0 0 / .25);
+    border: 1px solid #ffffff1f;
+    border-radius: 12px;
+    width: 460px;
+    padding: 48px 40px;
+    box-shadow: 0 8px 40px #0000004d;
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
 }
 
 .menu {
-    @apply bg-clip-text text-6xl text-center  uppercase leading-relaxed z-50;
+    @apply bg-clip-text text-center uppercase leading-relaxed;
+    @apply text-4xl md:text-5xl;
     @apply bg-linear-to-bl from-zinc-100 via-slate-500 to-zinc-500;
     @apply text-transparent;
     font-family: "Phage Rough";

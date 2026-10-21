@@ -1,0 +1,231 @@
+<!DOCTYPE html><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous"><html lang="zh-hans" class="h-full w-full m-0"><head><meta charset="utf-8"><link rel="icon" type="image/jepg" href="/favicon.ico"><meta name="viewport" content="width=device-width"><meta name="google-site-verification" content="-RgOsAO7rMTpJ8vNk8-ILdAA8VmiTEUc9HiUVVTKeEs"><meta name="generator" content="Astro v7.4.1"><meta name="description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><link rel="canonical" href="https://misakamayako.github.io/blog/ec9f2a7b4d1e/"><meta property="og:type" content="website"><meta property="og:title" content="✨御坂网络-Electron 主进程 ECONNRESET 排查：Node 的 fetch 与 net.fetch 到底差在哪✨"><meta property="og:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta property="og:url" content="https://misakamayako.github.io/blog/ec9f2a7b4d1e/"><meta property="og:image" content="https://misakamayako.github.io/favicon.jpg"><meta property="og:site_name" content="御坂网络"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="✨御坂网络-Electron 主进程 ECONNRESET 排查：Node 的 fetch 与 net.fetch 到底差在哪✨"><meta name="twitter:description" content="御坂网络 Mayako Space，记录技术文章、在线工具、图集与个人项目。"><meta name="twitter:image" content="https://misakamayako.github.io/favicon.jpg"><title>✨御坂网络-Electron 主进程 ECONNRESET 排查：Node 的 fetch 与 net.fetch 到底差在哪✨</title><link rel="stylesheet" href="/_astro/global.ReQycX2m.css"><style>/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid}}}.okTgGW_footer{font-size:var(--text-sm,.875rem);line-height:var(--tw-leading,var(--text-sm--line-height,calc(1.25 / .875)));color:var(--color-stone-400,oklch(70.9% .01 56.259));text-align:center;padding-block:calc(var(--spacing,.25rem) * 4);border-top-color:var(--color-zinc-50,oklch(98.5% 0 none));border-top-style:var(--tw-border-style);background-color:var(--color-slate-900,oklch(20.8% .042 265.755));border-top-width:2px;width:100%;position:relative}.okTgGW_footer a{text-decoration-line:underline}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-border-style:solid;--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0}}}.q0UmqG_menu{height:calc(var(--spacing,.25rem) * 16);padding-right:calc(var(--spacing,.25rem) * 16);border-bottom-color:var(--color-zinc-50,oklch(98.5% 0 none));border-bottom-style:var(--tw-border-style);text-align:right;border-bottom-width:2px}.q0UmqG_menu a{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,oklch(98.5% 0 none));margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@media (hover:hover){.q0UmqG_menu a:hover{--tw-translate-y:calc(var(--spacing,.25rem) * -.5);translate:var(--tw-translate-x) var(--tw-translate-y);color:var(--color-sky-500,oklch(68.5% .169 237.323))}}.q0UmqG_menu a{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4, 0, .2, 1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s));transition-property:transform,translate,scale,rotate;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function,cubic-bezier(.4, 0, .2, 1)));transition-duration:var(--tw-duration,var(--default-transition-duration,.15s))}.q0UmqG_navLink{padding-inline:calc(var(--spacing,.25rem) * 2);padding-block:calc(var(--spacing,.25rem) * 2);font-size:var(--text-xl,1.25rem);line-height:var(--tw-leading,var(--text-xl--line-height,calc(1.75 / 1.25)));color:var(--color-zinc-50,oklch(98.5% 0 none));margin-top:calc(var(--spacing,.25rem) * 2.5);display:inline-block}@media (hover:hover){.q0UmqG_navLink:hover{color:var(--color-sky-500,oklch(68.5% .169 237.323))}}.q0UmqG_navLink{transition:color .4s}.q0UmqG_avatar{float:right;border-radius:.25rem;display:inline-block;overflow:hidden}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}
+</style><link rel="stylesheet" href="/_astro/_slug_.qdchj5uw.css"><script type="module" src="/_astro/page.tougUCvb.js"></script></head><body class="w-full h-full flex flex-col"><div class="bg-slate-800 h-screen flex flex-col"><div class="bg-slate-700 w-full"><div class="q0UmqG_avatar"><img src="/avatar.jpg" width="62" height="62" alt=""></div><nav class="q0UmqG_menu"><a href="/" class="q0UmqG_navLink">home</a><a href="/blog/" class="q0UmqG_navLink">blog</a><a href="/essay/" class="q0UmqG_navLink">essay</a><a href="/utils/" class="q0UmqG_navLink">utils</a><a href="/dream-map/" class="inline-block">dream map</a><a href="/album/" class="q0UmqG_navLink">album</a><a href="/about-me/" class="q0UmqG_navLink">about me</a></nav></div><div class="flex p-4 grow flex-row h-full overflow-hidden"><aside class="w-1/4 ml-4 md:block min-w-[200px] overflow-auto pr-2"><div class="sticky top-4 space-y-6"><div class="bg-slate-700 p-4 rounded-lg"><img src="/avatar.jpg" class="w-16 h-16 rounded-full mx-auto"><p class="text-white text-center mt-2">作者：misakamayako</p><p class="text-white text-center mt-2">发布时间：2026/09/08</p></div><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">简介</h3><p class="text-white font-light mb-2">记录一次 Electron 桌面客户端登录请求被 ECONNRESET 打断的完整排查过程：如何用对照实验锁定到 TLS 指纹被中间层拦截，以及 Node 内置 fetch 与 Electron net.fetch 在底层网络栈上的本质差异。</p></div><!-- 2. 关联文章 --><!-- 3. 随机文章 --><div class="bg-slate-700 p-4 rounded-lg"><h3 class="text-emerald-400 mb-2">随便看看</h3><div id="random-posts" class="flex flex-wrap gap-2"></div></div></div></aside><main class="grow h-full overflow-auto w-3/4 px-8"><article class="text-zinc-200 mb-2 prose lg:prose-xl prose-stone
+                 prose-headings:text-current prose-strong:text-current prose-code:text-current
+                 prose-a:text-violet-200 prose-blockquote:text-stone-100"><header><h1>Electron 主进程 ECONNRESET 排查：Node 的 fetch 与 net.fetch 到底差在哪</h1></header><h2 id="一问题现象">一、问题现象</h2>
+<p>一个 Electron 桌面客户端，所有 HTTP 请求都由主进程统一转发（渲染层 → IPC → 主进程 <code>fetch</code>）。上线后出现一个诡异问题：</p>
+<ul>
+<li>客户端每次登录都失败，主进程抛错：</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>[api:request] POST https://api.example.com/api/auth/login body={"email":"...","password":"..."}</span></span>
+<span class="line"><span>[api:request] error: [TypeError: fetch failed] {</span></span>
+<span class="line"><span>  [cause]: Error: read ECONNRESET</span></span>
+<span class="line"><span>      at TLSWrap.onStreamRead (node:internal/stream_base_commons:216:20) {</span></span>
+<span class="line"><span>    errno: -4077,</span></span>
+<span class="line"><span>    code: 'ECONNRESET',</span></span>
+<span class="line"><span>    syscall: 'read'</span></span>
+<span class="line"><span>  }</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<ul>
+<li>更奇怪的是：<strong>服务端日志里根本没有这条请求</strong>，就好像请求从没到达过应用层。</li>
+<li>而在浏览器里手动 <code>fetch('https://api.example.com/api/auth/login', { method: 'POST' })</code>，服务端立刻就有日志（虽然返回 500，但至少请求到了）。</li>
+</ul>
+<p>同一个地址、同一个接口，浏览器通，Electron 主进程不通。问题出在哪？</p>
+<h2 id="二架构背景请求到底从哪发出">二、架构背景：请求到底从哪发出</h2>
+<p>很多 Electron 应用的网络请求并不发生在渲染进程里。出于安全（JWT 不暴露给渲染层）和 CORS（后端未开放跨域）的考虑，这类应用会把请求收口到主进程：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>React 组件 (渲染进程)</span></span>
+<span class="line"><span>  └─ window.api.request(...)          // preload 暴露的桥接</span></span>
+<span class="line"><span>       └─ ipcRenderer.invoke('api:request', ...)</span></span>
+<span class="line"><span>            └─ 主进程 handler 里 fetch(baseURL + path)   // 真正的 HTTP 在这里</span></span></code></pre>
+<p>关键点在于：主进程里写的 <code>fetch</code>，不是浏览器那个 <code>fetch</code>，而是 <strong>Node.js 内置的 <code>fetch</code></strong>（底层是 undici）。这为后面的一切埋下了伏笔。</p>
+<h2 id="三排查过程层层排除">三、排查过程：层层排除</h2>
+<h3 id="31-加日志先看清请求">3.1 加日志，先看清请求</h3>
+<p>第一件事是给 <code>api:request</code> 加上请求/响应日志，确认失败点。日志很快告诉我们：请求在 TLS 层 <code>read</code> 阶段被 <code>ECONNRESET</code>，也就是<strong>连接被对端用 RST 强行掐断</strong>，而不是超时、拒绝连接或 DNS 解析失败。</p>
+<h3 id="32-排除服务端挂了和网络不通">3.2 排除「服务端挂了」和「网络不通」</h3>
+<ul>
+<li><code>Test-NetConnection api.example.com -Port 443</code>：TCP 可达，IP 能解析。</li>
+<li>用系统 Node 直接写脚本连打 8 次接口：全部成功（401 是正常的未登录响应，说明服务端健康）。</li>
+<li>再做 16 并发 × 5 轮的压测：80/80 全部成功。</li>
+</ul>
+<p>结论：服务器本身没问题，这台机器到服务器的链路也没问题。</p>
+<h3 id="33-排除并发与-ipv6">3.3 排除并发与 IPv6</h3>
+<ul>
+<li>并发压测全过，排除「连接数被服务端限流」。</li>
+<li><code>Resolve-DnsName</code> 只有 A 记录、没有 AAAA，排除 IPv6 优先导致的握手失败。</li>
+</ul>
+<h3 id="34-一个看似合理的假设空闲连接复用">3.4 一个看似合理的假设：空闲连接复用</h3>
+<p>Node 的 fetch 会复用连接池里的空闲连接。如果某条连接已被服务端在空闲期关闭，客户端再复用这条「死连接」就会在读取时收到 RST。这能解释「偶发」与「服务端无日志」。</p>
+<p>于是我给请求加了 <code>ECONNRESET</code> 自动重试：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">async</span><span style="color:#F97583"> function</span><span style="color:#B392F0"> fetchWithRetry</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">label</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">url</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">init</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">retries</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  for</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">let</span><span style="color:#E1E4E8"> attempt </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">; attempt </span><span style="color:#F97583">&#x3C;=</span><span style="color:#E1E4E8"> retries; attempt</span><span style="color:#F97583">++</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> fetch</span><span style="color:#E1E4E8">(url, init)</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (err) {</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (attempt </span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8"> retries) </span><span style="color:#F97583">await</span><span style="color:#B392F0"> sleep</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">300</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> (attempt </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>结果打脸：<strong>连续 3 次全部 ECONNRESET，一次都没成功</strong>。如果是偶发的死连接，重试理应能建立新连接成功；现在每次都失败，说明问题不是「复用」，而是「这个客户端发起的连接本身就会被拒」。</p>
+<h3 id="35-决定性实验同进程双栈对照">3.5 决定性实验：同进程双栈对照</h3>
+<p>这是整个排查的关键一步。我把实验搬进 Electron 主进程内部，<strong>在同一时刻、同一进程里，分别用两种 fetch 打同一个接口</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>实验环境</th><th>结果</th></tr></thead><tbody><tr><td>系统 Node 24（OpenSSL）直连</td><td>✅ 全部成功</td></tr><tr><td>Electron 主进程 <code>globalThis.fetch</code>（Node undici）</td><td>❌ 全部 ECONNRESET</td></tr><tr><td>Electron 主进程 <code>net.fetch</code>（Chromium 网络栈）</td><td>✅ 全部成功</td></tr><tr><td>浏览器</td><td>✅ 成功</td></tr></tbody></table>
+<p>同一台机器、同一接口、同一请求体，唯一变量就是「用哪条网络栈」。至此原因已经锁死了。</p>
+<h2 id="四锁定原因两条网络栈两套-tls-指纹">四、锁定原因：两条网络栈，两套 TLS 指纹</h2>
+<p>Electron 主进程里其实有两个同名但完全不同的 <code>fetch</code>：</p>
+<ul>
+<li><code>globalThis.fetch</code> = <strong>Node.js 内置 fetch</strong>（undici），走 Node 自己的 HTTP/TLS 栈；在 Electron 里，Node 的 TLS 底层把 OpenSSL 换成了 <strong>BoringSSL</strong>。</li>
+<li><code>net.fetch</code> = Electron 封装在 <strong>Chromium 网络服务</strong> 之上的 fetch，和渲染层、和 Chrome 浏览器<strong>同一条代码路径</strong>。</li>
+</ul>
+<p>TCP 连接建立后、TLS 握手的 <code>ClientHello</code> 字节——密码套件顺序、扩展列表、支持的椭圆曲线、ALPN（Node 只协商 http/1.1，Chromium 协商 h2 + http/1.1）、GREASE 值等——合在一起叫 <strong>TLS 指纹（JA3/JA4）</strong>。两条栈发出的指纹长得不一样：</p>
+<ul>
+<li>服务端（或前面的 WAF/云盾等中间层）<strong>认得 Chromium 风格的握手就放行，认不得 Node 风格的握手就直接 RST</strong>。</li>
+<li>因此 Node 的请求在握手阶段就被掐断，根本到不了应用层 → 服务端日志一片空白。</li>
+<li>这也顺带解释了「系统 Node 为什么能通」：系统 Node 用的是 OpenSSL，握手指纹和 Electron 里的 Node（BoringSSL）并不相同，恰好落在被放行的集合里。</li>
+</ul>
+<p>一句话总结：<strong>不是 fetch 的 JS 语义不同，而是它们背后发 TCP/TLS 的栈不同，导致握手指纹不同，被前置防护区别对待了。</strong></p>
+<h2 id="五解决方案">五、解决方案</h2>
+<h3 id="51-切换到-netfetch">5.1 切换到 net.fetch</h3>
+<p>把主进程所有真实请求从全局 <code>fetch</code> 换成 Electron 的 <code>net.fetch</code>：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> { app, BrowserWindow, ipcMain, net, safeStorage } </span><span style="color:#F97583">from</span><span style="color:#9ECBFF"> 'electron'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">async</span><span style="color:#F97583"> function</span><span style="color:#B392F0"> fetchWithRetry</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">label</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">url</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">init</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">retries</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">  let</span><span style="color:#E1E4E8"> lastError</span></span>
+<span class="line"><span style="color:#F97583">  for</span><span style="color:#E1E4E8"> (</span><span style="color:#F97583">let</span><span style="color:#E1E4E8"> attempt </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">; attempt </span><span style="color:#F97583">&#x3C;=</span><span style="color:#E1E4E8"> retries; attempt</span><span style="color:#F97583">++</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">      return</span><span style="color:#F97583"> await</span><span style="color:#E1E4E8"> net.</span><span style="color:#B392F0">fetch</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(url), init)   </span><span style="color:#6A737D">// Chromium 网络栈，与浏览器一致</span></span>
+<span class="line"><span style="color:#E1E4E8">    } </span><span style="color:#F97583">catch</span><span style="color:#E1E4E8"> (err) {</span></span>
+<span class="line"><span style="color:#E1E4E8">      lastError </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> cause</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#F97583">      const</span><span style="color:#79B8FF"> code</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> cause.code </span><span style="color:#F97583">??</span><span style="color:#E1E4E8"> cause.cause?.code</span></span>
+<span class="line"><span style="color:#E1E4E8">      console.</span><span style="color:#B392F0">warn</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`[net] ${</span><span style="color:#E1E4E8">label</span><span style="color:#9ECBFF">} 第 ${</span><span style="color:#E1E4E8">attempt</span><span style="color:#F97583"> +</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF">} 次失败 (${</span><span style="color:#E1E4E8">code</span><span style="color:#F97583"> ??</span><span style="color:#9ECBFF"> 'network error'})`</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">      if</span><span style="color:#E1E4E8"> (attempt </span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8"> retries) </span><span style="color:#F97583">await</span><span style="color:#B392F0"> sleep</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">300</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> (attempt </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span>
+<span class="line"><span style="color:#F97583">  throw</span><span style="color:#E1E4E8"> lastError</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>几个注意点：</p>
+<ul>
+<li><code>net.fetch</code> 的 <code>input</code> 只接受 <code>string</code> 或 <code>GlobalRequest</code>，<strong>不接受 <code>URL</code> 对象</strong>，所以 <code>String(url)</code> 转一下最稳妥。</li>
+<li><code>net.fetch</code> 必须在 <code>app.whenReady()</code> 之后调用；通常请求都发生在窗口建立之后，天然满足。</li>
+<li>返回的 <code>Response</code> 支持 <code>res.text()</code> / <code>res.arrayBuffer()</code> / <code>res.headers.get()</code> 等常规用法，二进制下载照常处理即可。</li>
+</ul>
+<h3 id="52-上传-multipart-的兼容处理">5.2 上传 multipart 的兼容处理</h3>
+<p>主进程里原来的上传代码用了 Node 的 <code>FormData</code> + <code>Blob</code>，这两个在 <code>net.fetch</code>（Chromium 栈）下的兼容性不确定。干脆绕开，手写 multipart body，服务端 <code>MultipartFile</code> 无感知：</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> boundary</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> `----PromptfolioBoundary${</span><span style="color:#E1E4E8">Date</span><span style="color:#9ECBFF">.</span><span style="color:#B392F0">now</span><span style="color:#9ECBFF">().</span><span style="color:#B392F0">toString</span><span style="color:#9ECBFF">(</span><span style="color:#79B8FF">16</span><span style="color:#9ECBFF">)</span><span style="color:#9ECBFF">}`</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> head</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Buffer.</span><span style="color:#B392F0">from</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#9ECBFF">  `--${</span><span style="color:#E1E4E8">boundary</span><span style="color:#9ECBFF">}</span><span style="color:#79B8FF">\r\n</span><span style="color:#9ECBFF">`</span><span style="color:#F97583"> +</span></span>
+<span class="line"><span style="color:#9ECBFF">    `Content-Disposition: form-data; name="file"; filename="${</span><span style="color:#E1E4E8">safeName</span><span style="color:#9ECBFF">}"</span><span style="color:#79B8FF">\r\n</span><span style="color:#9ECBFF">`</span><span style="color:#F97583"> +</span></span>
+<span class="line"><span style="color:#9ECBFF">    `Content-Type: ${</span><span style="color:#E1E4E8">file</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">type</span><span style="color:#F97583"> ||</span><span style="color:#9ECBFF"> 'application/octet-stream'}</span><span style="color:#79B8FF">\r\n\r\n</span><span style="color:#9ECBFF">`</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">  'utf-8'</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> tail</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Buffer.</span><span style="color:#B392F0">from</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`</span><span style="color:#79B8FF">\r\n</span><span style="color:#9ECBFF">--${</span><span style="color:#E1E4E8">boundary</span><span style="color:#9ECBFF">}--</span><span style="color:#79B8FF">\r\n</span><span style="color:#9ECBFF">`</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'utf-8'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> body</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> Buffer.</span><span style="color:#B392F0">concat</span><span style="color:#E1E4E8">([head, Buffer.</span><span style="color:#B392F0">from</span><span style="color:#E1E4E8">(file.data), tail])</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> res</span><span style="color:#F97583"> =</span><span style="color:#F97583"> await</span><span style="color:#B392F0"> fetchWithRetry</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'api:upload POST /api/images'</span><span style="color:#E1E4E8">, base </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> '/api/images'</span><span style="color:#E1E4E8">, {</span></span>
+<span class="line"><span style="color:#E1E4E8">  method: </span><span style="color:#9ECBFF">'POST'</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">  headers: {</span></span>
+<span class="line"><span style="color:#F97583">    ...</span><span style="color:#E1E4E8">(session </span><span style="color:#F97583">?</span><span style="color:#E1E4E8"> { Authorization: </span><span style="color:#9ECBFF">`Bearer ${</span><span style="color:#E1E4E8">session</span><span style="color:#9ECBFF">.</span><span style="color:#E1E4E8">token</span><span style="color:#9ECBFF">}`</span><span style="color:#E1E4E8"> } </span><span style="color:#F97583">:</span><span style="color:#E1E4E8"> {}),</span></span>
+<span class="line"><span style="color:#9ECBFF">    'Content-Type'</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">`multipart/form-data; boundary=${</span><span style="color:#E1E4E8">boundary</span><span style="color:#9ECBFF">}`</span></span>
+<span class="line"><span style="color:#E1E4E8">  },</span></span>
+<span class="line"><span style="color:#E1E4E8">  body</span></span>
+<span class="line"><span style="color:#E1E4E8">})</span></span></code></pre>
+<h3 id="53-保留重试">5.3 保留重试</h3>
+<p><code>net.fetch</code> 虽然用的是 Chromium 的连接管理，重试仍然有价值——它守护的是网络层的瞬时抖动（偶发 RST、临时断连），和「换栈」是互补而非重复。</p>
+<h2 id="六node-内置-fetch-与-netfetch-的差异">六、Node 内置 fetch 与 net.fetch 的差异</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th><code>globalThis.fetch</code>（Node）</th><th><code>net.fetch</code>（Electron）</th></tr></thead><tbody><tr><td>网络栈</td><td>Node 的 HTTP/TLS 栈（undici）</td><td>Chromium 网络服务</td></tr><tr><td>TLS 库</td><td>Electron 下为 BoringSSL</td><td>Chromium（也是 BoringSSL，但指纹/配置不同）</td></tr><tr><td>ALPN</td><td>基本只协商 http/1.1</td><td>h2 + http/1.1，与浏览器一致</td></tr><tr><td>系统代理</td><td>不认系统代理，直连</td><td>跟随 session / 系统代理</td></tr><tr><td>session / cookies / webRequest</td><td>不参与</td><td>走 <code>defaultSession</code>，可被 <code>webRequest</code> 拦截、可用 <code>ses.fetch</code> 指定 session</td></tr><tr><td>连接复用</td><td>undici 连接池</td><td>Chromium 连接池</td></tr><tr><td>错误语义</td><td><code>TypeError: fetch failed</code> + <code>cause</code> 里带底层错误</td><td>更接近浏览器；连接层问题由 Chromium 内部消化</td></tr><tr><td>适用场景</td><td>纯 Node 语义的请求</td><td>需要与渲染层/浏览器行为一致的请求</td></tr></tbody></table>
+<p>结论很直白：<strong>在 Electron 主进程里，只要不是刻意要用 Node 语义，网络请求一律优先 <code>net.fetch</code>。</strong> 它能保证和浏览器一致的代理、证书、session 与 TLS 行为，还能避免「浏览器通、主进程不通」这类最让人抓狂的分裂问题。</p>
+<h2 id="七小结与经验">七、小结与经验</h2>
+<p>回顾整条排查链，最值得记住的是三点：</p>
+<ol>
+<li><strong>先定义清楚「哪个进程在发请求」</strong>。Electron 的请求可能发生在渲染层、主进程、utility process，各自的网络栈完全不同，别想当然。</li>
+<li><strong>用对照实验收敛变量，而不是靠猜</strong>。这次最关键的突破，是在同一进程同一时刻并行打两个 <code>fetch</code>，一次就把「环境差异」压成了「网络栈差异」。</li>
+<li><strong><code>ECONNRESET</code> 出现在 TLS 读取阶段时，优先怀疑握手层面的拦截</strong>（指纹、证书、密码套件），而不是应用层的业务问题——因为服务端没日志这个现象，往往意味着请求根本没走到应用层。</li>
+</ol></article><div class="tags"><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Electron/">Electron</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/Node.js/">Node.js</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/fetch/">fetch</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/TLS/">TLS</a></div><div class="_tailmateTag_u5zwa_5"><a href="/blog/tag/网络调试/">网络调试</a></div></div></main></div><div class="okTgGW_footer"><p>Supported and developed by&nbsp;<a href="https://github.com/misakamayako/" target="_blank" rel="noreferrer">misaka mayako</a></p><p>Tech with <a href="https://astro.build/" target="_blank" rel="noreferrer">astro</a>,&nbsp;<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">tailwindcss</a>,&nbsp; and <a href="https://pm2.keymetrics.io/" target="_blank" rel="noreferrer">pm2</a>,&nbsp;</p><p> feed back via <a href="mailto:misakamayaco@qq.com" target="_blank" rel="noreferrer">📫</a></p><a rel="license noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="absolute right-6 bottom-6"><img alt="知识共享许可协议" class="inlin-block border-0" src="/cc4.0.png"></a></div></div><script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre').forEach((block) => {
+                if (block.dataset.language === 'plaintext') return
+                const button = document.createElement('button')
+                button.innerText = '复制'
+                button.className =
+                    'absolute top-2 right-2 bg-slate-800 text-white px-2 py-1 rounded text-sm opacity-50 hover:opacity-100 transition cursor-pointer'
+                button.addEventListener('click', () => {
+                    const code = block.querySelector('code')
+                    if (code) {
+                        navigator.clipboard.writeText(code.innerText).then(() => {
+                            button.innerText = '已复制！'
+                            setTimeout(() => (button.innerText = '复制'), 1000)
+                        })
+                    }
+                })
+                block.classList.add('relative')
+                block.appendChild(button)
+            })
+        })
+    </script><script type="module">function e(e){return e.replace(/[&<>"']/g,e=>({"&":`&amp;`,"<":`&lt;`,">":`&gt;`,'"':`&quot;`,"'":`&#39;`})[e])}function t(e,t){let n=[...e];for(let e=n.length-1;e>0;e--){let t=Math.floor(Math.random()*(e+1));[n[e],n[t]]=[n[t],n[e]]}return n.slice(0,t)}async function n(n){n.innerHTML=`<span class="text-sm text-slate-400">加载中…</span>`;try{let r=await fetch(`/internal/blogs.json`);if(!r.ok)throw Error(`HTTP ${r.status}`);let i=await r.json();if(i.length===0){n.innerHTML=`<span class="text-sm text-slate-400">暂无文章</span>`;return}n.innerHTML=t(i,3).map(t=>`<a class="px-3 py-1 bg-slate-600 rounded-full text-sm text-white hover:bg-emerald-500 transition" href="/blog/${encodeURIComponent(t.slug)}/">${e(t.title)}</a>`).join(``)}catch(t){n.innerHTML=`<span class="text-sm text-red-400">加载失败：${e(t instanceof Error?t.message:String(t))}</span>`}}var r=document.getElementById(`random-posts`);r&&n(r);</script></body></html>

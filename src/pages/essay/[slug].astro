@@ -1,0 +1,23 @@
+---
+import {render, getCollection, type CollectionEntry} from 'astro:content';
+import EssayLayout from '../../layouts/essayLayout.astro';
+
+type Essay = CollectionEntry<'essay'>;
+
+export async function getStaticPaths() {
+    const essays = await getCollection('essay');
+    return essays
+        .filter((essay) => !essay.data.draft)
+        .map((essay) => ({
+            params: {slug: essay.data.slug},
+            props: {essay},
+        }));
+}
+
+const {essay} = Astro.props as {essay: Essay};
+
+const {Content} = await render(essay);
+---
+<EssayLayout frontmatter={essay.data}>
+    <Content/>
+</EssayLayout>

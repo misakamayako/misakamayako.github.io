@@ -65,12 +65,15 @@ const widthsFor = (src: ImageMetadata) => {
     /* 关键：横向滚动容器 + 强制吸附 */
     .snap-track {
         display: flex;
+        /* 每张 slide 按自身内容高度排布，不再被最高的一张撑满 */
+        align-items: flex-start;
         overflow-x: auto;
         overflow-y: hidden;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         scrollbar-width: none;
         border-radius: 0.75rem;
+        transition: height 0.2s ease;
     }
 
     .snap-track::-webkit-scrollbar {
@@ -161,6 +164,7 @@ const widthsFor = (src: ImageMetadata) => {
     @media (prefers-reduced-motion: reduce) {
         .snap-track {
             scroll-behavior: auto;
+            transition: none;
         }
     }
 </style>
@@ -171,9 +175,18 @@ const widthsFor = (src: ImageMetadata) => {
         const dots = [...gallery.querySelectorAll<HTMLButtonElement>("[data-dot]")];
         if (!track || dots.length === 0) return;
 
+        const slides = [...track.querySelectorAll<HTMLElement>(".snap-slide")];
+
         // 每张 slide 正好等于容器宽度，所以索引可以直接换算
         const step = () => track.clientWidth;
         const current = () => Math.round(track.scrollLeft / Math.max(1, step()));
+
+        // 轨道高度跟随当前可见 slide 的内容高度，避免被最高的图撑满后出现大片空白
+        const fitHeight = () => {
+            const slide = slides[current()];
+            if (!slide) return;
+            track.style.height = `${slide.offsetHeight}px`;
+        };
 
         const goTo = (i: number) => {
             const target = Math.max(0, Math.min(dots.length - 1, i));
@@ -183,6 +196,7 @@ const widthsFor = (src: ImageMetadata) => {
         const sync = () => {
             const i = current();
             dots.forEach((dot, n) => dot.setAttribute("aria-current", String(n === i)));
+            fitHeight();
         };
 
         gallery.querySelector("[data-prev]")?.addEventListener("click", () => goTo(current() - 1));
@@ -198,5 +212,9 @@ const widthsFor = (src: ImageMetadata) => {
             },
             {passive: true},
         );
+
+        // 初始与容器宽度变化时重新计算高度
+        fitHeight();
+        new ResizeObserver(fitHeight).observe(track);
     });
 </script>

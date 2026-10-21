@@ -76,6 +76,12 @@ for (const item of frontmatter.gallery ?? []) {
 </BaseLayout>
 
 <style is:global>
+    /* 正文内嵌图片水平居中：窄图按自然宽度居中，宽图仍占满栏宽 */
+    .essay-body img {
+        display: block;
+        margin-inline: auto;
+    }
+
     /* 长文阅读版式：更松的段间距与行距，段首不缩进。（slot 里的 markdown 内容不受 scoped style 影响，故用 global） */
     .essay-body p {
         margin-top: 1.75em;

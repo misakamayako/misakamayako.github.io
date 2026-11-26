@@ -8,15 +8,15 @@ import Footer from "../../components/Footer.astro";
   description="在线 LSB 图片隐写工具，支持 PNG 图片隐藏文本或文件、AES-256-GCM 加密、RGB/RGBA 通道选择与自动解码。"
 >
   <Navigation/>
-  <div class="flex flex-col min-h-screen bg-slate-900 text-slate-100">
-    <header class="text-center py-8">
+  <div class="flex flex-col min-h-[calc(100svh-158px)] bg-slate-900 text-slate-100">
+    <header class="text-center py-4">
       <h1 class="text-3xl font-bold bg-linear-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
         LSB 图片隐写工具
       </h1>
       <p class="mt-2 text-slate-400 text-sm">拖入图片，写入秘密——基于最低有效位的隐写术在线测试</p>
     </header>
 
-    <div class="flex-1 grid grid-cols-[1fr_380px_1fr] gap-4 px-6 pb-8 max-w-[1400px] mx-auto w-full">
+    <div class="flex-1 grid grid-cols-[1fr_380px_1fr] gap-4 px-6 pb-6 max-w-[1400px] mx-auto w-full content-start">
       <!-- ====== 左侧：原始图片 / 编码载体 ====== -->
       <div class="flex flex-col gap-3 relative">
         <div class="flex items-center justify-between">
@@ -26,8 +26,8 @@ import Footer from "../../components/Footer.astro";
             <button id="leftClearBtn" class="hidden text-xs text-slate-500 hover:text-red-400 transition-colors">清除</button>
           </div>
         </div>
-        <div id="leftDropContainer" class="flex-1 min-h-[300px] relative flex items-center justify-center overflow-hidden">
-          <div id="leftDropZone" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-blue-400 hover:bg-slate-800/50">
+        <div id="leftDropContainer" class="h-[calc(100svh-328px)] relative flex items-center justify-center overflow-hidden">
+          <div id="leftDropZone" tabindex="0" role="button" aria-label="选择原始 PNG 图片" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-blue-400 hover:bg-slate-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400">
             <svg class="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
             </svg>
@@ -45,11 +45,11 @@ import Footer from "../../components/Footer.astro";
       </div>
 
       <!-- ====== 中间：配置面板 ====== -->
-      <div class="flex flex-col gap-4 bg-slate-800/60 rounded-xl p-5 border border-slate-700">
+      <div class="flex flex-col gap-3 bg-slate-800/60 rounded-xl p-4 border border-slate-700">
         <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wide text-center">配置 & 控制</h2>
 
         <!-- 加密开关 -->
-        <div class="flex items-center justify-between bg-slate-700/50 rounded-lg px-4 py-3">
+        <div class="flex items-center justify-between bg-slate-700/50 rounded-lg px-3 py-2">
           <div>
             <p class="text-sm text-slate-200">AES 加密</p>
             <p class="text-xs text-slate-400">使用 AES-256-GCM 加密数据</p>
@@ -60,7 +60,7 @@ import Footer from "../../components/Footer.astro";
         </div>
 
         <!-- 加密参数区（默认隐藏） -->
-        <div id="encryptParams" class="hidden space-y-3">
+        <div id="encryptParams" class="hidden space-y-2">
           <div>
             <label class="text-xs text-slate-400 block mb-1">密钥 (Password)</label>
             <input type="password" id="encryptKey" class="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400" placeholder="输入加密密钥"/>
@@ -86,7 +86,7 @@ import Footer from "../../components/Footer.astro";
         <!-- 内容输入 -->
         <div id="payloadDropArea" class="flex-1 flex flex-col min-h-0">
           <label class="text-xs text-slate-400 block mb-1">隐藏内容</label>
-          <textarea id="payloadText" rows="6" class="flex-1 min-h-[120px] w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400 resize-none font-mono disabled:opacity-50 disabled:cursor-not-allowed" placeholder="输入要隐藏的文本...&#10;或拖入文件到此处"></textarea>
+          <textarea id="payloadText" rows="4" class="flex-1 min-h-[88px] w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-400 resize-none font-mono disabled:opacity-50 disabled:cursor-not-allowed" placeholder="输入要隐藏的文本...&#10;或拖入文件到此处"></textarea>
           <div class="mt-2 flex gap-2 items-center">
             <input type="file" id="payloadFileInput" class="hidden"/>
             <button id="loadFileBtn" type="button" class="text-xs px-3 py-1.5 bg-slate-600 hover:bg-slate-500 rounded-lg transition-colors">加载文件</button>
@@ -126,11 +126,13 @@ import Footer from "../../components/Footer.astro";
           <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wide">含密图片（解码源）</h2>
           <div class="flex items-center gap-2">
             <span id="rightBadge" class="hidden text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">已加载</span>
+            <!-- 下载入口始终占位（invisible 隐藏），编码完成后切换为可见，不会引起任何布局变化 -->
+            <a id="downloadLink" class="invisible inline-block whitespace-nowrap text-xs px-2 py-0.5 rounded-md font-semibold bg-emerald-600 hover:bg-emerald-500 transition-colors" download="lsb-encoded.png">下载含密图片</a>
             <button id="rightClearBtn" class="hidden text-xs text-slate-500 hover:text-red-400 transition-colors">清除</button>
           </div>
         </div>
-        <div id="rightDropContainer" class="flex-1 min-h-[300px] relative flex items-center justify-center overflow-hidden">
-          <div id="rightDropZone" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-emerald-400 hover:bg-slate-800/50">
+        <div id="rightDropContainer" class="h-[calc(100svh-328px)] relative flex items-center justify-center overflow-hidden">
+          <div id="rightDropZone" tabindex="0" role="button" aria-label="选择含密 PNG 图片" class="absolute inset-0 border-2 border-dashed border-slate-600 rounded-xl flex flex-col items-center justify-center gap-3 cursor-pointer transition-colors hover:border-emerald-400 hover:bg-slate-800/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">
             <svg class="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
             </svg>
@@ -143,7 +145,6 @@ import Footer from "../../components/Footer.astro";
             <p>尺寸: <span id="rightSize" class="text-slate-100"></span></p>
           </div>
         </div>
-        <a id="downloadLink" class="hidden w-full text-center py-2 text-sm font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-500 transition-colors" download="lsb-encoded.png">下载含密图片</a>
       </div>
     </div>
 
@@ -252,7 +253,11 @@ import Footer from "../../components/Footer.astro";
 
   // ============ IV 自动生成 ============
   genIVBtn.addEventListener('click', () => {
-    if (!encryptEnabled || rightImageData) return; // 解密模式不允许随机生成
+    if (!encryptEnabled) return;
+    if (rightImageData && rightImageData.file) {
+      setStatus('解码模式下 IV 会从图片中读取，无需随机生成', 'warn');
+      return;
+    }
     const iv = crypto.getRandomValues(new Uint8Array(12));
     encryptIV.value = Array.from(iv).map(b => b.toString(16).padStart(2, '0')).join('');
   });
@@ -319,21 +324,40 @@ import Footer from "../../components/Footer.astro";
   });
 
   // ============ 拖拽区域 & 画布点击重选 ============
-  // 容器级别统一处理拖放事件
-  [leftDropContainer, rightDropContainer].forEach(container => {
+  // 容器级别统一处理拖放 / 点击事件
+  [
+    { container: leftDropContainer, input: leftFileInput, side: 'left' },
+    { container: rightDropContainer, input: rightFileInput, side: 'right' }
+  ].forEach(({ container, input, side }) => {
     container.addEventListener('dragover', e => { e.preventDefault(); });
+
     container.addEventListener('drop', e => {
       e.preventDefault();
       const file = e.dataTransfer.files[0];
       if (!file) return;
-      const side = container === leftDropContainer ? 'left' : 'right';
       handleImageDrop(file, side);
+    });
+
+    // 点击拖拽区 / 已有图片 / 面板留白 → 打开文件选择框。
+    // e.target === input 用于忽略 input.click() 冒泡回容器时产生的点击，否则会无限递归。
+    container.addEventListener('click', e => {
+      if (e.target === input) return;
+      input.click();
     });
   });
 
-  // 画布点击 → 重新选择图片
-  leftCanvas.addEventListener('click', () => leftFileInput.click());
-  rightCanvas.addEventListener('click', () => rightFileInput.click());
+  // 拖拽区键盘可访问：Enter / Space 等同点击
+  [
+    { zone: leftDropZone, input: leftFileInput },
+    { zone: rightDropZone, input: rightFileInput }
+  ].forEach(({ zone, input }) => {
+    zone.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        input.click();
+      }
+    });
+  });
 
   // 画布 drop → 重新处理 (容器级已处理，此处防止浏览器默认行为)
   [leftCanvas, rightCanvas].forEach(c => {
@@ -347,10 +371,12 @@ import Footer from "../../components/Footer.astro";
   // 文件输入变化
   leftFileInput.addEventListener('change', () => {
     const file = leftFileInput.files[0];
+    leftFileInput.value = ''; // 清空以便重新选择同一文件时仍能触发 change
     if (file) handleImageDrop(file, 'left');
   });
   rightFileInput.addEventListener('change', () => {
     const file = rightFileInput.files[0];
+    rightFileInput.value = '';
     if (file) handleImageDrop(file, 'right');
   });
 
@@ -464,7 +490,7 @@ import Footer from "../../components/Footer.astro";
       rightBadge.classList.remove('hidden');
       rightClearBtn.classList.remove('hidden');
       rightSize.textContent = `${canvas.width} × ${canvas.height}`;
-      downloadLink.classList.add('hidden');
+      downloadLink.classList.add('invisible');
       encryptIV.value = '';
       setStatus('已加载含密图片，点击"解码"提取隐藏内容', 'ok');
     }
@@ -493,7 +519,7 @@ import Footer from "../../components/Footer.astro";
       if (downloadLink.href && downloadLink.href.startsWith('blob:')) {
         URL.revokeObjectURL(downloadLink.href);
       }
-      downloadLink.classList.add('hidden');
+      downloadLink.classList.add('invisible');
       rightImageData = null;
       rightFile = null;
       rightFileInput.value = '';
@@ -667,7 +693,7 @@ import Footer from "../../components/Footer.astro";
       }
       canvas.toBlob(blob => {
         downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.classList.remove('hidden');
+        downloadLink.classList.remove('invisible');
       }, 'image/png');
 
       setStatus(`编码成功！${encryptEnabled ? '已 AES 加密，' : ''}Payload ${formatSize(payload.length)}`, 'ok');
